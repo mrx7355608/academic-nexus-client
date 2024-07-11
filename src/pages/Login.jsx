@@ -1,40 +1,36 @@
-import { Box, Button, Flex, Heading, VStack } from "@chakra-ui/react";
+import { Button, Heading, VStack, Text } from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
 
 export default function Login() {
-    const handleGoogleSignIn = () => console.log("hello");
+    const handleGoogleSignIn = () => {
+        window.open("https://www.facebook.com", "_self");
+    };
 
     return (
-        <Flex height="100vh" alignItems="center" justifyContent="center" p={4}>
-            <Box
-                p={8}
-                maxWidth="400px"
+        <VStack
+            spacing={6}
+            alignItems="start"
+            justifyContent={"center"}
+            h={"100vh"}
+            maxWidth={"400px"}
+            mx={"auto"}
+        >
+            <Heading size="xl" color="gray.700">
+                Login
+            </Heading>
+            <Text>Use your university email</Text>
+            <Button
+                mt={7}
+                leftIcon={<FcGoogle />}
+                colorScheme="black"
+                variant="outline"
+                onClick={handleGoogleSignIn}
+                size="lg"
                 width="full"
-                borderWidth={1}
-                borderRadius={8}
-                boxShadow="lg"
-                bg="whiteAlpha.900"
-                textAlign="center"
+                rounded={"full"}
             >
-                <VStack spacing={6}>
-                    <Heading size={22} color="teal.500">
-                        Academic Nexus
-                    </Heading>
-                    <Heading size="md" color="gray.700">
-                        Login
-                    </Heading>
-                    <Button
-                        leftIcon={<FcGoogle />}
-                        colorScheme="teal"
-                        variant="outline"
-                        onClick={handleGoogleSignIn}
-                        size="lg"
-                        width="full"
-                    >
-                        Continue with Google
-                    </Button>
-                </VStack>
-            </Box>
-        </Flex>
+                Continue with Google
+            </Button>
+        </VStack>
     );
 }
