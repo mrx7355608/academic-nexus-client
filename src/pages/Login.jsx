@@ -3,7 +3,8 @@ import { FcGoogle } from "react-icons/fc";
 
 export default function Login() {
     const handleGoogleSignIn = () => {
-        window.open("https://www.facebook.com", "_self");
+        const serverURL = import.meta.env.VITE_SERVER_URL;
+        window.open(`${serverURL}/api/auth/google`, "_self");
     };
 
     return (
