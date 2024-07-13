@@ -50,9 +50,9 @@ export default function AssessmentItem({ data }) {
                 </Text>{" "}
                 - {new Date(data.createdAt).toDateString().slice(4)}
             </Text>
-            <Flex mt={4} gap={7} alignItems={"center"} justifyContent={"start"}>
+            <Flex mt={4} gap={3} alignItems={"center"} justifyContent={"start"}>
                 <Button
-                    px={0}
+                    px={2}
                     size={"sm"}
                     textDecor={"underline"}
                     variant="ghost"
@@ -67,7 +67,7 @@ export default function AssessmentItem({ data }) {
                     View
                 </Button>
                 <Button
-                    px={0}
+                    px={2}
                     size={"sm"}
                     variant="ghost"
                     textDecor={"underline"}
