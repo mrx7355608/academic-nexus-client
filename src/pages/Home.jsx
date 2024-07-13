@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
     Box,
     Flex,
@@ -6,14 +7,42 @@ import {
     Input,
     Divider,
     useColorMode,
+    Spinner,
 } from "@chakra-ui/react";
 import { BiSortAlt2 } from "react-icons/bi";
 import { LuSettings2 } from "react-icons/lu";
 import Navbar from "../components/Navbar";
 import AssessmentList from "../components/AssessmentList";
+import useToastUtils from "../hooks/useToastUtils";
 
 export default function Home() {
     const { colorMode } = useColorMode();
+    const [loading, setLoading] = useState(true);
+    const [assessments, setAssessments] = useState([]);
+    const { showErrorToast } = useToastUtils();
+
+    useEffect(() => {
+        fetch(`${import.meta.env.VITE_SERVER_URL}/api/assessments`)
+            .then((resp) => resp.json())
+            .then((data) => setAssessments(data.data))
+            .catch(() => {
+                showErrorToast("Unable to fetch assessments");
+            })
+            .finally(() => setLoading(false));
+    }, [showErrorToast]);
+
+    if (loading) {
+        return (
+            <Flex
+                alignItems={"center"}
+                justifyContent="center"
+                w="100vh"
+                h="100vh"
+            >
+                <Spinner />
+            </Flex>
+        );
+    }
 
     return (
         <>
@@ -72,7 +101,7 @@ export default function Home() {
                         />
                     </Flex>
                 </Flex>
-                <AssessmentList />
+                <AssessmentList assessments={assessments} />
             </Box>
         </>
     );

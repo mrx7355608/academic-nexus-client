@@ -2,11 +2,11 @@ import { IoMdEye } from "react-icons/io";
 import { HiOutlineDownload } from "react-icons/hi";
 import { Box, Flex, Text, Button, useColorMode } from "@chakra-ui/react";
 
-export default function AssessmentItem() {
+export default function AssessmentItem({ data }) {
     const { colorMode } = useColorMode();
 
     return (
-        <Box p={4} borderRadius="md" flex="1" minW={"300px"}>
+        <Box p={4} morderRadius="md" flex="1" maxW={"320px"}>
             <Flex
                 justifyContent="center"
                 alignItems="center"
@@ -15,7 +15,7 @@ export default function AssessmentItem() {
                 rounded="md"
             >
                 <Text fontSize="xl" fontWeight="bold">
-                    PDF
+                    {data.fileExtension.toUpperCase()}
                 </Text>
             </Flex>
             <Text
@@ -29,7 +29,7 @@ export default function AssessmentItem() {
                 w={"max-content"}
                 color={colorMode === "light" ? "gray.700" : "gray.400"}
             >
-                Linear Algebra
+                {data.subject}
             </Text>
             <Text
                 fontWeight={600}
@@ -37,7 +37,7 @@ export default function AssessmentItem() {
                 mt="2"
                 color={colorMode === "light" ? "gray.700" : "gray.100"}
             >
-                Assignment - 1, Calculation of something
+                {data.title}
             </Text>
             <Text
                 fontSize="sm"
@@ -46,9 +46,9 @@ export default function AssessmentItem() {
             >
                 Posted by{" "}
                 <Text as="span" textDecor={"underline"}>
-                    Abdul Moiz
+                    {data.author.fullname}
                 </Text>{" "}
-                - Feb 5, 2024
+                - {new Date(data.createdAt).toDateString().slice(4)}
             </Text>
             <Flex mt={4} gap={7} alignItems={"center"} justifyContent={"start"}>
                 <Button
