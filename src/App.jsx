@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import Upload from "./pages/Upload";
+
 import useUser from "./states/user";
 import MainSpinner from "./components/MainSpinner";
 
@@ -9,6 +11,10 @@ const router = createBrowserRouter([
     {
         path: "/",
         element: <Home />,
+    },
+    {
+        path: "/upload",
+        element: <Upload />,
     },
     {
         path: "/login",
