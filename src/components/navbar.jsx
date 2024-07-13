@@ -1,24 +1,22 @@
-import { Box, Flex, Input, Button, Text } from "@chakra-ui/react";
+import { Box, Flex, Input, Button, Text, useColorMode } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import DarkModeToggle from "./darkModeToggle";
 
 export default function Navbar() {
+    const { colorMode } = useColorMode();
     return (
         <Box bg="transparent" px={10} py={6}>
             <Flex alignItems="center" gap={9}>
                 <Box minW="max-content">
-                    <Text
-                        fontSize="xl"
-                        fontWeight={"black"}
-                        textColor={"gray.700"}
-                        display={"inline"}
-                    >
+                    <Text fontSize="xl" fontWeight={"black"} display={"inline"}>
                         academic{" "}
                     </Text>
                     <Text
                         fontSize="xl"
                         fontWeight={"black"}
-                        textColor={"purple.700"}
+                        textColor={
+                            colorMode === "light" ? "purple.700" : "purple.500"
+                        }
                         display={"inline"}
                     >
                         nexus.
@@ -26,7 +24,7 @@ export default function Navbar() {
                 </Box>
                 <Input
                     placeholder="Search students"
-                    bg="#d7d7d7"
+                    bg={colorMode === "light" ? "#d7d7d7" : "gray.700"}
                     rounded="md"
                     w={"full"}
                     fontSize="sm"
