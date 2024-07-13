@@ -26,11 +26,12 @@ export default function CloudinaryUploadWidget({ setAssessment }) {
                     setAssessment((prev) => ({
                         ...prev,
                         fileURL: result.info.secure_url,
+                        fileExtension: result.info.format,
                     }));
                 }
             },
         );
-    }, [setAssessment, showSuccessToast]);
+    }, []);
 
     return (
         <Flex
