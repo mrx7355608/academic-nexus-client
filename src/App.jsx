@@ -1,6 +1,9 @@
+import { useEffect, useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import useUser from "./states/user";
+import MainSpinner from "./components/MainSpinner";
 
 const router = createBrowserRouter([
     {
@@ -14,21 +17,33 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-    // const { setUser } = useUser();
+    const [loading, setLoading] = useState(true);
+    const setUser = useUser((state) => state.setUser);
 
     // Fetch logged in user data with useEffect
-    // useEffect(() => {
-    //     async function getUser() {
-    //         const serverURL = import.meta.env.VITE_SERVER_URL;
-    //         const response = await fetch(`${serverURL}/api/students/me`, {
-    //             credentials: "include",
-    //         });
-    //         const result = response.json();
-    //         setUser(result.data);
-    //     }
-    //
-    //     getUser();
-    // }, [setUser]);
+    useEffect(() => {
+        async function getUser() {
+            try {
+                const serverURL = import.meta.env.VITE_SERVER_URL;
+                const response = await fetch(`${serverURL}/api/students/me`, {
+                    credentials: "include",
+                });
+                const result = response.json();
+                setUser(result.data);
+            } catch (err) {
+                // Do nothing (the user will be logged out)
+                return null;
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        getUser();
+    }, [setUser]);
+
+    if (loading) {
+        return <MainSpinner />;
+    }
 
     return <RouterProvider router={router} />;
 }
