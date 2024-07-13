@@ -29,20 +29,7 @@ export default function Home() {
                 showErrorToast("Unable to fetch assessments");
             })
             .finally(() => setLoading(false));
-    }, [showErrorToast]);
-
-    if (loading) {
-        return (
-            <Flex
-                alignItems={"center"}
-                justifyContent="center"
-                w="100vh"
-                h="100vh"
-            >
-                <Spinner />
-            </Flex>
-        );
-    }
+    }, []);
 
     return (
         <>
@@ -101,7 +88,17 @@ export default function Home() {
                         />
                     </Flex>
                 </Flex>
-                <AssessmentList assessments={assessments} />
+                {loading ? (
+                    <Flex
+                        alignItems={"center"}
+                        justifyContent="center"
+                        h={"200px"}
+                    >
+                        <Spinner />
+                    </Flex>
+                ) : (
+                    <AssessmentList assessments={assessments} />
+                )}
             </Box>
         </>
     );
