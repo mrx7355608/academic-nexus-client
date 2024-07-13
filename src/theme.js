@@ -7,6 +7,9 @@ import "@fontsource/poppins/800.css";
 import "@fontsource/poppins/900.css";
 
 const theme = extendTheme({
+    config: {
+        initialColorMode: "light",
+    },
     fonts: {
         heading: "Poppins",
         body: "Poppins",

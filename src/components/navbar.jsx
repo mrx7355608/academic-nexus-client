@@ -1,5 +1,6 @@
 import { Box, Flex, Input, Button, Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import DarkModeToggle from "./darkModeToggle";
 
 export default function Navbar() {
     return (
@@ -51,6 +52,7 @@ export default function Navbar() {
                     >
                         Login
                     </Button>
+                    <DarkModeToggle />
                 </Flex>
             </Flex>
         </Box>
