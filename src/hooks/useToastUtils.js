@@ -4,7 +4,8 @@ export default function useToastUtils() {
     const toast = useToast({
         isClosable: true,
         duration: 4000,
-        variant: "subtle",
+        variant: "left-accent",
+        position: "bottom-right",
     });
 
     function showInfoToast(message) {
