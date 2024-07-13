@@ -47,7 +47,7 @@ export default function SubjectMenu({ setAssessment }) {
                                     setSelectedSubject(subject);
                                     setAssessment((prev) => ({
                                         ...prev,
-                                        selectedSubject: subject,
+                                        subject: subject,
                                     }));
                                 }}
                             >

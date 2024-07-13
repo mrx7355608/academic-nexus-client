@@ -11,6 +11,7 @@ import {
     useColorMode,
     Input,
     FormLabel,
+    Spinner,
 } from "@chakra-ui/react";
 
 // Components
@@ -24,21 +25,23 @@ export default function Upload() {
     const { colorMode } = useColorMode();
     const user = useUser((state) => state.user);
     const navigate = useNavigate();
-    const { showErrorToast } = useToastUtils();
+    const { showErrorToast, showSuccessToast } = useToastUtils();
+    const [loading, setLoading] = useState(false);
     const [assessment, setAssessment] = useState({
         title: "",
         fileURL: "",
-        selectedSubject: "",
+        subject: "",
         isPublic: true,
         type: "quiz",
+        fileExtension: "png",
     });
 
-    // useEffect(() => {
-    //     if (!user) {
-    //         navigate("/");
-    //         return showErrorToast("Please login to continue");
-    //     }
-    // }, [navigate, showErrorToast, user]);
+    useEffect(() => {
+        if (!user) {
+            navigate("/");
+            return showErrorToast("Please login to continue");
+        }
+    }, [navigate, showErrorToast, user]);
 
     return (
         <>
@@ -87,12 +90,39 @@ export default function Upload() {
                     <Button
                         w="full"
                         colorScheme="purple"
-                        onClick={() => console.log(assessment)}
+                        onClick={uploadAssessment}
                     >
-                        Upload Assessment
+                        {loading ? <Spinner /> : "Upload Assessment"}
                     </Button>
                 </Flex>
             </Box>
         </>
     );
+
+    async function uploadAssessment() {
+        try {
+            setLoading(true);
+            const serverURL = import.meta.env.VITE_SERVER_URL;
+            const response = await fetch(`${serverURL}/api/assessments/`, {
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(assessment),
+                credentials: "include",
+            });
+            const result = await response.json();
+
+            if (response.ok) {
+                showSuccessToast("Assessment uploaded successfully");
+                navigate("/");
+            } else {
+                showErrorToast(result.error);
+            }
+        } catch (err) {
+            showErrorToast("An error occurred");
+        } finally {
+            setLoading(false);
+        }
+    }
 }
