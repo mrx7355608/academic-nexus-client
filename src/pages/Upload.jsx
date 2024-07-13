@@ -33,7 +33,7 @@ export default function Upload() {
         subject: "",
         isPublic: true,
         type: "quiz",
-        fileExtension: "png",
+        fileExtension: "",
     });
 
     useEffect(() => {
@@ -102,6 +102,17 @@ export default function Upload() {
     async function uploadAssessment() {
         try {
             setLoading(true);
+
+            if (!assessment.subject) {
+                return showErrorToast("Assessment must have a subject");
+            } else if (!assessment.fileURL) {
+                return showErrorToast(
+                    "You must add a file in order to upload assessment",
+                );
+            } else if (!assessment.title) {
+                return showErrorToast("Assessment must have a title");
+            }
+
             const serverURL = import.meta.env.VITE_SERVER_URL;
             const response = await fetch(`${serverURL}/api/assessments/`, {
                 method: "post",
