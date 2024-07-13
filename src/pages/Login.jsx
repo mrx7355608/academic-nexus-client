@@ -1,7 +1,9 @@
-import { Button, Heading, VStack, Text } from "@chakra-ui/react";
+import { Button, Heading, VStack, Text, useColorMode } from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
 
 export default function Login() {
+    const { colorMode } = useColorMode();
+
     const handleGoogleSignIn = () => {
         const serverURL = import.meta.env.VITE_SERVER_URL;
         window.open(`${serverURL}/api/auth/google`, "_self");
@@ -16,17 +18,16 @@ export default function Login() {
             maxWidth={"400px"}
             mx={"auto"}
         >
-            <Heading size="xl" color="gray.700">
-                Login
-            </Heading>
-            <Text>Use your university email</Text>
+            <Heading size="xl">Login</Heading>
+            <Text textColor={colorMode === "light" ? "gray.700" : "gray.400"}>
+                Use your university email
+            </Text>
             <Button
                 mt={7}
-                leftIcon={<FcGoogle />}
+                leftIcon={<FcGoogle size={20} />}
                 colorScheme="black"
                 variant="outline"
                 onClick={handleGoogleSignIn}
-                size="lg"
                 width="full"
                 rounded={"full"}
             >

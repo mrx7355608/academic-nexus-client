@@ -1,9 +1,13 @@
 import { Box, Flex, Input, Button, Text, useColorMode } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import DarkModeToggle from "./DarkModeToggle";
+import useUser from "../states/user";
+import { TbLogout } from "react-icons/tb";
 
 export default function Navbar() {
     const { colorMode } = useColorMode();
+    const user = useUser((state) => state.user);
+
     return (
         <Box bg="transparent" px={10} py={6}>
             <Flex alignItems="center" gap={9}>
@@ -39,17 +43,38 @@ export default function Navbar() {
                     <Link to="/upload">Upload</Link>
                     <Link to="/library">Library</Link>
                     <Link to="/profile">Profile</Link>
-                    <Button
-                        size={"sm"}
-                        rounded="8px"
-                        border="2px solid"
-                        borderColor="gray.700"
-                        bg="transparent"
-                        px={5}
-                        py={4}
-                    >
-                        Login
-                    </Button>
+                    {user ? (
+                        <Button
+                            leftIcon={<TbLogout size={22} />}
+                            size={"sm"}
+                            rounded="8px"
+                            border="2px solid"
+                            borderColor="gray.700"
+                            bg="transparent"
+                            px={5}
+                            py={4}
+                        >
+                            Logout
+                        </Button>
+                    ) : (
+                        <Link to="/login">
+                            <Button
+                                size={"sm"}
+                                rounded="8px"
+                                border="2px solid"
+                                borderColor={
+                                    colorMode === "light"
+                                        ? "gray.700"
+                                        : "gray.300"
+                                }
+                                bg="transparent"
+                                px={5}
+                                py={4}
+                            >
+                                Login
+                            </Button>
+                        </Link>
+                    )}
                     <DarkModeToggle />
                 </Flex>
             </Flex>
