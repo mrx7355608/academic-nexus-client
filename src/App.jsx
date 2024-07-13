@@ -28,7 +28,7 @@ function App() {
                 const response = await fetch(`${serverURL}/api/students/me`, {
                     credentials: "include",
                 });
-                const result = response.json();
+                const result = await response.json();
                 setUser(result.data);
             } catch (err) {
                 // Do nothing (the user will be logged out)

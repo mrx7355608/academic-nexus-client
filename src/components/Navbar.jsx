@@ -49,10 +49,11 @@ export default function Navbar() {
                             size={"sm"}
                             rounded="8px"
                             border="2px solid"
-                            borderColor="gray.700"
+                            borderColor={
+                                colorMode === "light" ? "gray.700" : "gray.300"
+                            }
                             bg="transparent"
-                            px={5}
-                            py={4}
+                            p={4}
                         >
                             Logout
                         </Button>
