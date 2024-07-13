@@ -8,7 +8,7 @@ export default function Navbar() {
                 <Box minW="max-content">
                     <Text
                         fontSize="xl"
-                        fontWeight={600}
+                        fontWeight={"black"}
                         textColor={"gray.700"}
                         display={"inline"}
                     >
@@ -16,11 +16,11 @@ export default function Navbar() {
                     </Text>
                     <Text
                         fontSize="xl"
-                        fontWeight={600}
+                        fontWeight={"black"}
                         textColor={"purple.700"}
                         display={"inline"}
                     >
-                        nexus
+                        nexus.
                     </Text>
                 </Box>
                 <Input
@@ -28,6 +28,7 @@ export default function Navbar() {
                     bg="#d7d7d7"
                     rounded="md"
                     w={"full"}
+                    fontSize="sm"
                 />
                 <Flex
                     alignItems={"center"}
