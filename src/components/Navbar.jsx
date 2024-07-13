@@ -1,12 +1,26 @@
-import { Box, Flex, Input, Button, Text, useColorMode } from "@chakra-ui/react";
+import {
+    Box,
+    Flex,
+    Input,
+    Button,
+    Text,
+    useColorMode,
+    Spinner,
+    useToast,
+} from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import DarkModeToggle from "./DarkModeToggle";
 import useUser from "../states/user";
 import { TbLogout } from "react-icons/tb";
+import { useState } from "react";
+import useToastUtils from "../hooks/useToastUtils";
 
 export default function Navbar() {
+    const [loading, setLoading] = useState(false);
     const { colorMode } = useColorMode();
     const user = useUser((state) => state.user);
+    const setUser = useUser((state) => state.setUser);
+    const { showSuccessToast, showErrorToast } = useToastUtils();
 
     return (
         <Box bg="transparent" px={10} py={6}>
@@ -45,7 +59,7 @@ export default function Navbar() {
                     <Link to="/profile">Profile</Link>
                     {user ? (
                         <Button
-                            leftIcon={<TbLogout size={22} />}
+                            leftIcon={loading ? null : <TbLogout size={22} />}
                             size={"sm"}
                             rounded="8px"
                             border="2px solid"
@@ -54,8 +68,9 @@ export default function Navbar() {
                             }
                             bg="transparent"
                             p={4}
+                            onClick={logout}
                         >
-                            Logout
+                            {loading ? <Spinner size="sm" /> : "Logout"}
                         </Button>
                     ) : (
                         <Link to="/login">
@@ -81,4 +96,27 @@ export default function Navbar() {
             </Flex>
         </Box>
     );
+
+    async function logout() {
+        try {
+            setLoading(true);
+            const serverURL = import.meta.env.VITE_SERVER_URL;
+            const response = await fetch(`${serverURL}/api/auth/logout`, {
+                method: "post",
+                credentials: "include",
+            });
+            const result = await response.json();
+
+            if (response.ok) {
+                showSuccessToast("Logged out successfully");
+                setUser(null);
+            } else {
+                showErrorToast(result.error);
+            }
+        } catch (err) {
+            showErrorToast("An error occurred");
+        } finally {
+            setLoading(false);
+        }
+    }
 }
