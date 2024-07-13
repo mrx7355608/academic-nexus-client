@@ -6,7 +6,7 @@ import {
     Text,
     useColorMode,
     Spinner,
-    useToast,
+    Image,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import DarkModeToggle from "./DarkModeToggle";
@@ -56,10 +56,15 @@ export default function Navbar() {
                     <Link to="/">Home</Link>
                     <Link to="/upload">Upload</Link>
                     <Link to="/library">Library</Link>
-                    <Link to="/profile">Profile</Link>
+                    <Link to="/profile">
+                        <Image
+                            src={user.profilePicture}
+                            objectFit="cover"
+                            rounded="full"
+                        />
+                    </Link>
                     {user ? (
                         <Button
-                            leftIcon={loading ? null : <TbLogout size={22} />}
                             size={"sm"}
                             rounded="8px"
                             border="2px solid"
@@ -68,6 +73,7 @@ export default function Navbar() {
                             }
                             bg="transparent"
                             p={4}
+                            px={7}
                             onClick={logout}
                         >
                             {loading ? <Spinner size="sm" /> : "Logout"}
