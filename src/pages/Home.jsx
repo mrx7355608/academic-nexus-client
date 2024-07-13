@@ -9,7 +9,8 @@ import {
 } from "@chakra-ui/react";
 import { BiSortAlt2 } from "react-icons/bi";
 import { LuSettings2 } from "react-icons/lu";
-import Navbar from "../components/navbar";
+import Navbar from "../components/Navbar";
+import AssessmentList from "../components/AssessmentList";
 
 export default function Home() {
     const { colorMode } = useColorMode();
@@ -18,7 +19,7 @@ export default function Home() {
         <>
             <Navbar />
             <Box p={4} mt={8} maxW="80vw" mx={"auto"}>
-                <Flex alignItems="center" gap="5">
+                <Flex alignItems="center" gap="5" mb={12}>
                     <Heading fontWeight={700} fontSize={"4xl"}>
                         Home
                     </Heading>
@@ -71,6 +72,7 @@ export default function Home() {
                         />
                     </Flex>
                 </Flex>
+                <AssessmentList />
             </Box>
         </>
     );
