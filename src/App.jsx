@@ -14,7 +14,21 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-    // TODO: Fetch logged in user data with useEffect
+    // const { setUser } = useUser();
+
+    // Fetch logged in user data with useEffect
+    // useEffect(() => {
+    //     async function getUser() {
+    //         const serverURL = import.meta.env.VITE_SERVER_URL;
+    //         const response = await fetch(`${serverURL}/api/students/me`, {
+    //             credentials: "include",
+    //         });
+    //         const result = response.json();
+    //         setUser(result.data);
+    //     }
+    //
+    //     getUser();
+    // }, [setUser]);
 
     return <RouterProvider router={router} />;
 }
