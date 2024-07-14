@@ -1,6 +1,7 @@
 import { IoMdEye } from "react-icons/io";
 import { HiOutlineDownload } from "react-icons/hi";
 import { Box, Flex, Text, Button, useColorMode } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 export default function AssessmentItem({ data }) {
     const { colorMode } = useColorMode();
@@ -51,21 +52,26 @@ export default function AssessmentItem({ data }) {
                 - {new Date(data.createdAt).toDateString().slice(4)}
             </Text>
             <Flex mt={4} gap={3} alignItems={"center"} justifyContent={"start"}>
-                <Button
-                    px={2}
-                    size={"sm"}
-                    textDecor={"underline"}
-                    variant="ghost"
-                    color={colorMode === "light" ? "gray.700" : "gray.300"}
-                    leftIcon={
-                        <IoMdEye size={20} style={{ marginRight: "-2px" }} />
-                    }
-                    _hover={{
-                        textColor: "purple.400",
-                    }}
-                >
-                    View
-                </Button>
+                <Link to={`/assessment/${data._id}`}>
+                    <Button
+                        px={2}
+                        size={"sm"}
+                        textDecor={"underline"}
+                        variant="ghost"
+                        color={colorMode === "light" ? "gray.700" : "gray.300"}
+                        leftIcon={
+                            <IoMdEye
+                                size={20}
+                                style={{ marginRight: "-2px" }}
+                            />
+                        }
+                        _hover={{
+                            textColor: "purple.400",
+                        }}
+                    >
+                        View
+                    </Button>
+                </Link>
                 <Button
                     px={2}
                     size={"sm"}

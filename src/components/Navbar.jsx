@@ -11,7 +11,6 @@ import {
 import { Link } from "react-router-dom";
 import DarkModeToggle from "./DarkModeToggle";
 import useUser from "../states/user";
-import { TbLogout } from "react-icons/tb";
 import { useState } from "react";
 import useToastUtils from "../hooks/useToastUtils";
 
@@ -44,7 +43,7 @@ export default function Navbar() {
                     placeholder="Search students"
                     bg={colorMode === "light" ? "#d7d7d7" : "gray.700"}
                     rounded="md"
-                    w={"full"}
+                    flex={1}
                     fontSize="sm"
                 />
                 <Flex
@@ -52,32 +51,39 @@ export default function Navbar() {
                     gap={9}
                     fontWeight={"600"}
                     fontSize={"sm"}
+                    ml={"auto"}
                 >
                     <Link to="/">Home</Link>
                     <Link to="/upload">Upload</Link>
                     <Link to="/library">Library</Link>
-                    <Link to="/profile">
-                        <Image
-                            src={user.profilePicture}
-                            objectFit="cover"
-                            rounded="full"
-                        />
-                    </Link>
                     {user ? (
-                        <Button
-                            size={"sm"}
-                            rounded="8px"
-                            border="2px solid"
-                            borderColor={
-                                colorMode === "light" ? "gray.700" : "gray.300"
-                            }
-                            bg="transparent"
-                            p={4}
-                            px={7}
-                            onClick={logout}
-                        >
-                            {loading ? <Spinner size="sm" /> : "Logout"}
-                        </Button>
+                        <>
+                            <Link to="/profile">
+                                <Image
+                                    src={user.profilePicture}
+                                    objectFit="cover"
+                                    rounded="full"
+                                    w={10}
+                                    h={10}
+                                />
+                            </Link>
+                            <Button
+                                size={"sm"}
+                                rounded="8px"
+                                border="2px solid"
+                                borderColor={
+                                    colorMode === "light"
+                                        ? "gray.700"
+                                        : "gray.300"
+                                }
+                                bg="transparent"
+                                p={4}
+                                onClick={logout}
+                                minW={"max-content"}
+                            >
+                                {loading ? <Spinner size="sm" /> : "Logout"}
+                            </Button>
+                        </>
                     ) : (
                         <Link to="/login">
                             <Button

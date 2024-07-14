@@ -56,6 +56,7 @@ export default function Profile() {
                         </Text>
                     )}
                 </Flex>
+
                 {/* Social links icons */}
                 <Flex mt={10} gap={4} alignItems="center">
                     <FaFacebook size={20} />
