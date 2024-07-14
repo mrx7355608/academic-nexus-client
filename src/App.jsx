@@ -7,6 +7,7 @@ import Profile from "./pages/Profile";
 
 import useUser from "./states/user";
 import MainSpinner from "./components/MainSpinner";
+import ViewAssessment from "./pages/ViewAssessment";
 
 const router = createBrowserRouter([
     {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
     {
         path: "/profile",
         element: <Profile />,
+    },
+    {
+        path: "/assessment/:id",
+        element: <ViewAssessment />,
     },
 ]);
 
