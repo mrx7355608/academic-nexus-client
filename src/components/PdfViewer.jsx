@@ -1,10 +1,9 @@
-import { Viewer, Worker } from "@react-pdf-viewer/core";
-import "@react-pdf-viewer/core/lib/styles/index.css";
+import { Box } from "@chakra-ui/react";
 
 export default function PdfViewer({ pdfUrl }) {
     return (
-        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-            <Viewer fileUrl={pdfUrl} />
-        </Worker>
+        <Box w="full" height="700px">
+            <iframe src={pdfUrl} width={"100%"} height={"100%"} />
+        </Box>
     );
 }

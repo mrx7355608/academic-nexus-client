@@ -7,7 +7,7 @@ export default function AssessmentItem({ data }) {
     const { colorMode } = useColorMode();
 
     return (
-        <Box p={4} morderRadius="md" flex="1" maxW={"320px"}>
+        <Box p={4} morderRadius="md" flex="1" minW={"300px"} maxW={"350px"}>
             <Flex
                 justifyContent="center"
                 alignItems="center"
