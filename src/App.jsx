@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Upload from "./pages/Upload";
+import Profile from "./pages/Profile";
 
 import useUser from "./states/user";
 import MainSpinner from "./components/MainSpinner";
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
     {
         path: "/login",
         element: <Login />,
+    },
+    {
+        path: "/profile",
+        element: <Profile />,
     },
 ]);
 
