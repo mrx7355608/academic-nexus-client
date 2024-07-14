@@ -1,10 +1,21 @@
 import { IoMdEye } from "react-icons/io";
 import { HiOutlineDownload } from "react-icons/hi";
-import { Box, Flex, Text, Button, useColorMode } from "@chakra-ui/react";
+import {
+    Box,
+    Flex,
+    Text,
+    Button,
+    useColorMode,
+    Spinner,
+} from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import useToastUtils from "../hooks/useToastUtils";
 
 export default function AssessmentItem({ data }) {
     const { colorMode } = useColorMode();
+    const [downloading, setDownloading] = useState(false);
+    const { showErrorToast } = useToastUtils();
 
     return (
         <Box p={4} morderRadius="md" flex="1" minW={"300px"} maxW={"350px"}>
@@ -95,7 +106,7 @@ export default function AssessmentItem({ data }) {
                         )
                     }
                 >
-                    Download
+                    {downloading ? <Spinner size="xs" /> : "Download"}
                 </Button>
             </Flex>
         </Box>
@@ -110,6 +121,8 @@ export default function AssessmentItem({ data }) {
             jpg: "image/jpeg",
             jpeg: "image/jpeg",
         };
+
+        setDownloading(true);
 
         fetch(secure_url, {
             headers: {
@@ -129,6 +142,8 @@ export default function AssessmentItem({ data }) {
                 link.click();
 
                 link.parentNode.removeChild(link);
-            });
+            })
+            .catch(() => showErrorToast("Unable to download file"))
+            .finally(() => setDownloading(false));
     }
 }
