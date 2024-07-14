@@ -87,10 +87,48 @@ export default function AssessmentItem({ data }) {
                     _hover={{
                         textColor: "purple.400",
                     }}
+                    onClick={() =>
+                        downloadFile(
+                            data.fileURL,
+                            data.title + "." + data.fileExtension,
+                            data.fileExtension,
+                        )
+                    }
                 >
                     Download
                 </Button>
             </Flex>
         </Box>
     );
+
+    function downloadFile(secure_url, fileName, fileExtension) {
+        const contentTypeMap = {
+            pdf: "application/pdf",
+            doc: "application/msword",
+            docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            png: "image/png",
+            jpg: "image/jpeg",
+            jpeg: "image/jpeg",
+        };
+
+        fetch(secure_url, {
+            headers: {
+                "Content-Type": contentTypeMap[fileExtension],
+            },
+        })
+            .then((resp) => resp.blob())
+            .then((blob) => {
+                const url = window.URL.createObjectURL(new Blob([blob]));
+
+                const link = document.createElement("a");
+                link.href = url;
+                link.download = fileName;
+
+                document.body.appendChild(link);
+
+                link.click();
+
+                link.parentNode.removeChild(link);
+            });
+    }
 }
