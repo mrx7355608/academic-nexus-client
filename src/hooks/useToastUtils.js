@@ -4,7 +4,7 @@ export default function useToastUtils() {
     const toast = useToast({
         isClosable: true,
         duration: 4000,
-        variant: "left-accent",
+        variant: "solid",
         position: "bottom-right",
     });
 
