@@ -7,11 +7,15 @@ import {
     Spinner,
     Image,
     Text,
+    Button,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import PdfViewer from "../components/PdfViewer";
+import { FaCircleArrowUp, FaCircleArrowDown } from "react-icons/fa6";
+import useToastUtils from "../hooks/useToastUtils";
+import useUser from "../states/user";
 
 export default function ViewAssessment() {
     const { colorMode } = useColorMode();
@@ -19,6 +23,10 @@ export default function ViewAssessment() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [data, setData] = useState(null);
+    const { showErrorToast, showSuccessToast } = useToastUtils();
+    const [isUpvoting, setIsUpvoting] = useState(false);
+    const [isDownvoting, setIsDownvoting] = useState(false);
+    const user = useUser((state) => state.user);
 
     useEffect(() => {
         fetch(`${import.meta.env.VITE_SERVER_URL}/api/assessments/${id}`)
@@ -78,14 +86,67 @@ export default function ViewAssessment() {
                             />
                             <Text>{data.author.fullname}</Text>
                         </Flex>
-                        <Text mt={4} mb={12}>
+                        <Text mt={4} mb={4}>
                             Posted on:{"  "}
-                            <Text ml="1" as="span" textColor={"gray.400"}>
+                            <Text
+                                ml="1"
+                                as="span"
+                                textColor={
+                                    colorMode === "dark"
+                                        ? "gray.400"
+                                        : "gray.600"
+                                }
+                            >
                                 {new Date(data.createdAt)
                                     .toDateString()
                                     .slice(4)}
                             </Text>{" "}
                         </Text>
+
+                        <Text mt={4} mb={4}>
+                            Average votes:{"  "}
+                            <Text
+                                ml="1"
+                                as="span"
+                                color={
+                                    data.upvotes.length -
+                                        data.downvotes.length >
+                                    0
+                                        ? "green"
+                                        : data.upvotes.length -
+                                                data.downvotes.length <
+                                            0
+                                          ? "red"
+                                          : "gray"
+                                }
+                            >
+                                {data.upvotes.length - data.downvotes.length}
+                            </Text>
+                        </Text>
+
+                        {/* Upvot and Downvote buttons */}
+                        <Box mb={12}>
+                            <Button
+                                leftIcon={<FaCircleArrowUp />}
+                                colorScheme="green"
+                                onClick={upvote}
+                            >
+                                {isUpvoting ? <Spinner size="sm" /> : "Upvote"}
+                            </Button>
+                            <Button
+                                leftIcon={<FaCircleArrowDown />}
+                                colorScheme={"red"}
+                                ml={4}
+                                onClick={downvote}
+                            >
+                                {isDownvoting ? (
+                                    <Spinner size="sm" />
+                                ) : (
+                                    "Downvote"
+                                )}
+                            </Button>
+                        </Box>
+
                         {data.fileExtension === "pdf" ? (
                             <PdfViewer pdfUrl={data.fileURL} />
                         ) : data.fileExtension === "docx" ? null : (
@@ -102,4 +163,76 @@ export default function ViewAssessment() {
             </Box>
         </>
     );
+
+    async function upvote() {
+        if (data.upvotes.includes(user._id)) {
+            showErrorToast("You have already upvoted this assessment");
+            return;
+        }
+        try {
+            setIsUpvoting(true);
+            const serverURL = import.meta.env.VITE_SERVER_URL;
+            const response = await fetch(
+                `${serverURL}/api/assessments/${id}/upvote`,
+                {
+                    method: "post",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    credentials: "include",
+                },
+            );
+            const result = await response.json();
+            if (!result.ok) {
+                showErrorToast(result.error);
+            } else {
+                showSuccessToast("You upvoted this assessment");
+                setData({
+                    ...data,
+                    upvotes: result.data.upvotes,
+                    downvotes: result.data.downvotes,
+                });
+            }
+        } catch (err) {
+            showErrorToast("An error occurred");
+        } finally {
+            setIsUpvoting(false);
+        }
+    }
+
+    async function downvote() {
+        if (data.downvotes.includes(user._id)) {
+            showErrorToast("You have already downvoted this assessment");
+            return;
+        }
+        try {
+            setIsDownvoting(true);
+            const serverURL = import.meta.env.VITE_SERVER_URL;
+            const response = await fetch(
+                `${serverURL}/api/assessments/${id}/downvote`,
+                {
+                    method: "post",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    credentials: "include",
+                },
+            );
+            const result = await response.json();
+            if (!result.ok) {
+                showErrorToast(result.error);
+            } else {
+                showSuccessToast("You downvoted this assessment");
+                setData({
+                    ...data,
+                    upvotes: result.data.upvotes,
+                    downvotes: result.data.downvotes,
+                });
+            }
+        } catch (err) {
+            showErrorToast("An error occurred");
+        } finally {
+            setIsDownvoting(false);
+        }
+    }
 }

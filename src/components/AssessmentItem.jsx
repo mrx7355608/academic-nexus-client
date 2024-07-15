@@ -11,6 +11,7 @@ import {
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import useToastUtils from "../hooks/useToastUtils";
+import { FaVoteYea } from "react-icons/fa";
 
 export default function AssessmentItem({ data }) {
     const { colorMode } = useColorMode();
@@ -62,6 +63,30 @@ export default function AssessmentItem({ data }) {
                 </Text>{" "}
                 - {new Date(data.createdAt).toDateString().slice(4)}
             </Text>
+
+            <Flex
+                mt={1}
+                fontSize={"sm"}
+                mb={4}
+                color={colorMode === "light" ? "gray.600" : "gray.400"}
+                gap={2}
+            >
+                <FaVoteYea size={20} />
+                <Text
+                    ml="1"
+                    as="span"
+                    color={
+                        data.upvotes.length - data.downvotes.length > 0
+                            ? "green"
+                            : data.upvotes.length - data.downvotes.length < 0
+                              ? "red"
+                              : "gray"
+                    }
+                >
+                    {data.upvotes.length - data.downvotes.length}
+                </Text>
+            </Flex>
+
             <Flex mt={4} gap={3} alignItems={"center"} justifyContent={"start"}>
                 <Link to={`/assessment/${data._id}`}>
                     <Button
