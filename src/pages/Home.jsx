@@ -10,31 +10,34 @@ import {
     Spinner,
 } from "@chakra-ui/react";
 import { BiSortAlt2 } from "react-icons/bi";
-import { LuSettings2 } from "react-icons/lu";
 import Navbar from "../components/Navbar";
 import AssessmentList from "../components/AssessmentList";
 import useToastUtils from "../hooks/useToastUtils";
+import FilterModal from "../components/Modals/FilterModal";
+import { useSearchParams } from "react-router-dom";
 
 export default function Home() {
     const { colorMode } = useColorMode();
     const [loading, setLoading] = useState(true);
     const [assessments, setAssessments] = useState([]);
     const { showErrorToast } = useToastUtils();
+    const [searchParams, setSearchParams] = useSearchParams();
 
     useEffect(() => {
-        fetch(`${import.meta.env.VITE_SERVER_URL}/api/assessments`)
+        const serverURL = import.meta.env.VITE_SERVER_URL;
+        fetch(`${serverURL}/api/assessments?${searchParams.toString()}`)
             .then((resp) => resp.json())
             .then((data) => setAssessments(data.data))
             .catch(() => {
                 showErrorToast("Unable to fetch assessments");
             })
             .finally(() => setLoading(false));
-    }, []);
+    }, [searchParams]);
 
     return (
         <>
             <Navbar />
-            <Box p={4} mt={8} maxW="80vw" mx={"auto"}>
+            <Box p={4} mt={8} maxW="85vw" mx={"auto"}>
                 <Flex alignItems="center" gap="5" mb={12}>
                     <Heading fontWeight={700} fontSize={"4xl"}>
                         Home
@@ -62,22 +65,7 @@ export default function Home() {
                         >
                             Sort
                         </Button>
-                        <Button
-                            leftIcon={<LuSettings2 size={17} />}
-                            variant="outline"
-                            mr={2}
-                            colorScheme="black"
-                            size="sm"
-                            minW="max-content"
-                            _hover={{
-                                backgroundColor:
-                                    colorMode === "light"
-                                        ? "#d7d7d7"
-                                        : "gray.700",
-                            }}
-                        >
-                            Filter
-                        </Button>
+                        <FilterModal />
                         <Input
                             variant="outline"
                             bg={colorMode === "light" ? "#d7d7d7" : "gray.700"}
