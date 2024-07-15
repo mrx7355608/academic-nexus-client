@@ -44,6 +44,7 @@ export default function AssessmentItem({ data }) {
             >
                 {data.subject}
             </Text>
+
             <Text
                 fontWeight={600}
                 fontSize="md"
@@ -65,7 +66,7 @@ export default function AssessmentItem({ data }) {
             </Text>
 
             <Flex
-                mt={1}
+                mt={2}
                 fontSize={"sm"}
                 mb={4}
                 color={colorMode === "light" ? "gray.600" : "gray.400"}
@@ -84,6 +85,19 @@ export default function AssessmentItem({ data }) {
                     }
                 >
                     {data.upvotes.length - data.downvotes.length}
+                </Text>
+                <Text
+                    ml={2}
+                    fontSize="sm"
+                    fontWeight="medium"
+                    px={3}
+                    py={0.5}
+                    w={"max-content"}
+                    rounded="full"
+                    color={colorMode === "light" ? "gray.700" : "gray.400"}
+                    bg={colorMode === "dark" ? "gray.700" : "#d7d7d7"}
+                >
+                    #{data.type}
                 </Text>
             </Flex>
 
