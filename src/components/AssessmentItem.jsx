@@ -19,7 +19,7 @@ export default function AssessmentItem({ data }) {
     const { showErrorToast } = useToastUtils();
 
     return (
-        <Box p={4} morderRadius="md" flex="1" minW={"300px"} maxW={"350px"}>
+        <Box p={4} morderRadius="md" flex="1" minW={"350px"} maxW={"400px"}>
             <Flex
                 justifyContent="center"
                 alignItems="center"
@@ -68,7 +68,7 @@ export default function AssessmentItem({ data }) {
             <Flex
                 mt={2}
                 fontSize={"sm"}
-                mb={4}
+                mb={1}
                 color={colorMode === "light" ? "gray.600" : "gray.400"}
                 gap={2}
             >
@@ -101,7 +101,7 @@ export default function AssessmentItem({ data }) {
                 </Text>
             </Flex>
 
-            <Flex mt={4} gap={3} alignItems={"center"} justifyContent={"start"}>
+            <Flex mt={3} gap={3} alignItems={"center"} justifyContent={"start"}>
                 <Link to={`/assessment/${data._id}`}>
                     <Button
                         px={2}
