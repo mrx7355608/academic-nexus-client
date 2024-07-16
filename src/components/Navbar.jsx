@@ -1,7 +1,6 @@
 import {
     Box,
     Flex,
-    Input,
     Button,
     Text,
     useColorMode,
@@ -13,6 +12,7 @@ import DarkModeToggle from "./DarkModeToggle";
 import useUser from "../states/user";
 import { useState } from "react";
 import useToastUtils from "../hooks/useToastUtils";
+import NavSearchbar from "./NavSearchbar";
 
 export default function Navbar() {
     const [loading, setLoading] = useState(false);
@@ -39,13 +39,7 @@ export default function Navbar() {
                         nexus.
                     </Text>
                 </Box>
-                <Input
-                    placeholder="Search students"
-                    bg={colorMode === "light" ? "#d7d7d7" : "gray.700"}
-                    rounded="md"
-                    flex={1}
-                    fontSize="sm"
-                />
+                <NavSearchbar />
                 <Flex
                     alignItems={"center"}
                     gap={9}

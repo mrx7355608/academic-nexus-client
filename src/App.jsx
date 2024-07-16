@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+// Pages
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import Search from "./pages/Search";
 import Upload from "./pages/Upload";
 import Profile from "./pages/Profile";
+import ViewAssessment from "./pages/ViewAssessment";
 
 import useUser from "./states/user";
 import MainSpinner from "./components/MainSpinner";
-import ViewAssessment from "./pages/ViewAssessment";
 
 const router = createBrowserRouter([
     {
@@ -29,6 +32,10 @@ const router = createBrowserRouter([
     {
         path: "/assessment/:id",
         element: <ViewAssessment />,
+    },
+    {
+        path: "/search",
+        element: <Search />,
     },
 ]);
 
