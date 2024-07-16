@@ -171,8 +171,6 @@ export default function FilterModal() {
     );
 
     async function getFilteredAssessments() {
-        const searchParams = new URLSearchParams();
-
         if (selectedSubjects.length > 0) {
             searchParams.append("subjects", selectedSubjects.join(","));
         }

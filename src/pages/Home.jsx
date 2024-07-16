@@ -14,6 +14,7 @@ import useToastUtils from "../hooks/useToastUtils";
 import FilterModal from "../components/Modals/FilterModal";
 import { useSearchParams } from "react-router-dom";
 import SortMenu from "../components/SortMenu";
+import HomeSearchbar from "../components/HomeSearchbar";
 
 export default function Home() {
     const { colorMode } = useColorMode();
@@ -23,6 +24,7 @@ export default function Home() {
     const [searchParams, setSearchParams] = useSearchParams();
 
     useEffect(() => {
+        setLoading(true);
         const serverURL = import.meta.env.VITE_SERVER_URL;
         fetch(`${serverURL}/api/assessments?${searchParams.toString()}`)
             .then((resp) => resp.json())
@@ -50,14 +52,7 @@ export default function Home() {
                     <Flex alignItems="center" gap={1}>
                         <SortMenu />
                         <FilterModal />
-                        <Input
-                            variant="outline"
-                            bg={colorMode === "light" ? "#d7d7d7" : "gray.700"}
-                            placeholder="Search dashboard"
-                            rounded="full"
-                            fontSize={"sm"}
-                            w={"280px"}
-                        />
+                        <HomeSearchbar />
                     </Flex>
                 </Flex>
                 {loading ? (
