@@ -14,7 +14,8 @@ import {
     Checkbox,
     CheckboxGroup,
     VStack,
-    Divider,
+    RadioGroup,
+    Radio,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { LuSettings2 } from "react-icons/lu";
@@ -24,6 +25,7 @@ export default function FilterModal() {
     const { colorMode } = useColorMode();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [selectedSubjects, setSelectedSubjects] = useState([]);
+    const [selectedTypes, setSelectedTypes] = useState([]);
     const [searchParams, setSearchParams] = useSearchParams();
     const navigate = useNavigate();
     const subjects = [
@@ -80,6 +82,7 @@ export default function FilterModal() {
                             flexDirection="column"
                             alignItems={"flex-start"}
                         >
+                            {/* Subject Filter */}
                             <Text fontWeight={600}>Subjects</Text>
                             <CheckboxGroup
                                 colorScheme="purple"
@@ -95,7 +98,9 @@ export default function FilterModal() {
                                                 key={sub}
                                                 value={sub}
                                                 border={2}
-                                                onChange={handleOnChange}
+                                                onChange={
+                                                    subjectOnChangeHandler
+                                                }
                                                 borderColor={
                                                     colorMode === "dark"
                                                         ? "gray.400"
@@ -106,6 +111,45 @@ export default function FilterModal() {
                                             </Checkbox>
                                         );
                                     })}
+                                </VStack>
+                            </CheckboxGroup>
+
+                            {/* Assessment type filter */}
+                            <Text fontWeight={600} mt={8}>
+                                Type
+                            </Text>
+                            <CheckboxGroup
+                                colorScheme="purple"
+                                defaultValue={selectedTypes}
+                            >
+                                <VStack
+                                    direction={["column", "row"]}
+                                    alignItems={"flex-start"}
+                                >
+                                    <Checkbox
+                                        value={"quiz"}
+                                        border={2}
+                                        onChange={typeOnChangeHandler}
+                                        borderColor={
+                                            colorMode === "dark"
+                                                ? "gray.400"
+                                                : "#3d3d3d"
+                                        }
+                                    >
+                                        Quiz
+                                    </Checkbox>
+                                    <Checkbox
+                                        value={"assignment"}
+                                        border={2}
+                                        onChange={typeOnChangeHandler}
+                                        borderColor={
+                                            colorMode === "dark"
+                                                ? "gray.400"
+                                                : "#3d3d3d"
+                                        }
+                                    >
+                                        Assignment
+                                    </Checkbox>
                                 </VStack>
                             </CheckboxGroup>
                         </Flex>
@@ -128,13 +172,34 @@ export default function FilterModal() {
 
     async function getFilteredAssessments() {
         const searchParams = new URLSearchParams();
-        searchParams.append("subjects", selectedSubjects.join(","));
+
+        if (selectedSubjects.length > 0) {
+            searchParams.append("subjects", selectedSubjects.join(","));
+        }
+
+        if (selectedTypes.length > 0) {
+            searchParams.append("types", selectedTypes.join(","));
+        }
+
+        searchParams.forEach((key, value) => {
+            if (!value) {
+                searchParams.delete(key);
+            }
+        });
+
         const url = "/?" + searchParams.toString();
         navigate(url);
         onClose();
     }
 
-    function handleOnChange(e) {
+    function typeOnChangeHandler(e) {
+        if (selectedTypes.includes(e.target.value)) {
+            setSelectedTypes(selectedTypes.filter((t) => t != e.target.value));
+        } else {
+            setSelectedTypes([...selectedTypes, e.target.value]);
+        }
+    }
+    function subjectOnChangeHandler(e) {
         if (selectedSubjects.includes(e.target.value)) {
             setSelectedSubjects(
                 selectedSubjects.filter((s) => s != e.target.value),
