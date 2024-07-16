@@ -3,18 +3,17 @@ import {
     Box,
     Flex,
     Heading,
-    Button,
     Input,
     Divider,
     useColorMode,
     Spinner,
 } from "@chakra-ui/react";
-import { BiSortAlt2 } from "react-icons/bi";
 import Navbar from "../components/Navbar";
 import AssessmentList from "../components/AssessmentList";
 import useToastUtils from "../hooks/useToastUtils";
 import FilterModal from "../components/Modals/FilterModal";
 import { useSearchParams } from "react-router-dom";
+import SortMenu from "../components/SortMenu";
 
 export default function Home() {
     const { colorMode } = useColorMode();
@@ -49,22 +48,7 @@ export default function Home() {
                         h="2px"
                     />
                     <Flex alignItems="center" gap={1}>
-                        <Button
-                            leftIcon={<BiSortAlt2 size={17} />}
-                            variant="outline"
-                            mr={2}
-                            colorScheme="black"
-                            size="sm"
-                            minW="max-content"
-                            _hover={{
-                                backgroundColor:
-                                    colorMode === "light"
-                                        ? "#d7d7d7"
-                                        : "gray.700",
-                            }}
-                        >
-                            Sort
-                        </Button>
+                        <SortMenu />
                         <FilterModal />
                         <Input
                             variant="outline"
