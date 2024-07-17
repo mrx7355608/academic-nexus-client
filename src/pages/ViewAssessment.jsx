@@ -33,7 +33,6 @@ export default function ViewAssessment() {
             .then((resp) => resp.json())
             .then((result) => {
                 if (result.ok) {
-                    console.log(result.data);
                     setData(result.data);
                 } else {
                     setError(result.error);
@@ -148,10 +147,10 @@ export default function ViewAssessment() {
                         </Box>
 
                         {data.fileExtension === "pdf" ? (
-                            <PdfViewer pdfUrl={data.fileURL} />
+                            <PdfViewer id={data._id} />
                         ) : data.fileExtension === "docx" ? null : (
                             <Image
-                                src={data.fileURL}
+                                src={`${import.meta.env.VITE_SERVER_URL}/api/assessments/view-assessment/${data._id}`}
                                 w="full"
                                 objectFit="cover"
                                 rounded="lg"
