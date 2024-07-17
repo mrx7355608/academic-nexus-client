@@ -30,7 +30,7 @@ export default function NavSearchbar() {
                 borderTopLeftRadius={0}
                 borderBottomLeftRadius={0}
                 h={"full"}
-                zIndex={4000}
+                zIndex={1}
                 _hover={{
                     background: colorMode === "dark" ? "gray.600" : "#c7c7c7",
                 }}
