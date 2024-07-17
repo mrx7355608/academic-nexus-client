@@ -19,6 +19,7 @@ export default function SubjectMenu({ setAssessment }) {
         "Programming Fundamentals",
         "Object Oriented Programming",
         "Data Structures & Algorithms",
+        "Data Communication & Computer Networks",
         "Funtional English",
         "Applied Physics",
         "Web Programming",
