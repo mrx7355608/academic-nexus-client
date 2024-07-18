@@ -23,10 +23,15 @@ export default function CloudinaryUploadWidget({ setAssessment }) {
                 if (result.event === "success") {
                     showSuccessToast("File uploaded successfully");
                     setIsUploaded(true);
+
+                    const fileParts = result.info.path.split(".");
+                    const fileFormat =
+                        result.info.format || fileParts[fileParts.length - 1];
+
                     setAssessment((prev) => ({
                         ...prev,
                         fileURL: result.info.secure_url,
-                        fileExtension: result.info.format,
+                        fileExtension: fileFormat,
                     }));
                 }
             },
