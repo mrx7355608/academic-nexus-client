@@ -1,10 +1,10 @@
+import { useEffect, useRef, useState } from "react";
 import { Box, Flex, Button, Text, HStack, VStack } from "@chakra-ui/react";
-import { useState } from "react";
 import { pdfjs, Document, Page } from "react-pdf";
+import { RxHamburgerMenu } from "react-icons/rx";
+import { motion } from "framer-motion";
 import "react-pdf/dist/Page/AnnotationLayer.css";
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import "react-pdf/dist/Page/TextLayer.css";
-import PagesSidebar from "./PagesSidebar";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
     "pdfjs-dist/build/pdf.worker.min.mjs",
@@ -12,10 +12,22 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 ).toString();
 
 export default function PdfViewer({ id }) {
+    const [isOpen, setIsOpen] = useState(false);
     const [numPages, setNumPages] = useState();
-    const [pageNumber, _setPageNumber] = useState(1);
+    const [pageNumber, setPageNumber] = useState(1);
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [scale, setScale] = useState(1.0);
+    const viewRef = useRef(null);
+
+    useEffect(() => {
+        if (viewRef.current) {
+            const pages = viewRef.current.querySelectorAll(".react-pdf__Page");
+            const targetPage = pages[pageNumber - 1];
+            if (targetPage) {
+                targetPage.scrollIntoView({ behavior: "smooth" });
+            }
+        }
+    }, [pageNumber]);
 
     function onDocumentLoadSuccess({ numPages }) {
         setNumPages(numPages);
@@ -25,6 +37,8 @@ export default function PdfViewer({ id }) {
         setIsFullscreen(!isFullscreen);
         window.scrollTo(0, 0);
     };
+
+    const toggleSidebar = () => setIsOpen(!isOpen);
 
     return (
         <Box
@@ -47,7 +61,14 @@ export default function PdfViewer({ id }) {
                 w="full"
             >
                 <HStack>
-                    <PagesSidebar id={id} />
+                    <Button
+                        size="sm"
+                        variant="ghost"
+                        py={5}
+                        onClick={toggleSidebar}
+                    >
+                        <RxHamburgerMenu size={23} />
+                    </Button>
                     <Button onClick={toggleFullscreen}>
                         {isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
                     </Button>
@@ -69,8 +90,47 @@ export default function PdfViewer({ id }) {
                     file={`${import.meta.env.VITE_SERVER_URL}/api/assessments/view-assessment-file/${id}`}
                     onLoadSuccess={onDocumentLoadSuccess}
                 >
-                    <VStack>
-                        {Array.from(new Array(numPages), (el, index) => (
+                    {/* Pages sidebar */}
+                    <motion.div
+                        initial={{ x: "-100%" }}
+                        animate={{ x: isOpen ? 0 : "-100%" }}
+                        transition={{ type: "tween", duration: 0.3 }}
+                        style={{
+                            position: "fixed",
+                            left: 0,
+                            top: "64px",
+                            bottom: 0,
+                            width: "20%",
+                            backgroundColor: "#3b3b3b",
+                            padding: "16px",
+                            overflowY: "auto",
+                            zIndex: 2,
+                            height: "90vh",
+                        }}
+                    >
+                        <VStack alignItems={"center"}>
+                            {Array.from(new Array(numPages), (_el, index) => (
+                                <Box
+                                    key={`thumbnail-${index + 1}`}
+                                    onClick={() => setPageNumber(index + 1)}
+                                    cursor="pointer"
+                                    p={1}
+                                    border={
+                                        pageNumber === index + 1
+                                            ? "2px solid purple"
+                                            : "1px solid gray"
+                                    }
+                                    my={5}
+                                >
+                                    <Page pageNumber={index + 1} width={150} />
+                                </Box>
+                            ))}
+                        </VStack>
+                    </motion.div>
+
+                    {/* Main pdf view */}
+                    <VStack ref={viewRef}>
+                        {Array.from(new Array(numPages), (_el, index) => (
                             <Box
                                 key={index}
                                 my={4}
