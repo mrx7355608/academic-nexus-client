@@ -53,27 +53,27 @@ export default function PagesSidebar({ id }) {
                     alignItems={"center"}
                     display={isOpen ? "flex" : "none"}
                 >
-                    {/* <Document */}
-                    {/*     file={`${import.meta.env.VITE_SERVER_URL}/api/assessments/view-assessment-file/${id}`} */}
-                    {/*     onLoadSuccess={onDocumentLoadSuccess} */}
-                    {/* > */}
-                    {/*     {Array.from(new Array(numPages), (el, index) => ( */}
-                    {/*         <Box */}
-                    {/*             key={`thumbnail-${index + 1}`} */}
-                    {/*             onClick={() => handlePageClick(index + 1)} */}
-                    {/*             cursor="pointer" */}
-                    {/*             p={1} */}
-                    {/*             border={ */}
-                    {/*                 pageNumber === index + 1 */}
-                    {/*                     ? "2px solid purple" */}
-                    {/*                     : "1px solid gray" */}
-                    {/*             } */}
-                    {/*             my={5} */}
-                    {/*         > */}
-                    {/*             <Page pageNumber={index + 1} width={150} /> */}
-                    {/*         </Box> */}
-                    {/*     ))} */}
-                    {/* </Document> */}
+                    <Document
+                        file={`${import.meta.env.VITE_SERVER_URL}/api/assessments/view-assessment-file/${id}`}
+                        onLoadSuccess={onDocumentLoadSuccess}
+                    >
+                        {Array.from(new Array(numPages), (el, index) => (
+                            <Box
+                                key={`thumbnail-${index + 1}`}
+                                onClick={() => handlePageClick(index + 1)}
+                                cursor="pointer"
+                                p={1}
+                                border={
+                                    pageNumber === index + 1
+                                        ? "2px solid purple"
+                                        : "1px solid gray"
+                                }
+                                my={5}
+                            >
+                                <Page pageNumber={index + 1} width={150} />
+                            </Box>
+                        ))}
+                    </Document>
                 </VStack>
             </motion.div>
         </>

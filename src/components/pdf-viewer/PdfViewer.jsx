@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { Box, Flex, Button, Text, HStack, VStack } from "@chakra-ui/react";
+import { Box, Flex, Spinner, useColorMode, VStack } from "@chakra-ui/react";
 import { pdfjs, Document, Page } from "react-pdf";
-import { RxHamburgerMenu } from "react-icons/rx";
 import { motion } from "framer-motion";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
+import Toolbar from "./Toolbar";
+import PdfLoadError from "./PdfLoadError";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
     "pdfjs-dist/build/pdf.worker.min.mjs",
@@ -12,11 +13,13 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 ).toString();
 
 export default function PdfViewer({ id }) {
+    const { colorMode } = useColorMode();
     const [isOpen, setIsOpen] = useState(false);
     const [numPages, setNumPages] = useState();
     const [pageNumber, setPageNumber] = useState(1);
-    const [isFullscreen, setIsFullscreen] = useState(false);
     const [scale, setScale] = useState(1.0);
+    const [isFullscreen, setIsFullscreen] = useState(false);
+    const [bgColor, setBgColor] = useState("gray.200");
     const viewRef = useRef(null);
 
     useEffect(() => {
@@ -27,68 +30,45 @@ export default function PdfViewer({ id }) {
                 targetPage.scrollIntoView({ behavior: "smooth" });
             }
         }
-    }, [pageNumber]);
+    }, [pageNumber, colorMode]);
 
     function onDocumentLoadSuccess({ numPages }) {
         setNumPages(numPages);
     }
 
-    const toggleFullscreen = () => {
-        setIsFullscreen(!isFullscreen);
-        window.scrollTo(0, 0);
-    };
-
     const toggleSidebar = () => setIsOpen(!isOpen);
+
+    function onLoadError() {
+        setBgColor(colorMode === "light" ? "gray.200" : "gray.800");
+    }
 
     return (
         <Box
-            width={isFullscreen ? "100%" : "70vw"}
+            width={"100%"}
             pos={isFullscreen ? "absolute" : "relative"}
             top={0}
             left={0}
             mb={12}
-            bg={"white"}
+            bg={bgColor}
             overflowX="hidden"
-            pt={isFullscreen ? 20 : 0}
+            overflowY={"auto"}
+            pt={0}
+            height={"100vh"}
         >
-            <HStack
-                justifyContent="space-between"
-                bg={"#262626"}
-                p={3}
-                position={isFullscreen ? "fixed" : "relative"}
-                top={0}
-                zIndex={4}
-                w="full"
-            >
-                <HStack>
-                    <Button
-                        size="sm"
-                        variant="ghost"
-                        py={5}
-                        onClick={toggleSidebar}
-                    >
-                        <RxHamburgerMenu size={23} />
-                    </Button>
-                    <Button onClick={toggleFullscreen}>
-                        {isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
-                    </Button>
-                </HStack>
-                <Text>
-                    Page {pageNumber} of {numPages}
-                </Text>
-                <HStack>
-                    <Button onClick={() => setScale(scale + 0.1)}>
-                        Zoom In
-                    </Button>
-                    <Button onClick={() => setScale(scale - 0.1)}>
-                        Zoom Out
-                    </Button>
-                </HStack>
-            </HStack>
-            <Flex w="max-content" mx="auto">
+            <Toolbar
+                pageNumber={pageNumber}
+                numPages={numPages}
+                toggleSidebar={toggleSidebar}
+                setScale={setScale}
+                isFullscreen={isFullscreen}
+                setIsFullscreen={setIsFullscreen}
+            />
+            <Flex w="max-content" mx="auto" pos={"relative"}>
                 <Document
                     file={`${import.meta.env.VITE_SERVER_URL}/api/assessments/view-assessment-file/${id}`}
                     onLoadSuccess={onDocumentLoadSuccess}
+                    loading={<Spinner mt={12} />}
+                    onLoadError={onLoadError}
                 >
                     {/* Pages sidebar */}
                     <motion.div
@@ -101,14 +81,18 @@ export default function PdfViewer({ id }) {
                             top: "64px",
                             bottom: 0,
                             width: "20%",
-                            backgroundColor: "#3b3b3b",
                             padding: "16px",
                             overflowY: "auto",
                             zIndex: 2,
                             height: "90vh",
+                            backgroundColor:
+                                colorMode === "light"
+                                    ? "rgb(209,209,209)"
+                                    : "gray.400",
                         }}
+                        id="sidebar-pages"
                     >
-                        <VStack alignItems={"center"}>
+                        <VStack alignItems={"center"} w="full">
                             {Array.from(new Array(numPages), (_el, index) => (
                                 <Box
                                     key={`thumbnail-${index + 1}`}

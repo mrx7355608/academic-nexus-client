@@ -12,7 +12,7 @@ import {
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import PdfViewer from "../components/PdfViewer";
+import PdfViewer from "../components/pdf-viewer/PdfViewer";
 import { FaCircleArrowUp, FaCircleArrowDown } from "react-icons/fa6";
 import useToastUtils from "../hooks/useToastUtils";
 import useUser from "../states/user";
