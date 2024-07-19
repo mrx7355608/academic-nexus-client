@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import useUser from "../states/user";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useToastUtils from "../hooks/useToastUtils";
 import {
     Button,
@@ -13,28 +13,23 @@ import {
     FormLabel,
     Spinner,
 } from "@chakra-ui/react";
-
-// Components
 import Navbar from "../components/Navbar";
-import CloudinaryUploadWidget from "../components/upload-page/CloudinaryUploadWidget";
 import PublicPrivateMenu from "../components/upload-page/PublicPrivateMenu";
 import SubjectMenu from "../components/upload-page/SubjectMenu";
 import UploadType from "../components/upload-page/UploadType";
 
-export default function Upload() {
+export default function EditAssessment() {
     const { colorMode } = useColorMode();
+    const { id } = useParams();
     const user = useUser((state) => state.user);
     const navigate = useNavigate();
     const { showErrorToast, showSuccessToast } = useToastUtils();
     const [loading, setLoading] = useState(false);
     const [assessment, setAssessment] = useState({
         title: "",
-        fileURL: "",
         subject: "",
         isPublic: true,
         type: "quiz",
-        fileExtension: "",
-        password: "",
     });
 
     useEffect(() => {
@@ -48,10 +43,10 @@ export default function Upload() {
         <>
             <Navbar />
             <Box p={4} mt={8} maxW="80vw" mx={"auto"}>
-                {/* Upload Heading */}
+                {/* Heading */}
                 <Flex alignItems="center" gap="5" mb={12}>
                     <Heading fontWeight={700} fontSize={"4xl"}>
-                        Upload
+                        Edit
                     </Heading>
                     <Divider
                         w="full"
@@ -88,50 +83,25 @@ export default function Upload() {
                     <UploadType setAssessment={setAssessment} />
                     <PublicPrivateMenu setAssessment={setAssessment} />
 
-                    <Box w="full">
-                        <FormLabel>Password:</FormLabel>
-                        <Input
-                            placeholder="Password"
-                            type="password"
-                            bg={colorMode === "light" ? "#d7d7d7" : "gray.700"}
-                            onChange={(e) => {
-                                setAssessment({
-                                    ...assessment,
-                                    password: e.target.value,
-                                });
-                            }}
-                        />
-                    </Box>
-                    <CloudinaryUploadWidget setAssessment={setAssessment} />
                     <Button
                         w="full"
                         colorScheme="purple"
-                        onClick={uploadAssessment}
+                        onClick={editAssessment}
                     >
-                        {loading ? <Spinner /> : "Upload Assessment"}
+                        {loading ? <Spinner /> : "Save"}
                     </Button>
                 </Flex>
             </Box>
         </>
     );
 
-    async function uploadAssessment() {
+    async function editAssessment() {
         try {
             setLoading(true);
 
-            if (!assessment.subject) {
-                return showErrorToast("Assessment must have a subject");
-            } else if (!assessment.fileURL) {
-                return showErrorToast(
-                    "You must add a file in order to upload assessment",
-                );
-            } else if (!assessment.title) {
-                return showErrorToast("Assessment must have a title");
-            }
-
             const serverURL = import.meta.env.VITE_SERVER_URL;
-            const response = await fetch(`${serverURL}/api/assessments/`, {
-                method: "post",
+            const response = await fetch(`${serverURL}/api/assessments/${id}`, {
+                method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -141,7 +111,7 @@ export default function Upload() {
             const result = await response.json();
 
             if (response.ok) {
-                showSuccessToast("Assessment uploaded successfully");
+                showSuccessToast("Assessment has been updated");
                 navigate("/");
             } else {
                 showErrorToast(result.error);

@@ -4,9 +4,12 @@ import { Box, Flex, Text, Button, useColorMode } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { FaVoteYea } from "react-icons/fa";
 import DownloadModal from "./Modals/DownloadModal";
+import AssessmentMenu from "./AssessmentMenu";
+import useUser from "../states/user";
 
 export default function AssessmentItem({ data }) {
     const { colorMode } = useColorMode();
+    const user = useUser((state) => state.user);
 
     return (
         <Box p={4} borderRadius="md" flex="1" minW={"350px"} maxW={"400px"}>
@@ -21,19 +24,23 @@ export default function AssessmentItem({ data }) {
                     {data.fileExtension.toUpperCase()}
                 </Text>
             </Flex>
-            <Text
-                mt={3}
-                fontSize="xs"
-                fontWeight="medium"
-                borderWidth={1}
-                borderColor={"gray.500"}
-                px={2}
-                py={0.5}
-                w={"max-content"}
-                color={colorMode === "light" ? "gray.700" : "gray.400"}
-            >
-                {data.subject}
-            </Text>
+            <Flex justifyContent={"space-between"} alignItems="center" mt={2}>
+                <Text
+                    fontSize="xs"
+                    fontWeight="medium"
+                    borderWidth={1}
+                    borderColor={"gray.500"}
+                    px={2}
+                    py={0.5}
+                    w={"max-content"}
+                    color={colorMode === "light" ? "gray.700" : "gray.400"}
+                >
+                    {data.subject}
+                </Text>
+                {user._id === data.author._id && (
+                    <AssessmentMenu id={data._id} />
+                )}
+            </Flex>
 
             <Text
                 fontWeight={600}

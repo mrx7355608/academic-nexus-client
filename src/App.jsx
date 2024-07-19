@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+import useUser from "./states/user";
+import MainSpinner from "./components/MainSpinner";
+
 // Pages
+// TODO: use lazy loading
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Search from "./pages/Search";
 import Upload from "./pages/Upload";
 import Profile from "./pages/Profile";
 import ViewAssessment from "./pages/ViewAssessment";
-
-import useUser from "./states/user";
-import MainSpinner from "./components/MainSpinner";
+import EditAssessment from "./pages/EditAssessment";
 
 const router = createBrowserRouter([
     {
@@ -28,6 +30,10 @@ const router = createBrowserRouter([
     {
         path: "/profile",
         element: <Profile />,
+    },
+    {
+        path: "/edit/:id",
+        element: <EditAssessment />,
     },
     {
         path: "/assessment/:id",
