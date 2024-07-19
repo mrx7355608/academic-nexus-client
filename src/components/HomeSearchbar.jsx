@@ -11,8 +11,8 @@ export default function HomeSearchbar() {
         searchParams.set("s", value);
 
         // Remove empty values
-        searchParams.forEach((key, value) => {
-            if (!value) {
+        searchParams.forEach((val, key) => {
+            if (!val) {
                 searchParams.delete(key);
             }
         });
