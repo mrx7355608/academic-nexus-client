@@ -98,7 +98,7 @@ export default function AssessmentItem({ data }) {
                 </Text>
             </Flex>
 
-            <Flex mt={3} gap={3} alignItems={"center"} justifyContent={"start"}>
+            <Flex mt={3} gap={2} alignItems={"center"} justifyContent={"start"}>
                 <Link to={`/assessment/${data._id}`}>
                     <Button
                         px={2}
@@ -112,9 +112,6 @@ export default function AssessmentItem({ data }) {
                                 style={{ marginRight: "-2px" }}
                             />
                         }
-                        _hover={{
-                            textColor: "purple.400",
-                        }}
                     >
                         View
                     </Button>

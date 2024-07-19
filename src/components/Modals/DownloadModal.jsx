@@ -43,9 +43,6 @@ export default function DownloadModal({ id, fileName }) {
                         style={{ marginRight: "-4px" }}
                     />
                 }
-                _hover={{
-                    textColor: "purple.400",
-                }}
                 onClick={onOpen}
             >
                 Download
