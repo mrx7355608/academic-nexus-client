@@ -141,6 +141,43 @@ export default function FilterModal() {
                                     >
                                         Assignment
                                     </Checkbox>
+
+                                    <Checkbox
+                                        value={"proposal"}
+                                        border={2}
+                                        onChange={typeOnChangeHandler}
+                                        borderColor={
+                                            colorMode === "dark"
+                                                ? "gray.400"
+                                                : "#3d3d3d"
+                                        }
+                                    >
+                                        Proposal
+                                    </Checkbox>
+                                    <Checkbox
+                                        value={"labtask"}
+                                        border={2}
+                                        onChange={typeOnChangeHandler}
+                                        borderColor={
+                                            colorMode === "dark"
+                                                ? "gray.400"
+                                                : "#3d3d3d"
+                                        }
+                                    >
+                                        Lab task
+                                    </Checkbox>
+                                    <Checkbox
+                                        value={"report"}
+                                        border={2}
+                                        onChange={typeOnChangeHandler}
+                                        borderColor={
+                                            colorMode === "dark"
+                                                ? "gray.400"
+                                                : "#3d3d3d"
+                                        }
+                                    >
+                                        Report
+                                    </Checkbox>
                                 </VStack>
                             </CheckboxGroup>
                         </Flex>

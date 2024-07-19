@@ -17,6 +17,9 @@ export default function UploadType({ setAssessment }) {
                 <Stack direction="column">
                     <Radio value="quiz">Quiz</Radio>
                     <Radio value="assignment">Assignment</Radio>
+                    <Radio value="proposal">Proposal</Radio>
+                    <Radio value="labtask">Lab task</Radio>
+                    <Radio value="report">Report</Radio>
                 </Stack>
             </RadioGroup>
         </Box>
