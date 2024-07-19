@@ -16,6 +16,7 @@ import PdfViewer from "../components/pdf-viewer/PdfViewer";
 import { FaCircleArrowUp, FaCircleArrowDown } from "react-icons/fa6";
 import useToastUtils from "../hooks/useToastUtils";
 import useUser from "../states/user";
+import DownloadModal from "../components/Modals/DownloadModal";
 
 export default function ViewAssessment() {
     const { colorMode } = useColorMode();
@@ -135,7 +136,7 @@ export default function ViewAssessment() {
                             <Button
                                 leftIcon={<FaCircleArrowDown />}
                                 colorScheme={"red"}
-                                ml={4}
+                                mx={3}
                                 onClick={downvote}
                             >
                                 {isDownvoting ? (
@@ -144,6 +145,10 @@ export default function ViewAssessment() {
                                     "Downvote"
                                 )}
                             </Button>
+                            <DownloadModal
+                                id={data._id}
+                                fileName={`${data.title}.${data.fileExtension}`}
+                            />
                         </Box>
 
                         {data.fileExtension === "pdf" ? (
