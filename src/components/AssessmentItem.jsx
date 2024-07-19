@@ -1,21 +1,12 @@
+/* eslint-disable react/prop-types */
 import { IoMdEye } from "react-icons/io";
-import {
-    Box,
-    Flex,
-    Text,
-    Button,
-    useColorMode,
-    useDisclosure,
-} from "@chakra-ui/react";
+import { Box, Flex, Text, Button, useColorMode } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import useToastUtils from "../hooks/useToastUtils";
 import { FaVoteYea } from "react-icons/fa";
 import DownloadModal from "./Modals/DownloadModal";
 
 export default function AssessmentItem({ data }) {
     const { colorMode } = useColorMode();
-    const { showErrorToast } = useToastUtils();
 
     return (
         <Box p={4} borderRadius="md" flex="1" minW={"350px"} maxW={"400px"}>
