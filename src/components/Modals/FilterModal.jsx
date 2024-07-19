@@ -14,19 +14,16 @@ import {
     Checkbox,
     CheckboxGroup,
     VStack,
-    RadioGroup,
-    Radio,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { LuSettings2 } from "react-icons/lu";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function FilterModal() {
     const { colorMode } = useColorMode();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [selectedSubjects, setSelectedSubjects] = useState([]);
     const [selectedTypes, setSelectedTypes] = useState([]);
-    const [searchParams, setSearchParams] = useSearchParams();
     const navigate = useNavigate();
     const subjects = [
         "Linear Algebra",
@@ -40,12 +37,6 @@ export default function FilterModal() {
         "Philosophy and Critical Thinking",
         "Digital Logic Design",
     ];
-
-    useEffect(() => {
-        if (searchParams.get("subjects")) {
-            setSelectedSubjects(searchParams.get("subjects").split(","));
-        }
-    }, [searchParams]);
 
     return (
         <>
@@ -171,6 +162,8 @@ export default function FilterModal() {
     );
 
     async function getFilteredAssessments() {
+        const searchParams = new URLSearchParams();
+
         if (selectedSubjects.length > 0) {
             searchParams.append("subjects", selectedSubjects.join(","));
         }
@@ -179,7 +172,7 @@ export default function FilterModal() {
             searchParams.append("types", selectedTypes.join(","));
         }
 
-        searchParams.forEach((key, value) => {
+        searchParams.forEach((value, key) => {
             if (!value) {
                 searchParams.delete(key);
             }
@@ -192,7 +185,7 @@ export default function FilterModal() {
 
     function typeOnChangeHandler(e) {
         if (selectedTypes.includes(e.target.value)) {
-            setSelectedTypes(selectedTypes.filter((t) => t != e.target.value));
+            setSelectedTypes(selectedTypes.filter((t) => t !== e.target.value));
         } else {
             setSelectedTypes([...selectedTypes, e.target.value]);
         }
@@ -200,7 +193,7 @@ export default function FilterModal() {
     function subjectOnChangeHandler(e) {
         if (selectedSubjects.includes(e.target.value)) {
             setSelectedSubjects(
-                selectedSubjects.filter((s) => s != e.target.value),
+                selectedSubjects.filter((s) => s !== e.target.value),
             );
         } else {
             setSelectedSubjects([...selectedSubjects, e.target.value]);
