@@ -1,25 +1,24 @@
 import { IoMdEye } from "react-icons/io";
-import { HiOutlineDownload } from "react-icons/hi";
 import {
     Box,
     Flex,
     Text,
     Button,
     useColorMode,
-    Spinner,
+    useDisclosure,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import useToastUtils from "../hooks/useToastUtils";
 import { FaVoteYea } from "react-icons/fa";
+import DownloadModal from "./Modals/DownloadModal";
 
 export default function AssessmentItem({ data }) {
     const { colorMode } = useColorMode();
-    const [downloading, setDownloading] = useState(false);
     const { showErrorToast } = useToastUtils();
 
     return (
-        <Box p={4} morderRadius="md" flex="1" minW={"350px"} maxW={"400px"}>
+        <Box p={4} borderRadius="md" flex="1" minW={"350px"} maxW={"400px"}>
             <Flex
                 justifyContent="center"
                 alignItems="center"
@@ -122,67 +121,11 @@ export default function AssessmentItem({ data }) {
                         View
                     </Button>
                 </Link>
-                <Button
-                    px={2}
-                    size={"sm"}
-                    variant="ghost"
-                    textDecor={"underline"}
-                    color={colorMode === "light" ? "gray.700" : "gray.300"}
-                    leftIcon={
-                        <HiOutlineDownload
-                            size={20}
-                            style={{ marginRight: "-4px" }}
-                        />
-                    }
-                    _hover={{
-                        textColor: "purple.400",
-                    }}
-                    onClick={() =>
-                        downloadFile(
-                            data.fileURL,
-                            data.title + "." + data.fileExtension,
-                            data.fileExtension,
-                        )
-                    }
-                >
-                    {downloading ? <Spinner size="xs" /> : "Download"}
-                </Button>
+                <DownloadModal
+                    id={data._id}
+                    fileName={`${data.title}.${data.fileExtension}`}
+                />
             </Flex>
         </Box>
     );
-
-    function downloadFile(secure_url, fileName, fileExtension) {
-        const contentTypeMap = {
-            pdf: "application/pdf",
-            doc: "application/msword",
-            docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-            png: "image/png",
-            jpg: "image/jpeg",
-            jpeg: "image/jpeg",
-        };
-
-        setDownloading(true);
-
-        fetch(secure_url, {
-            headers: {
-                "Content-Type": contentTypeMap[fileExtension],
-            },
-        })
-            .then((resp) => resp.blob())
-            .then((blob) => {
-                const url = window.URL.createObjectURL(new Blob([blob]));
-
-                const link = document.createElement("a");
-                link.href = url;
-                link.download = fileName;
-
-                document.body.appendChild(link);
-
-                link.click();
-
-                link.parentNode.removeChild(link);
-            })
-            .catch(() => showErrorToast("Unable to download file"))
-            .finally(() => setDownloading(false));
-    }
 }

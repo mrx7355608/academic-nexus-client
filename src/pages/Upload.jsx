@@ -34,6 +34,7 @@ export default function Upload() {
         isPublic: true,
         type: "quiz",
         fileExtension: "",
+        password: "",
     });
 
     useEffect(() => {
@@ -86,6 +87,21 @@ export default function Upload() {
                     <SubjectMenu setAssessment={setAssessment} />
                     <UploadType setAssessment={setAssessment} />
                     <PublicPrivateMenu setAssessment={setAssessment} />
+
+                    <Box w="full">
+                        <FormLabel>Password:</FormLabel>
+                        <Input
+                            placeholder="Password"
+                            type="password"
+                            bg={colorMode === "light" ? "#d7d7d7" : "gray.700"}
+                            onChange={(e) => {
+                                setAssessment({
+                                    ...assessment,
+                                    password: e.target.value,
+                                });
+                            }}
+                        />
+                    </Box>
                     <CloudinaryUploadWidget setAssessment={setAssessment} />
                     <Button
                         w="full"

@@ -1,11 +1,10 @@
 import { Input, useColorMode } from "@chakra-ui/react";
-import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDebouncedCallback } from "use-debounce";
 
 export default function HomeSearchbar() {
     const { colorMode } = useColorMode();
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams, _setSearchParams] = useSearchParams();
     const navigate = useNavigate();
 
     const handleOnChange = useDebouncedCallback((value) => {
