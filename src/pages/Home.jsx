@@ -3,7 +3,6 @@ import {
     Box,
     Flex,
     Heading,
-    Input,
     Divider,
     useColorMode,
     Spinner,
@@ -15,13 +14,14 @@ import FilterModal from "../components/Modals/FilterModal";
 import { useSearchParams } from "react-router-dom";
 import SortMenu from "../components/SortMenu";
 import HomeSearchbar from "../components/HomeSearchbar";
+import useAssessments from "../states/assessments";
 
 export default function Home() {
     const { colorMode } = useColorMode();
     const [loading, setLoading] = useState(true);
-    const [assessments, setAssessments] = useState([]);
     const { showErrorToast } = useToastUtils();
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams, _setSearchParams] = useSearchParams();
+    const { assessments, setAssessments } = useAssessments();
 
     useEffect(() => {
         setLoading(true);
