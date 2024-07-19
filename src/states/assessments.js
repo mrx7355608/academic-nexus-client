@@ -1,6 +1,6 @@
-import { createStore } from "zustand";
+import { create } from "zustand";
 
-const useAssessments = createStore((set) => ({
+const useAssessments = create((set) => ({
     assessments: [],
     setAssessments: (data) => set({ assessments: data }),
     removeAssessment: (id) =>

@@ -3,10 +3,12 @@ import { useState } from "react";
 import { HiDotsVertical } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import useToastUtils from "../hooks/useToastUtils";
+import useAssessments from "../states/assessments";
 
 // eslint-disable-next-line
 export default function AssessmentMenu({ id }) {
     const { showErrorToast, showSuccessToast } = useToastUtils();
+    const { removeAssessment } = useAssessments();
     const [loading, setLoading] = useState(false);
 
     return (
@@ -50,6 +52,7 @@ export default function AssessmentMenu({ id }) {
                 return showErrorToast(result.error);
             }
 
+            removeAssessment(id);
             showSuccessToast("Assessment has been deleted");
         } catch (err) {
             showErrorToast("An un-expected error occurred");
