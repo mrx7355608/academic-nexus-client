@@ -32,6 +32,7 @@ export default function CloudinaryUploadWidget({ setAssessment }) {
                         ...prev,
                         fileURL: result.info.secure_url,
                         fileExtension: fileFormat,
+                        publicId: result.info.public_id,
                     }));
                 }
             },

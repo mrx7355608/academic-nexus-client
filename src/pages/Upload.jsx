@@ -31,6 +31,7 @@ export default function Upload() {
         title: "",
         fileURL: "",
         subject: "",
+        publicId: "",
         isPublic: true,
         type: "quiz",
         fileExtension: "",
