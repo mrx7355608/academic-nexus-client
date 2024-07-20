@@ -13,6 +13,7 @@ import Upload from "./pages/Upload";
 import Profile from "./pages/Profile";
 import ViewAssessment from "./pages/ViewAssessment";
 import EditAssessment from "./pages/EditAssessment";
+import MyAssessments from "./pages/MyAssessments";
 
 const router = createBrowserRouter([
     {
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
     {
         path: "/search",
         element: <Search />,
+    },
+    {
+        path: "/my-assessments/:type",
+        element: <MyAssessments />,
     },
 ]);
 
