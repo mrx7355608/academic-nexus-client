@@ -37,7 +37,7 @@ export default function AssessmentItem({ data }) {
                 >
                     {data.subject}
                 </Text>
-                {user._id === data.author._id && (
+                {user?._id === data.author._id && (
                     <AssessmentMenu id={data._id} />
                 )}
             </Flex>

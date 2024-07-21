@@ -1,4 +1,14 @@
-import { Button, Heading, VStack, Text, useColorMode } from "@chakra-ui/react";
+import {
+    Button,
+    Heading,
+    VStack,
+    Text,
+    useColorMode,
+    Alert,
+    AlertIcon,
+    AlertDescription,
+    Box,
+} from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
 
 export default function Login() {
@@ -19,11 +29,20 @@ export default function Login() {
             mx={"auto"}
         >
             <Heading size="xl">Login</Heading>
-            <Text textColor={colorMode === "light" ? "gray.700" : "gray.400"}>
-                Use your university email
-            </Text>
+
+            <Box mt={1} width="full">
+                <Alert status="info" borderRadius="md" boxShadow="md" w="full">
+                    <AlertIcon />
+                    <Box>
+                        <AlertDescription>
+                            You can only login with your IU email
+                        </AlertDescription>
+                    </Box>
+                </Alert>
+            </Box>
             <Button
-                mt={7}
+                mt={4}
+                size="lg"
                 leftIcon={<FcGoogle size={20} />}
                 colorScheme="black"
                 variant="outline"
