@@ -27,7 +27,6 @@ export default function AssessmentMenu({ id }) {
                 <Link to={`/edit/${id}`}>
                     <MenuItem>Edit</MenuItem>
                 </Link>
-                <MenuItem>Make private</MenuItem>
                 <MenuItem>Change password</MenuItem>
                 <MenuItem textColor="red.400" onClick={deleteAssessment}>
                     {loading ? "Deleting..." : "Delete"}
