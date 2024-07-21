@@ -25,7 +25,7 @@ export default function PublicPrivateMenu({ setAssessment, defaultIsPublic }) {
                     w="full"
                     bg={colorMode === "light" ? "#d7d7d7" : "gray.700"}
                 >
-                    {defaultIsPublic && isPublic ? "Public" : "Private"}
+                    {isPublic ? "Public" : "Private"}
                 </MenuButton>
                 <MenuList>
                     <MenuItem
