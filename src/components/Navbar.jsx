@@ -49,7 +49,7 @@ export default function Navbar() {
                 >
                     <Link to="/">Home</Link>
                     <Link to="/upload">Upload</Link>
-                    <Link to="/my-assessments/assignments">My Assessments</Link>
+                    <Link to="/my-assessments/assignment">My Assessments</Link>
                     {user ? (
                         <>
                             <Link to="/profile">
