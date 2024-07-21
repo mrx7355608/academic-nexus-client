@@ -36,6 +36,7 @@ export default function FilterModal() {
         "Personal Development",
         "Philosophy and Critical Thinking",
         "Digital Logic Design",
+        "Computer Architecture & Assembly Language",
     ];
 
     return (
