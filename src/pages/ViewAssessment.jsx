@@ -17,6 +17,7 @@ import { FaCircleArrowUp, FaCircleArrowDown } from "react-icons/fa6";
 import useToastUtils from "../hooks/useToastUtils";
 import useUser from "../states/user";
 import DownloadModal from "../components/Modals/DownloadModal";
+import DocxViewer from "../components/DocxViewer";
 
 export default function ViewAssessment() {
     const { colorMode } = useColorMode();
@@ -153,7 +154,9 @@ export default function ViewAssessment() {
 
                         {data.fileExtension === "pdf" ? (
                             <PdfViewer id={data._id} />
-                        ) : data.fileExtension === "docx" ? null : (
+                        ) : data.fileExtension === "docx" ? (
+                            <DocxViewer id={data._id} />
+                        ) : (
                             <Image
                                 src={`${import.meta.env.VITE_SERVER_URL}/api/assessments/view-assessment/${data._id}`}
                                 w="full"
