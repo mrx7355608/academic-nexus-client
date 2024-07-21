@@ -1,8 +1,8 @@
 import { FormLabel, Box, RadioGroup, Radio, Stack } from "@chakra-ui/react";
 import { useState } from "react";
 
-export default function UploadType({ setAssessment }) {
-    const [value, setValue] = useState("quiz");
+export default function UploadType({ setAssessment, defaultType }) {
+    const [value, setValue] = useState(defaultType || "quiz");
 
     return (
         <Box>

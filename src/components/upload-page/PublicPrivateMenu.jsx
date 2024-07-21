@@ -11,7 +11,7 @@ import {
 import { useState } from "react";
 import { IoMdEye } from "react-icons/io";
 
-export default function PublicPrivateMenu({ setAssessment }) {
+export default function PublicPrivateMenu({ setAssessment, defaultIsPublic }) {
     const { colorMode } = useColorMode();
     const [isPublic, setIsPublic] = useState(true);
 
@@ -25,7 +25,7 @@ export default function PublicPrivateMenu({ setAssessment }) {
                     w="full"
                     bg={colorMode === "light" ? "#d7d7d7" : "gray.700"}
                 >
-                    {isPublic ? "Public" : "Private"}
+                    {defaultIsPublic && isPublic ? "Public" : "Private"}
                 </MenuButton>
                 <MenuList>
                     <MenuItem

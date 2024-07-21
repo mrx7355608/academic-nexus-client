@@ -11,7 +11,7 @@ import {
 import { useState } from "react";
 import { FaBook } from "react-icons/fa";
 
-export default function SubjectMenu({ setAssessment }) {
+export default function SubjectMenu({ setAssessment, defaultSubject }) {
     const { colorMode } = useColorMode();
     const [selectedSubject, setSelectedSubject] = useState(null);
     const subjects = [
@@ -22,6 +22,7 @@ export default function SubjectMenu({ setAssessment }) {
         "Data Communication & Computer Networks",
         "Funtional English",
         "Applied Physics",
+        "Computer Architecture & Assembly Language",
         "Web Programming",
         "Personal Development",
         "Philosophy and Critical Thinking",
@@ -37,7 +38,7 @@ export default function SubjectMenu({ setAssessment }) {
                     w="full"
                     bg={colorMode === "light" ? "#d7d7d7" : "gray.700"}
                 >
-                    {selectedSubject || "No subject selected"}
+                    {defaultSubject || selectedSubject || "No subject selected"}
                 </MenuButton>
                 <MenuList>
                     {subjects.map((subject) => {
