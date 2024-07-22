@@ -1,5 +1,6 @@
 import { IoMdEye } from "react-icons/io";
 import { Flex, Text, Image, Box, Button, useColorMode } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 export default function SearchItem({ student }) {
     const { colorMode } = useColorMode();
@@ -28,9 +29,14 @@ export default function SearchItem({ student }) {
                         </Text>
                     </Box>
                 </Flex>
-                <Button leftIcon={<IoMdEye size={22} />} colorScheme="purple">
-                    View profile
-                </Button>
+                <Link to={`/student-profile/${student._id}`}>
+                    <Button
+                        leftIcon={<IoMdEye size={22} />}
+                        colorScheme="purple"
+                    >
+                        View profile
+                    </Button>
+                </Link>
             </Flex>
         </Box>
     );
