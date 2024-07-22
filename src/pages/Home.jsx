@@ -1,39 +1,16 @@
 import { useEffect, useState } from "react";
-import {
-    Box,
-    Flex,
-    Heading,
-    Divider,
-    useColorMode,
-    Spinner,
-} from "@chakra-ui/react";
+import { Box, Flex, Heading, Divider, useColorMode } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
-import AssessmentList from "../components/AssessmentList";
-import useToastUtils from "../hooks/useToastUtils";
 import FilterModal from "../components/Modals/FilterModal";
-import { useSearchParams } from "react-router-dom";
 import SortMenu from "../components/SortMenu";
 import HomeSearchbar from "../components/HomeSearchbar";
-import useAssessments from "../states/assessments";
+import AssessmentsContainer from "../components/AssessmentsContainer";
+import { useSearchParams } from "react-router-dom";
 
 export default function Home() {
     const { colorMode } = useColorMode();
-    const [loading, setLoading] = useState(true);
-    const { showErrorToast } = useToastUtils();
-    const [searchParams, _setSearchParams] = useSearchParams();
-    const { assessments, setAssessments } = useAssessments();
-
-    useEffect(() => {
-        setLoading(true);
-        const serverURL = import.meta.env.VITE_SERVER_URL;
-        fetch(`${serverURL}/api/assessments?${searchParams.toString()}`)
-            .then((resp) => resp.json())
-            .then((data) => setAssessments(data.data))
-            .catch(() => {
-                showErrorToast("Unable to fetch assessments");
-            })
-            .finally(() => setLoading(false));
-    }, [searchParams]);
+    const [sp, setSp] = useSearchParams();
+    const serverURL = import.meta.env.VITE_SERVER_URL;
 
     return (
         <>
@@ -55,17 +32,10 @@ export default function Home() {
                         <HomeSearchbar />
                     </Flex>
                 </Flex>
-                {loading ? (
-                    <Flex
-                        alignItems={"center"}
-                        justifyContent="center"
-                        h={"200px"}
-                    >
-                        <Spinner />
-                    </Flex>
-                ) : (
-                    <AssessmentList assessments={assessments} />
-                )}
+
+                <AssessmentsContainer
+                    url={`${serverURL}/api/assessments?${sp.toString()}`}
+                />
             </Box>
         </>
     );
