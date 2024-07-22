@@ -10,7 +10,6 @@ import { useSearchParams } from "react-router-dom";
 export default function Home() {
     const { colorMode } = useColorMode();
     const [sp, setSp] = useSearchParams();
-    const serverURL = import.meta.env.VITE_SERVER_URL;
 
     return (
         <>
@@ -34,7 +33,7 @@ export default function Home() {
                 </Flex>
 
                 <AssessmentsContainer
-                    url={`${serverURL}/api/assessments?${sp.toString()}`}
+                    endpoint={`/api/assessments?${sp.toString()}`}
                 />
             </Box>
         </>

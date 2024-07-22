@@ -5,51 +5,38 @@ import {
     Heading,
     Divider,
     useColorMode,
-    Spinner,
     Tabs,
     TabPanel,
     TabPanels,
     Tab,
     TabList,
-    Text,
 } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import {
+    Link,
+    useNavigate,
+    useParams,
+    useSearchParams,
+} from "react-router-dom";
 import MyAssessmentsFilterModal from "../components/Modals/MyAssessmentsFilterModal";
-import AssessmentList from "../components/AssessmentList";
+import AssessmentsContainer from "../components/AssessmentsContainer";
+import useUser from "../states/user";
+import useToastUtils from "../hooks/useToastUtils";
 
 export default function MyAssessments() {
     const { type } = useParams();
     const { colorMode } = useColorMode();
-    const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
-    const [searchParams, _setSearchParams] = useSearchParams();
-    const [assessments, setAssessments] = useState([]);
+    const [sp, _setSearchParams] = useSearchParams();
+    const user = useUser((state) => state.user);
+    const navigate = useNavigate();
+    const { showErrorToast } = useToastUtils();
 
     useEffect(() => {
-        const serverURL = import.meta.env.VITE_SERVER_URL;
-        setLoading(true);
-        fetch(
-            `${serverURL}/api/assessments/my/${type}?${searchParams.toString()}`,
-            {
-                credentials: "include",
-            },
-        )
-            .then((resp) => {
-                if (!resp.ok) {
-                    resp.json().then((result) => setError(result.error));
-                    return;
-                }
-                return resp.json();
-            })
-            .then((data) => setAssessments(data.data))
-            .catch(() => setError("An un-expected error occurred"))
-            .finally(() => setLoading(false));
-
-        return () => {
-            setError("");
-        };
-    }, [type, searchParams]);
+        if (!user) {
+            showErrorToast("Please login to continue");
+            navigate("/");
+        }
+    }, [user]);
 
     return (
         <>
@@ -91,91 +78,34 @@ export default function MyAssessments() {
 
                     <TabPanels>
                         <TabPanel>
-                            {loading ? (
-                                <Flex
-                                    alignItems={"center"}
-                                    justifyContent="center"
-                                    h={"200px"}
-                                >
-                                    <Spinner />
-                                </Flex>
-                            ) : error ? (
-                                <Text mt={3} color="red.400">
-                                    {error}
-                                </Text>
-                            ) : (
-                                <AssessmentList assessments={assessments} />
-                            )}
-                        </TabPanel>
-
-                        <TabPanel>
-                            {loading ? (
-                                <Flex
-                                    alignItems={"center"}
-                                    justifyContent="center"
-                                    h={"200px"}
-                                >
-                                    <Spinner />
-                                </Flex>
-                            ) : error ? (
-                                <Text mt={3} color="red.400">
-                                    {error}
-                                </Text>
-                            ) : (
-                                <AssessmentList assessments={assessments} />
-                            )}
-                        </TabPanel>
-
-                        <TabPanel>
-                            {loading ? (
-                                <Flex
-                                    alignItems={"center"}
-                                    justifyContent="center"
-                                    h={"200px"}
-                                >
-                                    <Spinner />
-                                </Flex>
-                            ) : error ? (
-                                <Text mt={3} color="red.400">
-                                    {error}
-                                </Text>
-                            ) : (
-                                <AssessmentList assessments={assessments} />
-                            )}
+                            <AssessmentsContainer
+                                endpoint={`/api/assessments/my/${type}?${sp.toString()}`}
+                                credentials={true}
+                            />
                         </TabPanel>
                         <TabPanel>
-                            {loading ? (
-                                <Flex
-                                    alignItems={"center"}
-                                    justifyContent="center"
-                                    h={"200px"}
-                                >
-                                    <Spinner />
-                                </Flex>
-                            ) : error ? (
-                                <Text mt={3} color="red.400">
-                                    {error}
-                                </Text>
-                            ) : (
-                                <AssessmentList assessments={assessments} />
-                            )}
+                            <AssessmentsContainer
+                                endpoint={`/api/assessments/my/${type}?${sp.toString()}`}
+                                credentials={true}
+                            />
                         </TabPanel>
                         <TabPanel>
-                            {loading ? (
-                                <Flex
-                                    alignItems={"center"}
-                                    justifyContent="center"
-                                    h={"200px"}
-                                >
-                                    <Spinner />
-                                </Flex>
-                            ) : error ? (
-                                <Text mt={3} color="red.400">
-                                    {error}
-                                </Text>
-                            ) : (
-                                <AssessmentList assessments={assessments} />
-                            )}
+                            <AssessmentsContainer
+                                endpoint={`/api/assessments/my/${type}?${sp.toString()}`}
+                                credentials={true}
+                            />
+                        </TabPanel>
+                        <TabPanel>
+                            <AssessmentsContainer
+                                endpoint={`/api/assessments/my/${type}?${sp.toString()}`}
+                                credentials={true}
+                            />
+                        </TabPanel>
+                        <TabPanel>
+                            <AssessmentsContainer
+                                endpoint={`/api/assessments/my/${type}?${sp.toString()}`}
+                                credentials={true}
+                            />
                         </TabPanel>
                     </TabPanels>
                 </Tabs>
