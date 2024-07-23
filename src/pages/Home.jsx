@@ -6,6 +6,7 @@ import SortMenu from "../components/SortMenu";
 import HomeSearchbar from "../components/HomeSearchbar";
 import AssessmentsContainer from "../components/AssessmentsContainer";
 import { useSearchParams } from "react-router-dom";
+import Footer from "../components/Footer";
 
 export default function Home() {
     const { colorMode } = useColorMode();
@@ -14,7 +15,7 @@ export default function Home() {
     return (
         <>
             <Navbar />
-            <Box p={4} mt={8} maxW="85vw" mx={"auto"}>
+            <Box p={4} mt={8} maxW="85vw" mx={"auto"} minH="100vh">
                 <Flex alignItems="center" gap="5" mb={12}>
                     <Heading fontWeight={700} fontSize={"4xl"}>
                         Home
@@ -36,6 +37,7 @@ export default function Home() {
                     endpoint={`/api/assessments?${sp.toString()}`}
                 />
             </Box>
+            <Footer />
         </>
     );
 }

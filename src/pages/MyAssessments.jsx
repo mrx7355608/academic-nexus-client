@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
     Box,
     Flex,
@@ -11,13 +11,14 @@ import {
     Tab,
     TabList,
 } from "@chakra-ui/react";
-import Navbar from "../components/Navbar";
 import {
     Link,
     useNavigate,
     useParams,
     useSearchParams,
 } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import MyAssessmentsFilterModal from "../components/Modals/MyAssessmentsFilterModal";
 import AssessmentsContainer from "../components/AssessmentsContainer";
 import useUser from "../states/user";
@@ -41,7 +42,7 @@ export default function MyAssessments() {
     return (
         <>
             <Navbar />
-            <Box p={4} mt={8} maxW="85vw" mx={"auto"}>
+            <Box p={4} mt={8} maxW="85vw" mx={"auto"} minH="100vh">
                 <Flex alignItems="center" gap="5" mb={12}>
                     <Heading fontWeight={700} fontSize={"4xl"}>
                         My Assessments
@@ -110,6 +111,7 @@ export default function MyAssessments() {
                     </TabPanels>
                 </Tabs>
             </Box>
+            <Footer />
         </>
     );
 }

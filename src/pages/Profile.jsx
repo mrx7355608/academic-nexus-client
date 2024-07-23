@@ -8,14 +8,9 @@ import {
     useColorMode,
 } from "@chakra-ui/react";
 import useUser from "../states/user";
-import {
-    FaEnvelope,
-    FaFacebook,
-    FaInstagram,
-    FaLinkedinIn,
-    FaTwitter,
-} from "react-icons/fa";
+import { FaEnvelope } from "react-icons/fa";
 import { PiCertificateFill } from "react-icons/pi";
+import Footer from "../components/Footer";
 
 export default function Profile() {
     const { colorMode } = useColorMode();
@@ -24,7 +19,7 @@ export default function Profile() {
     return (
         <>
             <Navbar />
-            <Box p={4} mt={8} maxW="80vw" mx={"auto"}>
+            <Box p={4} mt={8} maxW="80vw" mx={"auto"} minH="100vh">
                 <Flex alignItems="center" gap="5" mb={12}>
                     <Heading fontWeight={700} fontSize={"4xl"}>
                         Profile
@@ -57,6 +52,7 @@ export default function Profile() {
                     )}
                 </Flex>
             </Box>
+            <Footer />
         </>
     );
 }

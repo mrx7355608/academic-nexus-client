@@ -11,6 +11,7 @@ import Navbar from "../components/Navbar";
 import { useSearchParams } from "react-router-dom";
 import useToastUtils from "../hooks/useToastUtils";
 import SearchList from "../components/SearchList";
+import Footer from "../components/Footer";
 
 export default function Search() {
     // eslint-disable-next-line
@@ -36,7 +37,7 @@ export default function Search() {
     return (
         <>
             <Navbar />
-            <Box p={4} mt={8} maxW="85vw" mx={"auto"}>
+            <Box p={4} mt={8} maxW="85vw" mx={"auto"} minH="100vh">
                 <Flex alignItems="center" gap="5" mb={12}>
                     <Heading fontWeight={700} fontSize={"4xl"}>
                         Search
@@ -66,6 +67,7 @@ export default function Search() {
                     <SearchList searchResults={searchResults} />
                 )}
             </Box>
+            <Footer />
         </>
     );
 }

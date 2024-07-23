@@ -20,6 +20,7 @@ import CloudinaryUploadWidget from "../components/upload-page/CloudinaryUploadWi
 import PublicPrivateMenu from "../components/upload-page/PublicPrivateMenu";
 import SubjectMenu from "../components/upload-page/SubjectMenu";
 import UploadType from "../components/upload-page/UploadType";
+import Footer from "../components/Footer";
 
 export default function Upload() {
     const { colorMode } = useColorMode();
@@ -48,7 +49,7 @@ export default function Upload() {
     return (
         <>
             <Navbar />
-            <Box p={4} mt={8} maxW="80vw" mx={"auto"}>
+            <Box p={4} my={8} maxW="80vw" mx={"auto"}>
                 {/* Upload Heading */}
                 <Flex alignItems="center" gap="5" mb={12}>
                     <Heading fontWeight={700} fontSize={"4xl"}>
@@ -113,6 +114,7 @@ export default function Upload() {
                     </Button>
                 </Flex>
             </Box>
+            <Footer />
         </>
     );
 

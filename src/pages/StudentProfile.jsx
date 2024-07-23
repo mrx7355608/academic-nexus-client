@@ -11,6 +11,7 @@ import {
 import { useState, useEffect } from "react";
 import ProfileBox from "../components/profile/ProfileBox";
 import { useParams } from "react-router-dom";
+import Footer from "../components/Footer";
 
 export default function StudentProfile() {
     const { colorMode } = useColorMode();
@@ -39,7 +40,7 @@ export default function StudentProfile() {
     return (
         <>
             <Navbar />
-            <Box p={4} mt={8} maxW="80vw" mx={"auto"}>
+            <Box p={4} mt={8} maxW="80vw" mx={"auto"} minH="100vh">
                 <Flex alignItems="center" gap="5" mb={12}>
                     <Heading fontWeight={700} fontSize={"4xl"}>
                         Student Profile
@@ -63,6 +64,7 @@ export default function StudentProfile() {
                     <ProfileBox user={student} />
                 )}
             </Box>
+            <Footer />
         </>
     );
 }
