@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 import ProfileBox from "../components/profile/ProfileBox";
 import { useParams } from "react-router-dom";
 import Footer from "../components/Footer";
+import PageHeading from "../components/PageHeading";
 
 export default function StudentProfile() {
     const { colorMode } = useColorMode();
@@ -40,16 +41,7 @@ export default function StudentProfile() {
     return (
         <>
             <Flex alignItems="center" gap="5" mb={12}>
-                <Heading fontWeight={700} fontSize={"4xl"}>
-                    Student Profile
-                </Heading>
-                <Divider
-                    w="full"
-                    bg={colorMode === "light" ? "gray" : "gray.800"}
-                    rounded="full"
-                    h="2px"
-                    flex={1}
-                />
+                <PageHeading title={"Student Profile"} />
             </Flex>
 
             {loadingStudent ? (

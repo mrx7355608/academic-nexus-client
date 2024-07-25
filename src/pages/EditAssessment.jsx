@@ -18,6 +18,7 @@ import Navbar from "../components/Navbar";
 import PublicPrivateMenu from "../components/upload-page/PublicPrivateMenu";
 import SubjectMenu from "../components/upload-page/SubjectMenu";
 import UploadType from "../components/upload-page/UploadType";
+import PageHeading from "../components/PageHeading";
 
 export default function EditAssessment() {
     const { colorMode } = useColorMode();
@@ -65,15 +66,7 @@ export default function EditAssessment() {
         <>
             {/* Heading */}
             <Flex alignItems="center" gap="5" mb={12}>
-                <Heading fontWeight={700} fontSize={"4xl"}>
-                    Edit
-                </Heading>
-                <Divider
-                    w="full"
-                    bg={colorMode === "light" ? "gray" : "gray.800"}
-                    rounded="full"
-                    h="2px"
-                />
+                <PageHeading title={"Edit Assessment"} />
             </Flex>
 
             {fetching ? (

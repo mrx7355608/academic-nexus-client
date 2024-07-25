@@ -36,38 +36,30 @@ export default function Search() {
 
     return (
         <>
-            <Navbar />
-            <Box p={4} mt={8} maxW="85vw" mx={"auto"} minH="100vh">
-                <Flex alignItems="center" gap="5" mb={12}>
-                    <Heading fontWeight={700} fontSize={"4xl"}>
-                        Search
-                    </Heading>
-                    <Divider
-                        w="full"
-                        bg={colorMode === "light" ? "gray" : "gray.800"}
-                        rounded="full"
-                        h="2px"
-                        flex="1"
-                    />
-                </Flex>
-
-                <Heading fontWeight={700} fontSize={"2xl"} mb={12}>
-                    Showing results for "{searchParams.get("sname")}"
+            <Flex alignItems="center" gap="5" mb={12}>
+                <Heading fontWeight={700} fontSize={"4xl"}>
+                    Search
                 </Heading>
+                <Divider
+                    w="full"
+                    bg={colorMode === "light" ? "gray" : "gray.800"}
+                    rounded="full"
+                    h="2px"
+                    flex="1"
+                />
+            </Flex>
 
-                {loading ? (
-                    <Flex
-                        alignItems={"center"}
-                        justifyContent="center"
-                        h={"200px"}
-                    >
-                        <Spinner />
-                    </Flex>
-                ) : (
-                    <SearchList searchResults={searchResults} />
-                )}
-            </Box>
-            <Footer />
+            <Heading fontWeight={700} fontSize={"2xl"} mb={12}>
+                Showing results for "{searchParams.get("sname")}"
+            </Heading>
+
+            {loading ? (
+                <Flex alignItems={"center"} justifyContent="center" h={"200px"}>
+                    <Spinner />
+                </Flex>
+            ) : (
+                <SearchList searchResults={searchResults} />
+            )}
         </>
     );
 }

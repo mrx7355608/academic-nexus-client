@@ -16,6 +16,7 @@ import Footer from "../components/Footer";
 import MyAssessmentsFilterModal from "../components/Modals/MyAssessmentsFilterModal";
 import useUser from "../states/user";
 import useToastUtils from "../hooks/useToastUtils";
+import PageHeading from "../components/PageHeading";
 
 export default function MyAssessments() {
     const { colorMode } = useColorMode();
@@ -61,16 +62,7 @@ export default function MyAssessments() {
     return (
         <>
             <Flex alignItems="center" gap="5" mb={12}>
-                <Heading fontWeight={700} fontSize={"4xl"}>
-                    My Assessments
-                </Heading>
-                <Divider
-                    w="full"
-                    bg={colorMode === "light" ? "gray" : "gray.800"}
-                    rounded="full"
-                    h="2px"
-                    flex={1}
-                />
+                <PageHeading title={"My Assessments"} />
                 <MyAssessmentsFilterModal />
             </Flex>
 

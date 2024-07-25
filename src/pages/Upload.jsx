@@ -21,6 +21,7 @@ import PublicPrivateMenu from "../components/upload-page/PublicPrivateMenu";
 import SubjectMenu from "../components/upload-page/SubjectMenu";
 import UploadType from "../components/upload-page/UploadType";
 import Footer from "../components/Footer";
+import PageHeading from "../components/PageHeading";
 
 export default function Upload() {
     const { colorMode } = useColorMode();
@@ -50,15 +51,7 @@ export default function Upload() {
         <>
             {/* Upload Heading */}
             <Flex alignItems="center" gap="5" mb={12}>
-                <Heading fontWeight={700} fontSize={"4xl"}>
-                    Upload
-                </Heading>
-                <Divider
-                    w="full"
-                    bg={colorMode === "light" ? "gray" : "gray.800"}
-                    rounded="full"
-                    h="2px"
-                />
+                <PageHeading title={"Upload"} />
             </Flex>
 
             {/* Upload Form */}

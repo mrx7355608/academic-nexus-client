@@ -7,23 +7,15 @@ import HomeSearchbar from "../components/HomeSearchbar";
 import AssessmentsContainer from "../components/AssessmentsContainer";
 import { useSearchParams } from "react-router-dom";
 import Footer from "../components/Footer";
+import PageHeading from "../components/PageHeading";
 
 export default function Home() {
-    const { colorMode } = useColorMode();
     const [sp, setSp] = useSearchParams();
 
     return (
         <>
             <Flex alignItems="center" gap="5" mb={12}>
-                <Heading fontWeight={700} fontSize={"4xl"}>
-                    Home
-                </Heading>
-                <Divider
-                    w="full"
-                    bg={colorMode === "light" ? "gray" : "gray.800"}
-                    rounded="full"
-                    h="2px"
-                />
+                <PageHeading title="Home" />
                 <Flex alignItems="center" gap={1}>
                     <SortMenu />
                     <FilterModal />

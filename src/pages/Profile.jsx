@@ -11,6 +11,7 @@ import useUser from "../states/user";
 import { FaEnvelope } from "react-icons/fa";
 import { PiCertificateFill } from "react-icons/pi";
 import Footer from "../components/Footer";
+import PageHeading from "../components/PageHeading";
 
 export default function Profile() {
     const { colorMode } = useColorMode();
@@ -19,15 +20,7 @@ export default function Profile() {
     return (
         <>
             <Flex alignItems="center" gap="5" mb={12}>
-                <Heading fontWeight={700} fontSize={"4xl"}>
-                    Profile
-                </Heading>
-                <Divider
-                    w="full"
-                    bg={colorMode === "light" ? "gray" : "gray.800"}
-                    rounded="full"
-                    h="2px"
-                />
+                <PageHeading title={"Profile"} />
             </Flex>
 
             <Flex alignItems={"center"}>

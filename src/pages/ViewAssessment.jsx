@@ -18,6 +18,7 @@ import useToastUtils from "../hooks/useToastUtils";
 import useUser from "../states/user";
 import DownloadModal from "../components/Modals/DownloadModal";
 import DocxViewer from "../components/DocxViewer";
+import { PiAirplaneTaxiing } from "react-icons/pi";
 
 export default function ViewAssessment() {
     const { colorMode } = useColorMode();
@@ -47,15 +48,7 @@ export default function ViewAssessment() {
     return (
         <>
             <Flex alignItems="center" gap="5" mb={12}>
-                <Heading fontWeight={700} fontSize={"4xl"}>
-                    View Assessment
-                </Heading>
-                <Divider
-                    flex={1}
-                    bg={colorMode === "light" ? "gray" : "gray.800"}
-                    rounded="full"
-                    h="2px"
-                />
+                <PageHeading title={"View Assessment"} />
             </Flex>
             {loading ? (
                 <Spinner />
