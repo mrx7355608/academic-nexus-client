@@ -40,11 +40,6 @@ export default function EditAssessment() {
     }, []);
 
     useEffect(() => {
-        if (!user) {
-            navigate("/");
-            return showErrorToast("Please login to continue");
-        }
-
         getAssessment(id).then(({ data, error }) => {
             if (error) {
                 setError(error);
@@ -58,7 +53,7 @@ export default function EditAssessment() {
             }
             setFetching(false);
         });
-    }, [user]);
+    }, []);
 
     return (
         <>

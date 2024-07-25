@@ -63,3 +63,39 @@ export const deleteAssessment = servicesWrapper(async (id) => {
         return { error: result.error };
     }
 });
+
+export const upvoteAssessment = servicesWrapper(async (id) => {
+    const options = {
+        method: "post",
+        credentials: "include",
+    };
+    const response = await fetch(
+        `${serverURL}/api/assessments/${id}/upvote`,
+        options,
+    );
+    const result = await response.json();
+
+    if (response.ok) {
+        return { data: result.data };
+    } else {
+        return { error: result.error };
+    }
+});
+
+export const downvoteAssessment = servicesWrapper(async (id) => {
+    const options = {
+        method: "post",
+        credentials: "include",
+    };
+    const response = await fetch(
+        `${serverURL}/api/assessments/${id}/downvote`,
+        options,
+    );
+    const result = await response.json();
+
+    if (response.ok) {
+        return { data: result.data };
+    } else {
+        return { error: result.error };
+    }
+});

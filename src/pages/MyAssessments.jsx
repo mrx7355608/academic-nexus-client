@@ -1,24 +1,14 @@
 import { useEffect, useState } from "react";
 import { Flex, Tabs, TabPanels, Tab, TabList } from "@chakra-ui/react";
-import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
+import { Link, Outlet, useParams } from "react-router-dom";
 import MyAssessmentsFilterModal from "../components/Modals/MyAssessmentsFilterModal";
-import useUser from "../states/user";
-import useToastUtils from "../hooks/useToastUtils";
 import PageHeading from "../components/PageHeading";
 
 export default function MyAssessments() {
-    const { showErrorToast } = useToastUtils();
     const { type } = useParams();
     const [tabIndex, setTabIndex] = useState(0);
-    const user = useUser((state) => state.user);
-    const navigate = useNavigate();
 
     useEffect(() => {
-        if (!user) {
-            showErrorToast("Please login to continue");
-            navigate("/");
-        }
-
         switch (type) {
             case "assignment":
                 setTabIndex(0);
@@ -44,7 +34,7 @@ export default function MyAssessments() {
                 setTabIndex(0);
                 break;
         }
-    }, [user, type]);
+    }, [type]);
 
     return (
         <>

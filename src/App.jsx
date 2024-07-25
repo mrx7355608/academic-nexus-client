@@ -17,6 +17,7 @@ import MyAssessments from "./pages/MyAssessments";
 import StudentProfile from "./pages/StudentProfile";
 import SubAssessmentsPage from "./pages/SubAssessmentsPage";
 import MainLayout from "./layouts/MainLayout";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const router = createBrowserRouter([
     {
@@ -29,7 +30,11 @@ const router = createBrowserRouter([
             },
             {
                 path: "/upload",
-                element: <Upload />,
+                element: (
+                    <ProtectedRoute>
+                        <Upload />
+                    </ProtectedRoute>
+                ),
             },
             {
                 path: "/login",
@@ -37,11 +42,19 @@ const router = createBrowserRouter([
             },
             {
                 path: "/profile",
-                element: <Profile />,
+                element: (
+                    <ProtectedRoute>
+                        <Profile />
+                    </ProtectedRoute>
+                ),
             },
             {
                 path: "/edit/:id",
-                element: <EditAssessment />,
+                element: (
+                    <ProtectedRoute>
+                        <EditAssessment />
+                    </ProtectedRoute>
+                ),
             },
             {
                 path: "/assessment/:id",
@@ -53,7 +66,11 @@ const router = createBrowserRouter([
             },
             {
                 path: "/my-assessments/:type",
-                element: <MyAssessments />,
+                element: (
+                    <ProtectedRoute>
+                        <MyAssessments />
+                    </ProtectedRoute>
+                ),
                 children: [
                     {
                         index: true,

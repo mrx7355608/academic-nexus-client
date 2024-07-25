@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import useUser from "../states/user";
 import { useNavigate } from "react-router-dom";
 import useToastUtils from "../hooks/useToastUtils";
@@ -40,13 +40,6 @@ export default function Upload() {
     const memoizedSetAssessment = useCallback((newVal) => {
         setAssessment(newVal);
     }, []);
-
-    useEffect(() => {
-        if (!user) {
-            navigate("/");
-            return showErrorToast("Please login to continue");
-        }
-    }, [user]);
 
     return (
         <>
