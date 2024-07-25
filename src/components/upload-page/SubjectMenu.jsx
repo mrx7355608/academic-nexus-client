@@ -8,10 +8,10 @@ import {
     MenuItem,
     useColorMode,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { FaBook } from "react-icons/fa";
 
-export default function SubjectMenu({ setAssessment, defaultSubject }) {
+export default memo(function SubjectMenu({ setAssessment, defaultSubject }) {
     const { colorMode } = useColorMode();
     const [selectedSubject, setSelectedSubject] = useState(null);
     const subjects = [
@@ -28,6 +28,7 @@ export default function SubjectMenu({ setAssessment, defaultSubject }) {
         "Philosophy and Critical Thinking",
         "Digital Logic Design",
     ];
+
     return (
         <Box w="full">
             <FormLabel>Select Subject:</FormLabel>
@@ -61,4 +62,4 @@ export default function SubjectMenu({ setAssessment, defaultSubject }) {
             </Menu>
         </Box>
     );
-}
+});

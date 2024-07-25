@@ -1,7 +1,7 @@
 import { FormLabel, Box, RadioGroup, Radio, Stack } from "@chakra-ui/react";
-import { useState } from "react";
+import { memo, useState } from "react";
 
-export default function UploadType({ setAssessment, defaultType }) {
+export default memo(function UploadType({ setAssessment, defaultType }) {
     const [value, setValue] = useState(defaultType || "quiz");
 
     return (
@@ -24,4 +24,4 @@ export default function UploadType({ setAssessment, defaultType }) {
             </RadioGroup>
         </Box>
     );
-}
+});

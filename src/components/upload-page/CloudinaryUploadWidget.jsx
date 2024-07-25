@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { Flex, Button, useColorMode } from "@chakra-ui/react";
 import { IoCameraSharp } from "react-icons/io5";
 import useToastUtils from "../../hooks/useToastUtils";
 
-export default function CloudinaryUploadWidget({ setAssessment }) {
+export default memo(function CloudinaryUploadWidget({ setAssessment }) {
     const cloudinaryRef = useRef();
     const widgetRef = useRef();
     const [isUploaded, setIsUploaded] = useState(false);
@@ -73,4 +73,4 @@ export default function CloudinaryUploadWidget({ setAssessment }) {
             </Button>
         </Flex>
     );
-}
+});

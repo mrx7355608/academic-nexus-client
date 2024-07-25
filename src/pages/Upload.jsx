@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useUser from "../states/user";
 import { useNavigate } from "react-router-dom";
 import useToastUtils from "../hooks/useToastUtils";
@@ -37,6 +37,10 @@ export default function Upload() {
         password: "",
     });
 
+    const memoizedSetAssessment = useCallback((newVal) => {
+        setAssessment(newVal);
+    }, []);
+
     useEffect(() => {
         if (!user) {
             navigate("/");
@@ -74,9 +78,9 @@ export default function Upload() {
                     />
                 </Box>
 
-                <SubjectMenu setAssessment={setAssessment} />
-                <UploadType setAssessment={setAssessment} />
-                <PublicPrivateMenu setAssessment={setAssessment} />
+                <SubjectMenu setAssessment={memoizedSetAssessment} />
+                <UploadType setAssessment={memoizedSetAssessment} />
+                <PublicPrivateMenu setAssessment={memoizedSetAssessment} />
 
                 <Box w="full">
                     <FormLabel>Password:</FormLabel>
@@ -92,7 +96,7 @@ export default function Upload() {
                         }}
                     />
                 </Box>
-                <CloudinaryUploadWidget setAssessment={setAssessment} />
+                <CloudinaryUploadWidget setAssessment={memoizedSetAssessment} />
                 <Button
                     w="full"
                     colorScheme="purple"

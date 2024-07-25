@@ -9,9 +9,10 @@ import {
     useColorMode,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { memo } from "react";
 import { IoMdEye } from "react-icons/io";
 
-export default function PublicPrivateMenu({ setAssessment, defaultIsPublic }) {
+export default memo(function PublicPrivateMenu({ setAssessment }) {
     const { colorMode } = useColorMode();
     const [isPublic, setIsPublic] = useState(true);
 
@@ -54,4 +55,4 @@ export default function PublicPrivateMenu({ setAssessment, defaultIsPublic }) {
             </Menu>
         </Box>
     );
-}
+});
