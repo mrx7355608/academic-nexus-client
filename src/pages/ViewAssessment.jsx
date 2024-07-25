@@ -18,31 +18,17 @@ import useUser from "../states/user";
 import DownloadModal from "../components/Modals/DownloadModal";
 import DocxViewer from "../components/DocxViewer";
 import PageHeading from "../components/PageHeading";
+import useFetch from "../hooks/useFetch";
 
 export default function ViewAssessment() {
     const { colorMode } = useColorMode();
     const { id } = useParams();
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [data, setData] = useState(null);
     const { showErrorToast, showSuccessToast } = useToastUtils();
     const [isUpvoting, setIsUpvoting] = useState(false);
     const [isDownvoting, setIsDownvoting] = useState(false);
     const user = useUser((state) => state.user);
 
-    useEffect(() => {
-        fetch(`${import.meta.env.VITE_SERVER_URL}/api/assessments/${id}`)
-            .then((resp) => resp.json())
-            .then((result) => {
-                if (result.ok) {
-                    setData(result.data);
-                } else {
-                    setError(result.error);
-                }
-            })
-            .catch(() => setError("An unexpected error occurred"))
-            .finally(() => setLoading(false));
-    }, []);
+    const { loading, result: data, error } = useFetch(`/api/assessments/${id}`);
 
     return (
         <>

@@ -1,30 +1,12 @@
-import { useState, useEffect } from "react";
 import { Text, Spinner, Flex } from "@chakra-ui/react";
 import AssessmentList from "./AssessmentList";
+import useFetch from "../hooks/useFetch";
 
 export default function AssessmentsContainer({
     endpoint,
     credentials = false,
 }) {
-    const [assessments, setAssessments] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState("");
-
-    useEffect(() => {
-        setLoading(true);
-        const url = `${import.meta.env.VITE_SERVER_URL}${endpoint}`;
-        console.log(url);
-        let options = {};
-        if (credentials) {
-            options.credentials = "include";
-        }
-
-        fetch(url, options)
-            .then((resp) => resp.json())
-            .then((data) => setAssessments(data.data))
-            .catch(() => setError("Unable to fetch assessments"))
-            .finally(() => setLoading(false));
-    }, [endpoint, credentials]);
+    const { loading, result, error } = useFetch(endpoint, credentials);
 
     return (
         <>
@@ -37,7 +19,7 @@ export default function AssessmentsContainer({
                     {error}
                 </Text>
             ) : (
-                <AssessmentList assessments={assessments} />
+                <AssessmentList assessments={result} />
             )}
         </>
     );

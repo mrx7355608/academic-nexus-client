@@ -1,35 +1,22 @@
-import { useEffect, useState } from "react";
 import {
     Flex,
     Heading,
     Divider,
     Spinner,
+    Text,
     useColorMode,
 } from "@chakra-ui/react";
 import { useSearchParams } from "react-router-dom";
-import useToastUtils from "../hooks/useToastUtils";
 import SearchList from "../components/SearchList";
+import useFetch from "../hooks/useFetch";
 
 export default function Search() {
     // eslint-disable-next-line
     const [searchParams, _setSearchParams] = useSearchParams();
-
-    const [searchResults, setSearchResults] = useState([]);
-    const [loading, setLoading] = useState(true);
     const { colorMode } = useColorMode();
-    const { showErrorToast } = useToastUtils();
-
-    useEffect(() => {
-        setLoading(true);
-        const serverURL = import.meta.env.VITE_SERVER_URL;
-        fetch(`${serverURL}/api/students/search?${searchParams.toString()}`)
-            .then((resp) => resp.json())
-            .then((data) => setSearchResults(data.data))
-            .catch(() => {
-                showErrorToast("Unable to fetch assessments");
-            })
-            .finally(() => setLoading(false));
-    }, [searchParams]);
+    const { loading, result, error } = useFetch(
+        `/api/students/search?${searchParams.toString()}`,
+    );
 
     return (
         <>
@@ -54,8 +41,12 @@ export default function Search() {
                 <Flex alignItems={"center"} justifyContent="center" h={"200px"}>
                     <Spinner />
                 </Flex>
+            ) : error ? (
+                <Text color="red.400" mt={5}>
+                    {error}
+                </Text>
             ) : (
-                <SearchList searchResults={searchResults} />
+                <SearchList searchResults={result} />
             )}
         </>
     );
