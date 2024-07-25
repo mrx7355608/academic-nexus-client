@@ -14,30 +14,26 @@ export default function Home() {
 
     return (
         <>
-            <Navbar />
-            <Box p={4} mt={8} maxW="85vw" mx={"auto"} minH="100vh">
-                <Flex alignItems="center" gap="5" mb={12}>
-                    <Heading fontWeight={700} fontSize={"4xl"}>
-                        Home
-                    </Heading>
-                    <Divider
-                        w="full"
-                        bg={colorMode === "light" ? "gray" : "gray.800"}
-                        rounded="full"
-                        h="2px"
-                    />
-                    <Flex alignItems="center" gap={1}>
-                        <SortMenu />
-                        <FilterModal />
-                        <HomeSearchbar />
-                    </Flex>
-                </Flex>
-
-                <AssessmentsContainer
-                    endpoint={`/api/assessments?${sp.toString()}`}
+            <Flex alignItems="center" gap="5" mb={12}>
+                <Heading fontWeight={700} fontSize={"4xl"}>
+                    Home
+                </Heading>
+                <Divider
+                    w="full"
+                    bg={colorMode === "light" ? "gray" : "gray.800"}
+                    rounded="full"
+                    h="2px"
                 />
-            </Box>
-            <Footer />
+                <Flex alignItems="center" gap={1}>
+                    <SortMenu />
+                    <FilterModal />
+                    <HomeSearchbar />
+                </Flex>
+            </Flex>
+
+            <AssessmentsContainer
+                endpoint={`/api/assessments?${sp.toString()}`}
+            />
         </>
     );
 }

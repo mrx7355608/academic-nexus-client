@@ -39,32 +39,28 @@ export default function StudentProfile() {
 
     return (
         <>
-            <Navbar />
-            <Box p={4} mt={8} maxW="80vw" mx={"auto"} minH="100vh">
-                <Flex alignItems="center" gap="5" mb={12}>
-                    <Heading fontWeight={700} fontSize={"4xl"}>
-                        Student Profile
-                    </Heading>
-                    <Divider
-                        w="full"
-                        bg={colorMode === "light" ? "gray" : "gray.800"}
-                        rounded="full"
-                        h="2px"
-                        flex={1}
-                    />
-                </Flex>
+            <Flex alignItems="center" gap="5" mb={12}>
+                <Heading fontWeight={700} fontSize={"4xl"}>
+                    Student Profile
+                </Heading>
+                <Divider
+                    w="full"
+                    bg={colorMode === "light" ? "gray" : "gray.800"}
+                    rounded="full"
+                    h="2px"
+                    flex={1}
+                />
+            </Flex>
 
-                {loadingStudent ? (
-                    <Spinner />
-                ) : error ? (
-                    <Text mt={5} color="red.400">
-                        {error}
-                    </Text>
-                ) : (
-                    <ProfileBox user={student} />
-                )}
-            </Box>
-            <Footer />
+            {loadingStudent ? (
+                <Spinner />
+            ) : error ? (
+                <Text mt={5} color="red.400">
+                    {error}
+                </Text>
+            ) : (
+                <ProfileBox user={student} />
+            )}
         </>
     );
 }

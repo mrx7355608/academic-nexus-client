@@ -60,48 +60,44 @@ export default function MyAssessments() {
 
     return (
         <>
-            <Navbar />
-            <Box p={4} mt={8} maxW="85vw" mx={"auto"} minH="100vh">
-                <Flex alignItems="center" gap="5" mb={12}>
-                    <Heading fontWeight={700} fontSize={"4xl"}>
-                        My Assessments
-                    </Heading>
-                    <Divider
-                        w="full"
-                        bg={colorMode === "light" ? "gray" : "gray.800"}
-                        rounded="full"
-                        h="2px"
-                        flex={1}
-                    />
-                    <MyAssessmentsFilterModal />
-                </Flex>
+            <Flex alignItems="center" gap="5" mb={12}>
+                <Heading fontWeight={700} fontSize={"4xl"}>
+                    My Assessments
+                </Heading>
+                <Divider
+                    w="full"
+                    bg={colorMode === "light" ? "gray" : "gray.800"}
+                    rounded="full"
+                    h="2px"
+                    flex={1}
+                />
+                <MyAssessmentsFilterModal />
+            </Flex>
 
-                <Tabs index={tabIndex}>
-                    <TabList>
-                        <Link to="/my-assessments/assignment">
-                            <Tab>Assignments</Tab>
-                        </Link>
+            <Tabs index={tabIndex}>
+                <TabList>
+                    <Link to="/my-assessments/assignment">
+                        <Tab>Assignments</Tab>
+                    </Link>
 
-                        <Link to="/my-assessments/proposal">
-                            <Tab>Proposals</Tab>
-                        </Link>
-                        <Link to="/my-assessments/report">
-                            <Tab>Reports</Tab>
-                        </Link>
-                        <Link to="/my-assessments/labtask">
-                            <Tab>Lab tasks</Tab>
-                        </Link>
-                        <Link to="/my-assessments/quiz">
-                            <Tab>Quizzes</Tab>
-                        </Link>
-                    </TabList>
+                    <Link to="/my-assessments/proposal">
+                        <Tab>Proposals</Tab>
+                    </Link>
+                    <Link to="/my-assessments/report">
+                        <Tab>Reports</Tab>
+                    </Link>
+                    <Link to="/my-assessments/labtask">
+                        <Tab>Lab tasks</Tab>
+                    </Link>
+                    <Link to="/my-assessments/quiz">
+                        <Tab>Quizzes</Tab>
+                    </Link>
+                </TabList>
 
-                    <TabPanels>
-                        <Outlet />
-                    </TabPanels>
-                </Tabs>
-            </Box>
-            <Footer />
+                <TabPanels>
+                    <Outlet />
+                </TabPanels>
+            </Tabs>
         </>
     );
 }

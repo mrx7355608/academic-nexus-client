@@ -48,73 +48,69 @@ export default function Upload() {
 
     return (
         <>
-            <Navbar />
-            <Box p={4} my={8} maxW="80vw" mx={"auto"}>
-                {/* Upload Heading */}
-                <Flex alignItems="center" gap="5" mb={12}>
-                    <Heading fontWeight={700} fontSize={"4xl"}>
-                        Upload
-                    </Heading>
-                    <Divider
-                        w="full"
-                        bg={colorMode === "light" ? "gray" : "gray.800"}
-                        rounded="full"
-                        h="2px"
+            {/* Upload Heading */}
+            <Flex alignItems="center" gap="5" mb={12}>
+                <Heading fontWeight={700} fontSize={"4xl"}>
+                    Upload
+                </Heading>
+                <Divider
+                    w="full"
+                    bg={colorMode === "light" ? "gray" : "gray.800"}
+                    rounded="full"
+                    h="2px"
+                />
+            </Flex>
+
+            {/* Upload Form */}
+            <Flex
+                flexDirection="column"
+                alignItems="start"
+                justifyContent="center"
+                gap={9}
+                maxW="500px"
+                mx="auto"
+            >
+                <Box w="full">
+                    <FormLabel>Title:</FormLabel>
+                    <Input
+                        placeholder="Title"
+                        bg={colorMode === "light" ? "#d7d7d7" : "gray.700"}
+                        onChange={(e) => {
+                            setAssessment({
+                                ...assessment,
+                                title: e.target.value,
+                            });
+                        }}
                     />
-                </Flex>
+                </Box>
 
-                {/* Upload Form */}
-                <Flex
-                    flexDirection="column"
-                    alignItems="start"
-                    justifyContent="center"
-                    gap={9}
-                    maxW="500px"
-                    mx="auto"
+                <SubjectMenu setAssessment={setAssessment} />
+                <UploadType setAssessment={setAssessment} />
+                <PublicPrivateMenu setAssessment={setAssessment} />
+
+                <Box w="full">
+                    <FormLabel>Password:</FormLabel>
+                    <Input
+                        placeholder="Password"
+                        type="password"
+                        bg={colorMode === "light" ? "#d7d7d7" : "gray.700"}
+                        onChange={(e) => {
+                            setAssessment({
+                                ...assessment,
+                                password: e.target.value,
+                            });
+                        }}
+                    />
+                </Box>
+                <CloudinaryUploadWidget setAssessment={setAssessment} />
+                <Button
+                    w="full"
+                    colorScheme="purple"
+                    onClick={uploadAssessment}
                 >
-                    <Box w="full">
-                        <FormLabel>Title:</FormLabel>
-                        <Input
-                            placeholder="Title"
-                            bg={colorMode === "light" ? "#d7d7d7" : "gray.700"}
-                            onChange={(e) => {
-                                setAssessment({
-                                    ...assessment,
-                                    title: e.target.value,
-                                });
-                            }}
-                        />
-                    </Box>
-
-                    <SubjectMenu setAssessment={setAssessment} />
-                    <UploadType setAssessment={setAssessment} />
-                    <PublicPrivateMenu setAssessment={setAssessment} />
-
-                    <Box w="full">
-                        <FormLabel>Password:</FormLabel>
-                        <Input
-                            placeholder="Password"
-                            type="password"
-                            bg={colorMode === "light" ? "#d7d7d7" : "gray.700"}
-                            onChange={(e) => {
-                                setAssessment({
-                                    ...assessment,
-                                    password: e.target.value,
-                                });
-                            }}
-                        />
-                    </Box>
-                    <CloudinaryUploadWidget setAssessment={setAssessment} />
-                    <Button
-                        w="full"
-                        colorScheme="purple"
-                        onClick={uploadAssessment}
-                    >
-                        {loading ? <Spinner /> : "Upload Assessment"}
-                    </Button>
-                </Flex>
-            </Box>
-            <Footer />
+                    {loading ? <Spinner /> : "Upload Assessment"}
+                </Button>
+            </Flex>
         </>
     );
 

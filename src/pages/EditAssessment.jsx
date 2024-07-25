@@ -63,82 +63,71 @@ export default function EditAssessment() {
 
     return (
         <>
-            <Navbar />
-            <Box p={4} mt={8} maxW="80vw" mx={"auto"}>
-                {/* Heading */}
-                <Flex alignItems="center" gap="5" mb={12}>
-                    <Heading fontWeight={700} fontSize={"4xl"}>
-                        Edit
-                    </Heading>
-                    <Divider
-                        w="full"
-                        bg={colorMode === "light" ? "gray" : "gray.800"}
-                        rounded="full"
-                        h="2px"
-                    />
+            {/* Heading */}
+            <Flex alignItems="center" gap="5" mb={12}>
+                <Heading fontWeight={700} fontSize={"4xl"}>
+                    Edit
+                </Heading>
+                <Divider
+                    w="full"
+                    bg={colorMode === "light" ? "gray" : "gray.800"}
+                    rounded="full"
+                    h="2px"
+                />
+            </Flex>
+
+            {fetching ? (
+                <Flex alignItems={"center"} justifyContent="center" h={"200px"}>
+                    <Spinner />
                 </Flex>
+            ) : error ? (
+                <Text color="red.400">{error}</Text>
+            ) : (
+                <Flex
+                    flexDirection="column"
+                    alignItems="start"
+                    justifyContent="center"
+                    gap={9}
+                    maxW="500px"
+                    mx="auto"
+                >
+                    <Box w="full">
+                        <FormLabel>Title:</FormLabel>
+                        <Input
+                            placeholder="Title"
+                            bg={colorMode === "light" ? "#d7d7d7" : "gray.700"}
+                            value={assessment.title}
+                            onChange={(e) => {
+                                setAssessment({
+                                    ...assessment,
+                                    title: e.target.value,
+                                });
+                            }}
+                        />
+                    </Box>
 
-                {fetching ? (
-                    <Flex
-                        alignItems={"center"}
-                        justifyContent="center"
-                        h={"200px"}
+                    <SubjectMenu
+                        setAssessment={setAssessment}
+                        defaultSubject={assessment.subject}
+                    />
+                    <UploadType
+                        setAssessment={setAssessment}
+                        defaultType={assessment.type}
+                    />
+                    <PublicPrivateMenu
+                        setAssessment={setAssessment}
+                        defaultIsPublic={assessment.isPublic}
+                    />
+
+                    <Button
+                        w="full"
+                        colorScheme="purple"
+                        onClick={editAssessment}
                     >
-                        <Spinner />
-                    </Flex>
-                ) : error ? (
-                    <Text color="red.400">{error}</Text>
-                ) : (
-                    <Flex
-                        flexDirection="column"
-                        alignItems="start"
-                        justifyContent="center"
-                        gap={9}
-                        maxW="500px"
-                        mx="auto"
-                    >
-                        <Box w="full">
-                            <FormLabel>Title:</FormLabel>
-                            <Input
-                                placeholder="Title"
-                                bg={
-                                    colorMode === "light"
-                                        ? "#d7d7d7"
-                                        : "gray.700"
-                                }
-                                value={assessment.title}
-                                onChange={(e) => {
-                                    setAssessment({
-                                        ...assessment,
-                                        title: e.target.value,
-                                    });
-                                }}
-                            />
-                        </Box>
-
-                        <SubjectMenu
-                            setAssessment={setAssessment}
-                            defaultSubject={assessment.subject}
-                        />
-                        <UploadType
-                            setAssessment={setAssessment}
-                            defaultType={assessment.type}
-                        />
-                        <PublicPrivateMenu
-                            setAssessment={setAssessment}
-                            defaultIsPublic={assessment.isPublic}
-                        />
-
-                        <Button
-                            w="full"
-                            colorScheme="purple"
-                            onClick={editAssessment}
-                        >
-                            {loading ? <Spinner /> : "Save"}
-                        </Button>
-                    </Flex>
-                )}
-            </Box>
+                        {loading ? <Spinner /> : "Save"}
+                    </Button>
+                </Flex>
+            )}
         </>
     );
 

@@ -18,41 +18,37 @@ export default function Profile() {
 
     return (
         <>
-            <Navbar />
-            <Box p={4} mt={8} maxW="80vw" mx={"auto"} minH="100vh">
-                <Flex alignItems="center" gap="5" mb={12}>
-                    <Heading fontWeight={700} fontSize={"4xl"}>
-                        Profile
-                    </Heading>
-                    <Divider
-                        w="full"
-                        bg={colorMode === "light" ? "gray" : "gray.800"}
-                        rounded="full"
-                        h="2px"
-                    />
-                </Flex>
+            <Flex alignItems="center" gap="5" mb={12}>
+                <Heading fontWeight={700} fontSize={"4xl"}>
+                    Profile
+                </Heading>
+                <Divider
+                    w="full"
+                    bg={colorMode === "light" ? "gray" : "gray.800"}
+                    rounded="full"
+                    h="2px"
+                />
+            </Flex>
 
-                <Flex alignItems={"center"}>
-                    <Box rounded="full" bg="purple.500" w="20px" h="20px"></Box>
-                    <Divider bg="purple.500" w="20px" h="5px" mr={3} />
-                    <Heading color="purple.500">{user.fullname}</Heading>
-                </Flex>
-                <Flex alignItems={"center"} gap={3} mt={5}>
-                    <FaEnvelope size={18} />
-                    <Text fontSize="lg">{user.email}</Text>
-                </Flex>
-                <Flex alignItems={"center"} gap={3} mt={5}>
-                    <PiCertificateFill size={24} />
-                    {user.degree ? (
-                        <Text fontSize="lg">{user.degree}</Text>
-                    ) : (
-                        <Text as="i" textColor={"gray.500"}>
-                            No information provided
-                        </Text>
-                    )}
-                </Flex>
-            </Box>
-            <Footer />
+            <Flex alignItems={"center"}>
+                <Box rounded="full" bg="purple.500" w="20px" h="20px"></Box>
+                <Divider bg="purple.500" w="20px" h="5px" mr={3} />
+                <Heading color="purple.500">{user.fullname}</Heading>
+            </Flex>
+            <Flex alignItems={"center"} gap={3} mt={5}>
+                <FaEnvelope size={18} />
+                <Text fontSize="lg">{user.email}</Text>
+            </Flex>
+            <Flex alignItems={"center"} gap={3} mt={5}>
+                <PiCertificateFill size={24} />
+                {user.degree ? (
+                    <Text fontSize="lg">{user.degree}</Text>
+                ) : (
+                    <Text as="i" textColor={"gray.500"}>
+                        No information provided
+                    </Text>
+                )}
+            </Flex>
         </>
     );
 }

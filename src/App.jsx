@@ -16,49 +16,56 @@ import EditAssessment from "./pages/EditAssessment";
 import MyAssessments from "./pages/MyAssessments";
 import StudentProfile from "./pages/StudentProfile";
 import SubAssessmentsPage from "./pages/SubAssessmentsPage";
+import MainLayout from "./layouts/MainLayout";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Home />,
-    },
-    {
-        path: "/upload",
-        element: <Upload />,
-    },
-    {
-        path: "/login",
-        element: <Login />,
-    },
-    {
-        path: "/profile",
-        element: <Profile />,
-    },
-    {
-        path: "/edit/:id",
-        element: <EditAssessment />,
-    },
-    {
-        path: "/assessment/:id",
-        element: <ViewAssessment />,
-    },
-    {
-        path: "/search",
-        element: <Search />,
-    },
-    {
-        path: "/my-assessments/:type",
-        element: <MyAssessments />,
+        element: <MainLayout />,
         children: [
             {
                 index: true,
-                element: <SubAssessmentsPage />,
+                element: <Home />,
+            },
+            {
+                path: "/upload",
+                element: <Upload />,
+            },
+            {
+                path: "/login",
+                element: <Login />,
+            },
+            {
+                path: "/profile",
+                element: <Profile />,
+            },
+            {
+                path: "/edit/:id",
+                element: <EditAssessment />,
+            },
+            {
+                path: "/assessment/:id",
+                element: <ViewAssessment />,
+            },
+            {
+                path: "/search",
+                element: <Search />,
+            },
+            {
+                path: "/my-assessments/:type",
+                element: <MyAssessments />,
+                children: [
+                    {
+                        index: true,
+                        element: <SubAssessmentsPage />,
+                    },
+                ],
+            },
+            {
+                path: "/student-profile/:id",
+                element: <StudentProfile />,
             },
         ],
-    },
-    {
-        path: "/student-profile/:id",
-        element: <StudentProfile />,
     },
 ]);
 
