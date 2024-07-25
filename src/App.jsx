@@ -18,6 +18,7 @@ import StudentProfile from "./pages/StudentProfile";
 import SubAssessmentsPage from "./pages/SubAssessmentsPage";
 import MainLayout from "./layouts/MainLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
+import GuestRoute from "./components/GuestRoute";
 
 const router = createBrowserRouter([
     {
@@ -38,7 +39,11 @@ const router = createBrowserRouter([
             },
             {
                 path: "/login",
-                element: <Login />,
+                element: (
+                    <GuestRoute>
+                        <Login />
+                    </GuestRoute>
+                ),
             },
             {
                 path: "/profile",
