@@ -1,20 +1,10 @@
-import Navbar from "../components/Navbar";
-import {
-    Box,
-    Flex,
-    Heading,
-    Text,
-    Divider,
-    useColorMode,
-} from "@chakra-ui/react";
+import { Box, Flex, Heading, Text, Divider } from "@chakra-ui/react";
 import useUser from "../states/user";
 import { FaEnvelope } from "react-icons/fa";
 import { PiCertificateFill } from "react-icons/pi";
-import Footer from "../components/Footer";
 import PageHeading from "../components/PageHeading";
 
 export default function Profile() {
-    const { colorMode } = useColorMode();
     const user = useUser((state) => state.user);
 
     return (

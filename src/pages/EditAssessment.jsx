@@ -1,20 +1,17 @@
 import { useEffect, useState } from "react";
 import useUser from "../states/user";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useToastUtils from "../hooks/useToastUtils";
 import {
     Button,
     Box,
-    Heading,
     Flex,
-    Divider,
     useColorMode,
     Input,
     FormLabel,
     Spinner,
     Text,
 } from "@chakra-ui/react";
-import Navbar from "../components/Navbar";
 import PublicPrivateMenu from "../components/upload-page/PublicPrivateMenu";
 import SubjectMenu from "../components/upload-page/SubjectMenu";
 import UploadType from "../components/upload-page/UploadType";

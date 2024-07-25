@@ -5,9 +5,7 @@ import useToastUtils from "../hooks/useToastUtils";
 import {
     Button,
     Box,
-    Heading,
     Flex,
-    Divider,
     useColorMode,
     Input,
     FormLabel,
@@ -15,12 +13,10 @@ import {
 } from "@chakra-ui/react";
 
 // Components
-import Navbar from "../components/Navbar";
 import CloudinaryUploadWidget from "../components/upload-page/CloudinaryUploadWidget";
 import PublicPrivateMenu from "../components/upload-page/PublicPrivateMenu";
 import SubjectMenu from "../components/upload-page/SubjectMenu";
 import UploadType from "../components/upload-page/UploadType";
-import Footer from "../components/Footer";
 import PageHeading from "../components/PageHeading";
 
 export default function Upload() {

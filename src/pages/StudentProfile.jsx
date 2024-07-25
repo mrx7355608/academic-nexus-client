@@ -1,21 +1,10 @@
-import Navbar from "../components/Navbar";
-import {
-    Box,
-    Flex,
-    Heading,
-    Spinner,
-    Divider,
-    Text,
-    useColorMode,
-} from "@chakra-ui/react";
+import { Flex, Spinner, Text } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import ProfileBox from "../components/profile/ProfileBox";
 import { useParams } from "react-router-dom";
-import Footer from "../components/Footer";
 import PageHeading from "../components/PageHeading";
 
 export default function StudentProfile() {
-    const { colorMode } = useColorMode();
     const { id } = useParams();
     const [student, setStudent] = useState(null);
     const [error, setError] = useState("");

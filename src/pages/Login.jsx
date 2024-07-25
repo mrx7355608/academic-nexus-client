@@ -2,7 +2,6 @@ import {
     Button,
     Heading,
     VStack,
-    Text,
     useColorMode,
     Alert,
     AlertIcon,
@@ -12,8 +11,6 @@ import {
 import { FcGoogle } from "react-icons/fc";
 
 export default function Login() {
-    const { colorMode } = useColorMode();
-
     const handleGoogleSignIn = () => {
         const serverURL = import.meta.env.VITE_SERVER_URL;
         window.open(`${serverURL}/api/auth/google`, "_self");

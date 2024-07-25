@@ -1,16 +1,14 @@
-import { useEffect, useState } from "react";
-import { Box, Flex, Heading, Divider, useColorMode } from "@chakra-ui/react";
-import Navbar from "../components/Navbar";
+import { Flex } from "@chakra-ui/react";
 import FilterModal from "../components/Modals/FilterModal";
 import SortMenu from "../components/SortMenu";
 import HomeSearchbar from "../components/HomeSearchbar";
 import AssessmentsContainer from "../components/AssessmentsContainer";
 import { useSearchParams } from "react-router-dom";
-import Footer from "../components/Footer";
 import PageHeading from "../components/PageHeading";
 
 export default function Home() {
-    const [sp, setSp] = useSearchParams();
+    // eslint-disable-next-line
+    const [sp, _setSp] = useSearchParams();
 
     return (
         <>

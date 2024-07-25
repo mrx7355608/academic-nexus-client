@@ -1,25 +1,12 @@
 import { useEffect, useState } from "react";
-import {
-    Box,
-    Flex,
-    Heading,
-    Divider,
-    useColorMode,
-    Tabs,
-    TabPanels,
-    Tab,
-    TabList,
-} from "@chakra-ui/react";
+import { Flex, Tabs, TabPanels, Tab, TabList } from "@chakra-ui/react";
 import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import MyAssessmentsFilterModal from "../components/Modals/MyAssessmentsFilterModal";
 import useUser from "../states/user";
 import useToastUtils from "../hooks/useToastUtils";
 import PageHeading from "../components/PageHeading";
 
 export default function MyAssessments() {
-    const { colorMode } = useColorMode();
     const { showErrorToast } = useToastUtils();
     const { type } = useParams();
     const [tabIndex, setTabIndex] = useState(0);

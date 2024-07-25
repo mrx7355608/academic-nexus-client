@@ -11,14 +11,13 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Navbar from "../components/Navbar";
 import PdfViewer from "../components/pdf-viewer/PdfViewer";
 import { FaCircleArrowUp, FaCircleArrowDown } from "react-icons/fa6";
 import useToastUtils from "../hooks/useToastUtils";
 import useUser from "../states/user";
 import DownloadModal from "../components/Modals/DownloadModal";
 import DocxViewer from "../components/DocxViewer";
-import { PiAirplaneTaxiing } from "react-icons/pi";
+import PageHeading from "../components/PageHeading";
 
 export default function ViewAssessment() {
     const { colorMode } = useColorMode();

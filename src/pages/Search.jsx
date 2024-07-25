@@ -1,17 +1,14 @@
 import { useEffect, useState } from "react";
 import {
-    Box,
     Flex,
     Heading,
     Divider,
     Spinner,
     useColorMode,
 } from "@chakra-ui/react";
-import Navbar from "../components/Navbar";
 import { useSearchParams } from "react-router-dom";
 import useToastUtils from "../hooks/useToastUtils";
 import SearchList from "../components/SearchList";
-import Footer from "../components/Footer";
 
 export default function Search() {
     // eslint-disable-next-line
