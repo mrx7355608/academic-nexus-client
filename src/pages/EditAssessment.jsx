@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import useUser from "../states/user";
 import { useNavigate, useParams } from "react-router-dom";
 import useToastUtils from "../hooks/useToastUtils";
@@ -33,6 +33,11 @@ export default function EditAssessment() {
     });
     const [err, setError] = useState("");
     const [fetching, setFetching] = useState(true);
+
+    // Use callback hook to avoid re-renders
+    const memoizedSetAssessment = useCallback((newVal) => {
+        setAssessment(newVal);
+    }, []);
 
     useEffect(() => {
         if (!user) {
@@ -93,15 +98,15 @@ export default function EditAssessment() {
                     </Box>
 
                     <SubjectMenu
-                        setAssessment={setAssessment}
+                        setAssessment={memoizedSetAssessment}
                         defaultSubject={assessment.subject}
                     />
                     <UploadType
-                        setAssessment={setAssessment}
+                        setAssessment={memoizedSetAssessment}
                         defaultType={assessment.type}
                     />
                     <PublicPrivateMenu
-                        setAssessment={setAssessment}
+                        setAssessment={memoizedSetAssessment}
                         defaultIsPublic={assessment.isPublic}
                     />
 
