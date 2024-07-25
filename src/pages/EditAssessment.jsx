@@ -16,6 +16,7 @@ import PublicPrivateMenu from "../components/upload-page/PublicPrivateMenu";
 import SubjectMenu from "../components/upload-page/SubjectMenu";
 import UploadType from "../components/upload-page/UploadType";
 import PageHeading from "../components/PageHeading";
+import { editAssessment, getAssessment } from "../services/assessment.services";
 
 export default function EditAssessment() {
     const { colorMode } = useColorMode();
@@ -30,7 +31,7 @@ export default function EditAssessment() {
         isPublic: true,
         type: "quiz",
     });
-    const [error, setError] = useState("");
+    const [err, setError] = useState("");
     const [fetching, setFetching] = useState(true);
 
     useEffect(() => {
@@ -39,24 +40,19 @@ export default function EditAssessment() {
             return showErrorToast("Please login to continue");
         }
 
-        fetch(`${import.meta.env.VITE_SERVER_URL}/api/assessments/${id}`)
-            .then((resp) => {
-                if (resp.ok) {
-                    return resp.json();
-                } else {
-                    resp.json().then((result) => setError(result.error));
-                }
-            })
-            .then(({ data }) => {
+        getAssessment(id).then(({ data, error }) => {
+            if (error) {
+                setError(error);
+            } else {
                 setAssessment({
                     title: data.title,
                     subject: data.subject,
                     isPublic: data.isPublic,
                     type: data.type,
                 });
-            })
-            .catch(() => setError("An un-expected error occurred"))
-            .finally(() => setFetching(false));
+            }
+            setFetching(false);
+        });
     }, [user]);
 
     return (
@@ -70,8 +66,8 @@ export default function EditAssessment() {
                 <Flex alignItems={"center"} justifyContent="center" h={"200px"}>
                     <Spinner />
                 </Flex>
-            ) : error ? (
-                <Text color="red.400">{error}</Text>
+            ) : err ? (
+                <Text color="red.400">{err}</Text>
             ) : (
                 <Flex
                     flexDirection="column"
@@ -109,11 +105,7 @@ export default function EditAssessment() {
                         defaultIsPublic={assessment.isPublic}
                     />
 
-                    <Button
-                        w="full"
-                        colorScheme="purple"
-                        onClick={editAssessment}
-                    >
+                    <Button w="full" colorScheme="purple" onClick={edit}>
                         {loading ? <Spinner /> : "Save"}
                     </Button>
                 </Flex>
@@ -121,31 +113,15 @@ export default function EditAssessment() {
         </>
     );
 
-    async function editAssessment() {
-        try {
-            setLoading(true);
-
-            const serverURL = import.meta.env.VITE_SERVER_URL;
-            const response = await fetch(`${serverURL}/api/assessments/${id}`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(assessment),
-                credentials: "include",
-            });
-            const result = await response.json();
-
-            if (response.ok) {
-                showSuccessToast("Assessment has been updated");
-                navigate("/");
-            } else {
-                showErrorToast(result.error);
-            }
-        } catch (err) {
-            showErrorToast("An error occurred");
-        } finally {
-            setLoading(false);
+    async function edit() {
+        setLoading(true);
+        const { data, error } = await editAssessment(id, assessment);
+        if (data) {
+            showSuccessToast("Assessment has been updated");
+            navigate("/");
+        } else {
+            showErrorToast(error);
         }
+        setLoading(false);
     }
 }
