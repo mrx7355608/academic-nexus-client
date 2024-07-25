@@ -3,6 +3,7 @@ import { useState } from "react";
 import { HiDotsVertical } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import useToastUtils from "../hooks/useToastUtils";
+import { deleteAssessment } from "../services/assessment.services";
 import useAssessments from "../states/assessments";
 
 // eslint-disable-next-line
@@ -28,35 +29,22 @@ export default function AssessmentMenu({ id }) {
                     <MenuItem>Edit</MenuItem>
                 </Link>
                 <MenuItem>Change password</MenuItem>
-                <MenuItem textColor="red.400" onClick={deleteAssessment}>
+                <MenuItem textColor="red.400" onClick={del}>
                     {loading ? "Deleting..." : "Delete"}
                 </MenuItem>
             </MenuList>
         </Menu>
     );
 
-    async function deleteAssessment() {
-        try {
-            setLoading(true);
-            const options = {
-                method: "delete",
-                credentials: "include",
-            };
-            const response = await fetch(
-                `${import.meta.env.VITE_SERVER_URL}/api/assessments/${id}`,
-                options,
-            );
-            if (!response.ok) {
-                const result = await response.json();
-                return showErrorToast(result.error);
-            }
-
-            removeAssessment(id);
-            showSuccessToast("Assessment has been deleted");
-        } catch (err) {
-            showErrorToast("An un-expected error occurred");
-        } finally {
-            setLoading(false);
+    async function del() {
+        setLoading(true);
+        const { error } = await deleteAssessment(id);
+        if (error) {
+            return showErrorToast(error);
         }
+
+        removeAssessment(id);
+        showSuccessToast("Assessment has been deleted");
+        setLoading(false);
     }
 }

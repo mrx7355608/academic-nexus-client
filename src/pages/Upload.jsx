@@ -18,6 +18,7 @@ import PublicPrivateMenu from "../components/upload-page/PublicPrivateMenu";
 import SubjectMenu from "../components/upload-page/SubjectMenu";
 import UploadType from "../components/upload-page/UploadType";
 import PageHeading from "../components/PageHeading";
+import { createAssessment } from "../services/assessment.services";
 
 export default function Upload() {
     const { colorMode } = useColorMode();
@@ -104,40 +105,27 @@ export default function Upload() {
     );
 
     async function uploadAssessment() {
-        try {
-            setLoading(true);
+        setLoading(true);
 
-            if (!assessment.subject) {
-                return showErrorToast("Assessment must have a subject");
-            } else if (!assessment.fileURL) {
-                return showErrorToast(
-                    "You must add a file in order to upload assessment",
-                );
-            } else if (!assessment.title) {
-                return showErrorToast("Assessment must have a title");
-            }
-
-            const serverURL = import.meta.env.VITE_SERVER_URL;
-            const response = await fetch(`${serverURL}/api/assessments/`, {
-                method: "post",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(assessment),
-                credentials: "include",
-            });
-            const result = await response.json();
-
-            if (response.ok) {
-                showSuccessToast("Assessment uploaded successfully");
-                navigate("/");
-            } else {
-                showErrorToast(result.error);
-            }
-        } catch (err) {
-            showErrorToast("An error occurred");
-        } finally {
-            setLoading(false);
+        // Validate the data
+        if (!assessment.subject) {
+            return showErrorToast("Assessment must have a subject");
+        } else if (!assessment.fileURL) {
+            return showErrorToast(
+                "You must add a file in order to upload assessment",
+            );
+        } else if (!assessment.title) {
+            return showErrorToast("Assessment must have a title");
         }
+
+        // Make an api call to create an assessment
+        const { error } = await createAssessment(assessment);
+        if (error) {
+            showErrorToast(error);
+        } else {
+            showSuccessToast("Assessment uploaded successfully");
+            navigate("/");
+        }
+        setLoading(false);
     }
 }
