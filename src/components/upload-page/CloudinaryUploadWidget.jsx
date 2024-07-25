@@ -18,6 +18,8 @@ export default function CloudinaryUploadWidget({ setAssessment }) {
                 uploadPreset: import.meta.env.VITE_UPLOAD_PRESET,
                 maxFileSize: 2097152,
                 accept: "application/pdf, image/jpeg, image/png, application/vnd.openxmlformats-officedocument.wordprocessingml.document, image/jpg",
+                multiple: false,
+                maxFiles: 1,
             },
             function (_error, result) {
                 if (result.event === "success") {
