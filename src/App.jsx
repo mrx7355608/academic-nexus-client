@@ -15,6 +15,7 @@ import ViewAssessment from "./pages/ViewAssessment";
 import EditAssessment from "./pages/EditAssessment";
 import MyAssessments from "./pages/MyAssessments";
 import StudentProfile from "./pages/StudentProfile";
+import SubAssessmentsPage from "./pages/SubAssessmentsPage";
 
 const router = createBrowserRouter([
     {
@@ -48,6 +49,12 @@ const router = createBrowserRouter([
     {
         path: "/my-assessments/:type",
         element: <MyAssessments />,
+        children: [
+            {
+                index: true,
+                element: <SubAssessmentsPage />,
+            },
+        ],
     },
     {
         path: "/student-profile/:id",

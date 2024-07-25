@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
     Box,
     Flex,
@@ -6,38 +6,57 @@ import {
     Divider,
     useColorMode,
     Tabs,
-    TabPanel,
     TabPanels,
     Tab,
     TabList,
 } from "@chakra-ui/react";
-import {
-    Link,
-    useNavigate,
-    useParams,
-    useSearchParams,
-} from "react-router-dom";
+import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import MyAssessmentsFilterModal from "../components/Modals/MyAssessmentsFilterModal";
-import AssessmentsContainer from "../components/AssessmentsContainer";
 import useUser from "../states/user";
 import useToastUtils from "../hooks/useToastUtils";
 
 export default function MyAssessments() {
-    const { type } = useParams();
     const { colorMode } = useColorMode();
-    const [sp, _setSearchParams] = useSearchParams();
+    const { showErrorToast } = useToastUtils();
+    const { type } = useParams();
+    const [tabIndex, setTabIndex] = useState(0);
     const user = useUser((state) => state.user);
     const navigate = useNavigate();
-    const { showErrorToast } = useToastUtils();
 
     useEffect(() => {
         if (!user) {
             showErrorToast("Please login to continue");
             navigate("/");
         }
-    }, [user]);
+
+        switch (type) {
+            case "assignment":
+                setTabIndex(0);
+                break;
+
+            case "proposal":
+                setTabIndex(1);
+                break;
+
+            case "report":
+                setTabIndex(2);
+                break;
+
+            case "labtask":
+                setTabIndex(3);
+                break;
+
+            case "quiz":
+                setTabIndex(4);
+                break;
+
+            default:
+                setTabIndex(0);
+                break;
+        }
+    }, [user, type]);
 
     return (
         <>
@@ -57,7 +76,7 @@ export default function MyAssessments() {
                     <MyAssessmentsFilterModal />
                 </Flex>
 
-                <Tabs>
+                <Tabs index={tabIndex}>
                     <TabList>
                         <Link to="/my-assessments/assignment">
                             <Tab>Assignments</Tab>
@@ -78,36 +97,7 @@ export default function MyAssessments() {
                     </TabList>
 
                     <TabPanels>
-                        <TabPanel>
-                            <AssessmentsContainer
-                                endpoint={`/api/assessments/my/${type}?${sp.toString()}`}
-                                credentials={true}
-                            />
-                        </TabPanel>
-                        <TabPanel>
-                            <AssessmentsContainer
-                                endpoint={`/api/assessments/my/${type}?${sp.toString()}`}
-                                credentials={true}
-                            />
-                        </TabPanel>
-                        <TabPanel>
-                            <AssessmentsContainer
-                                endpoint={`/api/assessments/my/${type}?${sp.toString()}`}
-                                credentials={true}
-                            />
-                        </TabPanel>
-                        <TabPanel>
-                            <AssessmentsContainer
-                                endpoint={`/api/assessments/my/${type}?${sp.toString()}`}
-                                credentials={true}
-                            />
-                        </TabPanel>
-                        <TabPanel>
-                            <AssessmentsContainer
-                                endpoint={`/api/assessments/my/${type}?${sp.toString()}`}
-                                credentials={true}
-                            />
-                        </TabPanel>
+                        <Outlet />
                     </TabPanels>
                 </Tabs>
             </Box>
