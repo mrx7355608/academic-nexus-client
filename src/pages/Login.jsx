@@ -2,7 +2,6 @@ import {
     Button,
     Heading,
     VStack,
-    useColorMode,
     Alert,
     AlertIcon,
     AlertDescription,

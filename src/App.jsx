@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { lazy, useEffect, useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import useUser from "./states/user";
@@ -6,19 +6,19 @@ import MainSpinner from "./components/MainSpinner";
 
 // Pages
 // TODO: use lazy loading
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Search from "./pages/Search";
-import Upload from "./pages/Upload";
-import Profile from "./pages/Profile";
-import ViewAssessment from "./pages/ViewAssessment";
-import EditAssessment from "./pages/EditAssessment";
-import MyAssessments from "./pages/MyAssessments";
-import StudentProfile from "./pages/StudentProfile";
-import SubAssessmentsPage from "./pages/SubAssessmentsPage";
+const Home = lazy(() => import("./pages/Home"));
+const Login = lazy(() => import("./pages/Login"));
+const Search = lazy(() => import("./pages/Search"));
+const Upload = lazy(() => import("./pages/Upload"));
+const Profile = lazy(() => import("./pages/Profile"));
+const ViewAssessment = lazy(() => import("./pages/ViewAssessment"));
+const EditAssessment = lazy(() => import("./pages/EditAssessment"));
+const MyAssessments = lazy(() => import("./pages/MyAssessments"));
+const StudentProfile = lazy(() => import("./pages/StudentProfile"));
+const SubAssessmentsPage = lazy(() => import("./pages/SubAssessmentsPage"));
+const ProtectedRoute = lazy(() => import("./components/ProtectedRoute"));
+const GuestRoute = lazy(() => import("./components/GuestRoute"));
 import MainLayout from "./layouts/MainLayout";
-import ProtectedRoute from "./components/ProtectedRoute";
-import GuestRoute from "./components/GuestRoute";
 
 const router = createBrowserRouter([
     {

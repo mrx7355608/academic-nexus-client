@@ -2,13 +2,17 @@ import { Box } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Outlet } from "react-router-dom";
+import { Suspense } from "react";
+import MainSpinner from "../components/MainSpinner";
 
 export default function MainLayout() {
     return (
         <>
             <Navbar />
             <Box p={4} mt={8} maxW="85vw" mx={"auto"} minH="100vh">
-                <Outlet />
+                <Suspense fallback={<MainSpinner />}>
+                    <Outlet />
+                </Suspense>
             </Box>
             <Footer />
         </>
