@@ -21,7 +21,7 @@ export default function Login() {
             spacing={6}
             alignItems="start"
             justifyContent={"center"}
-            h={"100vh"}
+            h={"60vh"}
             maxWidth={"400px"}
             mx={"auto"}
         >

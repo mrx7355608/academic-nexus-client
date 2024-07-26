@@ -3,7 +3,7 @@ import AssessmentItem from "./AssessmentItem";
 
 export default function AssessmentList({ assessments }) {
     return (
-        <Flex flexWrap={"wrap"} gap={4}>
+        <Flex flexWrap={"wrap"} gap={4} mb={20}>
             {assessments.length > 0 ? (
                 assessments.map((a) => {
                     return <AssessmentItem key={a._id} data={a} />;

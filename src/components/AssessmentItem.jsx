@@ -12,7 +12,7 @@ export default function AssessmentItem({ data }) {
     const user = useUser((state) => state.user);
 
     return (
-        <Box p={4} borderRadius="md" flex="1" minW={"350px"} maxW={"400px"}>
+        <Box p={4} borderRadius="md" flex="1" minW={"350px"} maxW={"370px"}>
             <Flex
                 justifyContent="center"
                 alignItems="center"
