@@ -18,6 +18,7 @@ const StudentProfile = lazy(() => import("./pages/StudentProfile"));
 const SubAssessmentsPage = lazy(() => import("./pages/SubAssessmentsPage"));
 const ProtectedRoute = lazy(() => import("./components/ProtectedRoute"));
 const GuestRoute = lazy(() => import("./components/GuestRoute"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 import MainLayout from "./layouts/MainLayout";
 
 const router = createBrowserRouter([
@@ -88,6 +89,10 @@ const router = createBrowserRouter([
                 element: <StudentProfile />,
             },
         ],
+    },
+    {
+        path: "*",
+        element: <NotFound />,
     },
 ]);
 
