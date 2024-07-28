@@ -20,11 +20,13 @@ const ProtectedRoute = lazy(() => import("./components/ProtectedRoute"));
 const GuestRoute = lazy(() => import("./components/GuestRoute"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 import MainLayout from "./layouts/MainLayout";
+import ErrorPage from "./components/ErrorPage";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <MainLayout />,
+        errorElement: <ErrorPage />,
         children: [
             {
                 index: true,
@@ -88,11 +90,11 @@ const router = createBrowserRouter([
                 path: "/student-profile/:id",
                 element: <StudentProfile />,
             },
+            {
+                path: "*",
+                element: <NotFound />,
+            },
         ],
-    },
-    {
-        path: "*",
-        element: <NotFound />,
     },
 ]);
 
@@ -104,8 +106,7 @@ function App() {
     useEffect(() => {
         async function getUser() {
             try {
-                const serverURL = import.meta.env.VITE_SERVER_URL;
-                const response = await fetch(`${serverURL}/api/students/me`, {
+                const response = await fetch("/api/students/me", {
                     credentials: "include",
                 });
                 const result = await response.json();

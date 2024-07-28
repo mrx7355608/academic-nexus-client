@@ -8,13 +8,9 @@ import {
     Box,
 } from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
+import { Link } from "react-router-dom";
 
 export default function Login() {
-    const handleGoogleSignIn = () => {
-        const serverURL = import.meta.env.VITE_SERVER_URL;
-        window.open(`${serverURL}/api/auth/google`, "_self");
-    };
-
     return (
         <VStack
             spacing={6}
@@ -36,18 +32,19 @@ export default function Login() {
                     </Box>
                 </Alert>
             </Box>
-            <Button
-                mt={4}
-                size="lg"
-                leftIcon={<FcGoogle size={20} />}
-                colorScheme="black"
-                variant="outline"
-                onClick={handleGoogleSignIn}
-                width="full"
-                rounded={"full"}
-            >
-                Continue with Google
-            </Button>
+            <a href={`${import.meta.env.VITE_SERVER_URL}/api/auth/google`}>
+                <Button
+                    mt={4}
+                    size="lg"
+                    leftIcon={<FcGoogle size={20} />}
+                    colorScheme="black"
+                    variant="outline"
+                    width="full"
+                    rounded={"full"}
+                >
+                    Continue with Google
+                </Button>
+            </a>
         </VStack>
     );
 }

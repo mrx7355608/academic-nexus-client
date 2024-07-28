@@ -1,5 +1,4 @@
 import { useCallback, useState } from "react";
-import useUser from "../states/user";
 import { useNavigate } from "react-router-dom";
 import useToastUtils from "../hooks/useToastUtils";
 import {
@@ -22,7 +21,6 @@ import { createAssessment } from "../services/assessment.services";
 
 export default function Upload() {
     const { colorMode } = useColorMode();
-    const user = useUser((state) => state.user);
     const navigate = useNavigate();
     const { showErrorToast, showSuccessToast } = useToastUtils();
     const [loading, setLoading] = useState(false);
@@ -102,8 +100,6 @@ export default function Upload() {
     );
 
     async function uploadAssessment() {
-        setLoading(true);
-
         // Validate the data
         if (!assessment.subject) {
             return showErrorToast("Assessment must have a subject");
@@ -114,6 +110,8 @@ export default function Upload() {
         } else if (!assessment.title) {
             return showErrorToast("Assessment must have a title");
         }
+
+        setLoading(true);
 
         // Make an api call to create an assessment
         const { error } = await createAssessment(assessment);

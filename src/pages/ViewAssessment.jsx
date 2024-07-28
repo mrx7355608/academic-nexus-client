@@ -62,17 +62,17 @@ export default function ViewAssessment() {
                             h="20px"
                         ></Box>
                         <Divider bg="purple.500" w="20px" h="5px" mr={4} />
-                        <Heading color="purple.500">{data?.title}</Heading>
+                        <Heading color="purple.500">{result.title}</Heading>
                     </Flex>
                     <Flex alignItems={"center"} gap={3} mt={5}>
                         <Image
-                            src={data?.author.profilePicture}
+                            src={result.author.profilePicture}
                             w={"35px"}
                             h={"35px"}
                             rounded="full"
                             objectFit={"cover"}
                         />
-                        <Text>{data?.author.fullname}</Text>
+                        <Text>{result.author.fullname}</Text>
                     </Flex>
                     <Text mt={4} mb={4}>
                         Posted on:{"  "}
@@ -83,7 +83,7 @@ export default function ViewAssessment() {
                                 colorMode === "dark" ? "gray.400" : "gray.600"
                             }
                         >
-                            {new Date(data?.createdAt).toDateString().slice(4)}
+                            {new Date(result.createdAt).toDateString().slice(4)}
                         </Text>{" "}
                     </Text>
 
@@ -125,18 +125,19 @@ export default function ViewAssessment() {
                             {isDownvoting ? <Spinner size="sm" /> : "Downvote"}
                         </Button>
                         <DownloadModal
-                            id={data?._id}
-                            fileName={`${data?.title}.${data?.fileExtension}`}
+                            id={result._id}
+                            fileName={`${result.title}.${result.fileExtension}`}
                         />
                     </Box>
 
+                    {/* File viewer */}
                     {data?.fileExtension === "pdf" ? (
-                        <PdfViewer id={data?._id} />
+                        <PdfViewer id={result._id} />
                     ) : data?.fileExtension === "docx" ? (
-                        <DocxViewer id={data?._id} />
+                        <DocxViewer id={result._id} />
                     ) : (
                         <Image
-                            src={`${import.meta.env.VITE_SERVER_URL}/api/assessments/view-assessment/${data?._id}`}
+                            src={`/api/assessments/view-assessment/${result._id}`}
                             w="full"
                             objectFit="cover"
                             rounded="lg"

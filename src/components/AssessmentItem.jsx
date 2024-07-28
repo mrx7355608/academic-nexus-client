@@ -7,7 +7,7 @@ import DownloadModal from "./Modals/DownloadModal";
 import AssessmentMenu from "./AssessmentMenu";
 import useUser from "../states/user";
 
-export default function AssessmentItem({ data }) {
+export default function AssessmentItem({ data, setAssessment }) {
     const { colorMode } = useColorMode();
     const user = useUser((state) => state.user);
 
@@ -38,7 +38,10 @@ export default function AssessmentItem({ data }) {
                     {data.subject}
                 </Text>
                 {user?._id === data.author._id && (
-                    <AssessmentMenu id={data._id} />
+                    <AssessmentMenu
+                        id={data._id}
+                        setAssessment={setAssessment}
+                    />
                 )}
             </Flex>
 

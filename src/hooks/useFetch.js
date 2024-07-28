@@ -6,11 +6,10 @@ export default function useFetch(endpoint, credentials = false) {
     const [error, setError] = useState("");
 
     useEffect(() => {
-        const url = `${import.meta.env.VITE_SERVER_URL}${endpoint}`;
         const options = {};
         if (credentials) options.credentials = "include";
 
-        fetch(url, options)
+        fetch(endpoint, options)
             .then(async (resp) => {
                 if (resp.ok) {
                     return resp.json();
