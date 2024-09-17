@@ -1,33 +1,35 @@
 import { useEffect, useState } from "react";
+import axiosInstance from "../axiosInstance";
 
-export default function useFetch(endpoint, credentials = false) {
+export default function useFetch(endpoint, withCredentials = false) {
     const [loading, setLoading] = useState(true);
-    const [result, setResult] = useState(null);
+    const [data, setData] = useState(null);
     const [error, setError] = useState("");
 
     useEffect(() => {
-        const options = {};
-        if (credentials) options.credentials = "include";
-
-        fetch(endpoint, options)
-            .then(async (resp) => {
-                if (resp.ok) {
-                    return resp.json();
+        const getData = async () => {
+            try {
+                const resp = await axiosInstance(endpoint, { withCredentials });
+                const status = resp.status;
+                if (status >= 400 && status < 500) {
+                    return setError(resp.data.error);
                 }
+                setData(resp.data.data);
+            } catch (err) {
+                setError("Something went wrong!");
+            } finally {
+                setLoading(false);
+            }
+        };
 
-                const r = await resp.json();
-                throw new Error(r.error);
-            })
-            .then(({ data }) => setResult(data))
-            .catch((err) => setError(err.message))
-            .finally(() => setLoading(false));
+        getData();
 
         return () => {
             setLoading(true);
             setError("");
-            setResult(null);
+            setData(null);
         };
-    }, [endpoint, credentials]);
+    }, [endpoint, withCredentials]);
 
-    return { loading, result, error };
+    return { loading, data, error };
 }
