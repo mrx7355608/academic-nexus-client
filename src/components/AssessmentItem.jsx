@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { FaVoteYea } from "react-icons/fa";
 import AssessmentMenu from "./AssessmentMenu";
 import useUser from "../states/user";
-import { SubjectTag } from "./ui";
+import { SubjectTag, Para } from "./ui";
 
 export default function AssessmentItem({ data, setAssessment }) {
     const { colorMode } = useColorMode();
@@ -15,6 +15,7 @@ export default function AssessmentItem({ data, setAssessment }) {
 
     return (
         <Box p={4} borderRadius="md" flex="1" minW={"350px"} maxW={"370px"}>
+            {/* FILE EXTENSION PREVIEW */}
             <Flex
                 justifyContent="center"
                 alignItems="center"
@@ -27,6 +28,7 @@ export default function AssessmentItem({ data, setAssessment }) {
                 </Text>
             </Flex>
 
+            {/* FILE TAG & MENU */}
             <Flex justifyContent={"space-between"} alignItems="center" mt={2}>
                 <SubjectTag subject={data.subject} />
                 {isOwner() && (
@@ -37,14 +39,10 @@ export default function AssessmentItem({ data, setAssessment }) {
                 )}
             </Flex>
 
-            <Text
-                fontWeight={600}
-                fontSize="md"
-                mt="2"
-                color={colorMode === "light" ? "gray.700" : "gray.100"}
-            >
-                {data.title}
-            </Text>
+            {/* FILE TITLE */}
+            <Para text={data.title} />
+
+            {/* FILE DATE & AUTHOR */}
             <Text
                 fontSize="sm"
                 color={colorMode === "light" ? "gray.600" : "gray.400"}
@@ -57,6 +55,7 @@ export default function AssessmentItem({ data, setAssessment }) {
                 - {new Date(data.createdAt).toDateString().slice(4)}
             </Text>
 
+            {/* FILE VOTES */}
             <Flex
                 mt={2}
                 fontSize={"sm"}
@@ -65,50 +64,22 @@ export default function AssessmentItem({ data, setAssessment }) {
                 gap={2}
             >
                 <FaVoteYea size={20} />
-                <Text
-                    ml="1"
-                    as="span"
-                    color={
-                        data.upvotes.length - data.downvotes.length > 0
-                            ? "green"
-                            : data.upvotes.length - data.downvotes.length < 0
-                              ? "red"
-                              : "gray"
-                    }
-                >
-                    {data.upvotes.length - data.downvotes.length}
-                </Text>
-                <Text
-                    ml={2}
-                    fontSize="sm"
-                    fontWeight="medium"
-                    px={3}
-                    py={0.5}
-                    w={"max-content"}
-                    rounded="full"
-                    color={colorMode === "light" ? "gray.700" : "gray.400"}
-                    bg={colorMode === "dark" ? "gray.700" : "#d7d7d7"}
-                >
-                    #{data.type}
-                </Text>
-            </Flex>
-
-            <Flex mt={3} gap={2} alignItems={"center"} justifyContent={"start"}>
+                <Para text={data.upvotes.length - data.downvotes.length} />
                 <Link to={`/assessment/${data.id}`}>
                     <Button
-                        px={2}
                         size={"sm"}
                         textDecor={"underline"}
-                        variant="ghost"
+                        variant="link"
                         color={colorMode === "light" ? "gray.700" : "gray.300"}
+                        ml={2}
                         leftIcon={
                             <IoMdEye
-                                size={20}
-                                style={{ marginRight: "-2px" }}
+                                size={18}
+                                style={{ marginRight: "-3px" }}
                             />
                         }
                     >
-                        View
+                        View file
                     </Button>
                 </Link>
             </Flex>
