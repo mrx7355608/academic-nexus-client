@@ -1,10 +1,11 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import FilterModal from "../components/Modals/FilterModal";
 import SortMenu from "../components/SortMenu";
 import HomeSearchbar from "../components/HomeSearchbar";
 import AssessmentsContainer from "../components/AssessmentsContainer";
 import { useSearchParams } from "react-router-dom";
 import PageHeading from "../components/PageHeading";
+import ErrorBoundary from "../components/ErrorBoundary";
 
 export default function Home() {
     // eslint-disable-next-line
@@ -21,7 +22,13 @@ export default function Home() {
                 </Flex>
             </Flex>
 
-            <AssessmentsContainer endpoint={`/api/files?${sp.toString()}`} />
+            <ErrorBoundary
+                fallback={<Text color={"red.500"}>Something went wrong!</Text>}
+            >
+                <AssessmentsContainer
+                    endpoint={`/api/files?${sp.toString()}`}
+                />
+            </ErrorBoundary>
         </>
     );
 }

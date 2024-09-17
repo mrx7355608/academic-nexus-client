@@ -101,7 +101,7 @@ export default function AssessmentItem({ data, setAssessment }) {
             </Flex>
 
             <Flex mt={3} gap={2} alignItems={"center"} justifyContent={"start"}>
-                <Link to={`/assessment/${data._id}`}>
+                <Link to={`/assessment/${data.id}`}>
                     <Button
                         px={2}
                         size={"sm"}

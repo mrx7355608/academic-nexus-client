@@ -6,7 +6,7 @@ export default function AssessmentsContainer({
     endpoint,
     credentials = false,
 }) {
-    const { loading, result, error } = useFetch(endpoint, credentials);
+    const { loading, data, error } = useFetch(endpoint, credentials);
 
     return (
         <>
@@ -19,7 +19,7 @@ export default function AssessmentsContainer({
                     {error}
                 </Text>
             ) : (
-                <AssessmentList assessments={result} />
+                <AssessmentList assessments={data} />
             )}
         </>
     );
