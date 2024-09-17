@@ -5,10 +5,13 @@ import { Link } from "react-router-dom";
 import { FaVoteYea } from "react-icons/fa";
 import AssessmentMenu from "./AssessmentMenu";
 import useUser from "../states/user";
+import { SubjectTag } from "./ui";
 
 export default function AssessmentItem({ data, setAssessment }) {
     const { colorMode } = useColorMode();
     const user = useUser((state) => state.user);
+
+    const isOwner = () => user?._id === data.author._id;
 
     return (
         <Box p={4} borderRadius="md" flex="1" minW={"350px"} maxW={"370px"}>
@@ -23,20 +26,10 @@ export default function AssessmentItem({ data, setAssessment }) {
                     {data.fileExtension.toUpperCase()}
                 </Text>
             </Flex>
+
             <Flex justifyContent={"space-between"} alignItems="center" mt={2}>
-                <Text
-                    fontSize="xs"
-                    fontWeight="medium"
-                    borderWidth={1}
-                    borderColor={"gray.500"}
-                    px={2}
-                    py={0.5}
-                    w={"max-content"}
-                    color={colorMode === "light" ? "gray.700" : "gray.400"}
-                >
-                    {data.subject}
-                </Text>
-                {user?._id === data.author._id && (
+                <SubjectTag subject={data.subject} />
+                {isOwner() && (
                     <AssessmentMenu
                         id={data._id}
                         setAssessment={setAssessment}

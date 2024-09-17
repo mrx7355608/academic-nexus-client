@@ -11,34 +11,34 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import PdfViewer from "../components/pdf-viewer/PdfViewer";
-import { FaCircleArrowUp, FaCircleArrowDown } from "react-icons/fa6";
+import useFetch from "../hooks/useFetch";
 import useToastUtils from "../hooks/useToastUtils";
 import useUser from "../states/user";
-import DocxViewer from "../components/DocxViewer";
-import PageHeading from "../components/PageHeading";
-import useFetch from "../hooks/useFetch";
 import {
     downvoteAssessment,
     upvoteAssessment,
 } from "../services/assessment.services";
+import { FaCircleArrowUp, FaCircleArrowDown } from "react-icons/fa6";
+import PageHeading from "../components/PageHeading";
+// import PdfViewer from "../components/pdf-viewer/PdfViewer";
+// import DocxViewer from "../components/DocxViewer";
 
 export default function ViewAssessment() {
     const { colorMode } = useColorMode();
     const { id } = useParams();
     const { showErrorToast, showSuccessToast } = useToastUtils();
-    const [data, setData] = useState(null);
+    const [data2, setData] = useState(null);
     const [isUpvoting, setIsUpvoting] = useState(false);
     const [isDownvoting, setIsDownvoting] = useState(false);
     const user = useUser((state) => state.user);
 
-    const { loading, result, error } = useFetch(`/api/files/${id}`);
+    const { loading, data, error } = useFetch(`/api/files/${id}`);
 
     useEffect(() => {
-        if (result) {
-            setData(result);
+        if (data) {
+            setData(data);
         }
-    }, [result]);
+    }, [data]);
 
     return (
         <>
@@ -61,17 +61,17 @@ export default function ViewAssessment() {
                             h="20px"
                         ></Box>
                         <Divider bg="purple.500" w="20px" h="5px" mr={4} />
-                        <Heading color="purple.500">{result.title}</Heading>
+                        <Heading color="purple.500">{data2.title}</Heading>
                     </Flex>
                     <Flex alignItems={"center"} gap={3} mt={5}>
                         <Image
-                            src={result.author.profilePicture}
+                            src={data2.author.profilePicture}
                             w={"35px"}
                             h={"35px"}
                             rounded="full"
                             objectFit={"cover"}
                         />
-                        <Text>{result.author.fullname}</Text>
+                        <Text>{data2.author.fullname}</Text>
                     </Flex>
                     <Text mt={4} mb={4}>
                         Posted on:{"  "}
@@ -82,7 +82,7 @@ export default function ViewAssessment() {
                                 colorMode === "dark" ? "gray.400" : "gray.600"
                             }
                         >
-                            {new Date(result.createdAt).toDateString().slice(4)}
+                            {new Date(data2.createdAt).toDateString().slice(4)}
                         </Text>{" "}
                     </Text>
 
@@ -92,17 +92,18 @@ export default function ViewAssessment() {
                             ml="1"
                             as="span"
                             color={
-                                data?.upvotes.length - data?.downvotes.length >
+                                data2?.upvotes.length -
+                                    data2?.downvotes.length >
                                 0
                                     ? "green"
-                                    : data?.upvotes.length -
-                                            data?.downvotes.length <
+                                    : data2?.upvotes.length -
+                                            data2?.downvotes.length <
                                         0
                                       ? "red"
                                       : "gray"
                             }
                         >
-                            {data?.upvotes.length - data?.downvotes.length}
+                            {data2?.upvotes.length - data2?.downvotes.length}
                         </Text>
                     </Text>
 
@@ -126,19 +127,19 @@ export default function ViewAssessment() {
                     </Box>
 
                     {/* File viewer */}
-                    {data?.fileExtension === "pdf" ? (
-                        <PdfViewer fileURL={result.fileURL} />
-                    ) : data?.fileExtension === "docx" ? (
-                        <DocxViewer fileURL={result.fileURL} />
-                    ) : (
-                        <Image
-                            src={result.fileURL}
-                            w="full"
-                            objectFit="cover"
-                            rounded="lg"
-                            h={"full"}
-                        />
-                    )}
+                    {/* {data?.fileExtension === "pdf" ? ( */}
+                    {/*     <PdfViewer fileURL={result.fileURL} /> */}
+                    {/* ) : data?.fileExtension === "docx" ? ( */}
+                    {/*     <DocxViewer fileURL={result.fileURL} /> */}
+                    {/* ) : ( */}
+                    {/*     <Image */}
+                    {/*         src={result.fileURL} */}
+                    {/*         w="full" */}
+                    {/*         objectFit="cover" */}
+                    {/*         rounded="lg" */}
+                    {/*         h={"full"} */}
+                    {/*     /> */}
+                    {/* )} */}
                 </>
             )}
         </>
@@ -149,7 +150,7 @@ export default function ViewAssessment() {
             showErrorToast("Please login to upvote this assessment");
             return;
         }
-        if (data.upvotes.includes(user._id)) {
+        if (data2.upvotes.includes(user._id)) {
             showErrorToast("You have already upvoted this assessment");
             return;
         }
@@ -161,7 +162,7 @@ export default function ViewAssessment() {
         } else {
             showSuccessToast("You upvoted this assessment");
             setData({
-                ...data,
+                ...data2,
                 upvotes: result.upvotes,
                 downvotes: result.downvotes,
             });
@@ -174,7 +175,7 @@ export default function ViewAssessment() {
             showErrorToast("Please login to downvote this assessment");
             return;
         }
-        if (data.downvotes.includes(user._id)) {
+        if (data2.downvotes.includes(user._id)) {
             showErrorToast("You have already downvoted this assessment");
             return;
         }
@@ -186,7 +187,7 @@ export default function ViewAssessment() {
             showErrorToast(error);
         } else {
             setData({
-                ...data,
+                ...data2,
                 upvotes: result.upvotes,
                 downvotes: result.downvotes,
             });
