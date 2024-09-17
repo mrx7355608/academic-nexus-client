@@ -15,7 +15,6 @@ import PdfViewer from "../components/pdf-viewer/PdfViewer";
 import { FaCircleArrowUp, FaCircleArrowDown } from "react-icons/fa6";
 import useToastUtils from "../hooks/useToastUtils";
 import useUser from "../states/user";
-import DownloadModal from "../components/Modals/DownloadModal";
 import DocxViewer from "../components/DocxViewer";
 import PageHeading from "../components/PageHeading";
 import useFetch from "../hooks/useFetch";
@@ -33,7 +32,7 @@ export default function ViewAssessment() {
     const [isDownvoting, setIsDownvoting] = useState(false);
     const user = useUser((state) => state.user);
 
-    const { loading, result, error } = useFetch(`/api/assessments/${id}`);
+    const { loading, result, error } = useFetch(`/api/files/${id}`);
 
     useEffect(() => {
         if (result) {
@@ -124,20 +123,16 @@ export default function ViewAssessment() {
                         >
                             {isDownvoting ? <Spinner size="sm" /> : "Downvote"}
                         </Button>
-                        <DownloadModal
-                            id={result._id}
-                            fileName={`${result.title}.${result.fileExtension}`}
-                        />
                     </Box>
 
                     {/* File viewer */}
                     {data?.fileExtension === "pdf" ? (
-                        <PdfViewer id={result._id} />
+                        <PdfViewer fileURL={result.fileURL} />
                     ) : data?.fileExtension === "docx" ? (
-                        <DocxViewer id={result._id} />
+                        <DocxViewer fileURL={result.fileURL} />
                     ) : (
                         <Image
-                            src={`/api/assessments/view-assessment/${result._id}`}
+                            src={result.fileURL}
                             w="full"
                             objectFit="cover"
                             rounded="lg"
@@ -181,7 +176,6 @@ export default function ViewAssessment() {
         }
         if (data.downvotes.includes(user._id)) {
             showErrorToast("You have already downvoted this assessment");
-            return;
             return;
         }
 

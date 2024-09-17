@@ -1,9 +1,7 @@
 import servicesWrapper from "./servicesWrapper";
 
-const serverURL = import.meta.env.VITE_SERVER_URL;
-
 export const getAssessment = servicesWrapper(async (id) => {
-    const response = await fetch(`${serverURL}/api/assessments/${id}`);
+    const response = await fetch(`/api/files/${id}`);
     const result = await response.json();
     if (result.ok) {
         return { data: result.data };
@@ -21,7 +19,7 @@ export const editAssessment = servicesWrapper(async (id, assessment) => {
         body: JSON.stringify(assessment),
         credentials: "include",
     };
-    const response = await fetch(`${serverURL}/api/assessments/${id}`, options);
+    const response = await fetch(`/api/files/${id}`, options);
 
     const result = await response.json();
     if (result.ok) {
@@ -40,7 +38,7 @@ export const createAssessment = servicesWrapper(async (assessment) => {
         body: JSON.stringify(assessment),
         credentials: "include",
     };
-    const response = await fetch(`${serverURL}/api/assessments`, options);
+    const response = await fetch(`/api/files`, options);
 
     const result = await response.json();
     if (result.ok) {
@@ -55,7 +53,7 @@ export const deleteAssessment = servicesWrapper(async (id) => {
         method: "delete",
         credentials: "include",
     };
-    const response = await fetch(`${serverURL}/api/assessments/${id}`, options);
+    const response = await fetch(`/api/files/${id}`, options);
     if (response.ok) {
         return { data: null };
     } else {
@@ -69,10 +67,7 @@ export const upvoteAssessment = servicesWrapper(async (id) => {
         method: "post",
         credentials: "include",
     };
-    const response = await fetch(
-        `${serverURL}/api/assessments/${id}/upvote`,
-        options,
-    );
+    const response = await fetch(`/api/files/${id}/upvote`, options);
     const result = await response.json();
 
     if (response.ok) {
@@ -87,10 +82,7 @@ export const downvoteAssessment = servicesWrapper(async (id) => {
         method: "post",
         credentials: "include",
     };
-    const response = await fetch(
-        `${serverURL}/api/assessments/${id}/downvote`,
-        options,
-    );
+    const response = await fetch(`/api/files/${id}/downvote`, options);
     const result = await response.json();
 
     if (response.ok) {

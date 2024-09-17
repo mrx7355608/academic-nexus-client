@@ -3,7 +3,6 @@ import { IoMdEye } from "react-icons/io";
 import { Box, Flex, Text, Button, useColorMode } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { FaVoteYea } from "react-icons/fa";
-import DownloadModal from "./Modals/DownloadModal";
 import AssessmentMenu from "./AssessmentMenu";
 import useUser from "../states/user";
 
@@ -119,10 +118,6 @@ export default function AssessmentItem({ data, setAssessment }) {
                         View
                     </Button>
                 </Link>
-                <DownloadModal
-                    id={data._id}
-                    fileName={`${data.title}.${data.fileExtension}`}
-                />
             </Flex>
         </Box>
     );

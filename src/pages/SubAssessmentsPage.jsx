@@ -7,7 +7,7 @@ export default function SubAssessmentsPage() {
 
     return (
         <AssessmentsContainer
-            endpoint={`/api/assessments/my/${type}?${sp.toString()}`}
+            endpoint={`/api/files/my/${type}?${sp.toString()}`}
             credentials={true}
         />
     );

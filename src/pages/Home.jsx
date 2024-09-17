@@ -21,9 +21,7 @@ export default function Home() {
                 </Flex>
             </Flex>
 
-            <AssessmentsContainer
-                endpoint={`/api/assessments?${sp.toString()}`}
-            />
+            <AssessmentsContainer endpoint={`/api/files?${sp.toString()}`} />
         </>
     );
 }
