@@ -29,7 +29,12 @@ export default function AssessmentItem({ data, setAssessment }) {
             </Flex>
 
             {/* FILE TAG & MENU */}
-            <Flex justifyContent={"space-between"} alignItems="center" mt={2}>
+            <Flex
+                justifyContent={"space-between"}
+                alignItems="center"
+                mt={2}
+                mb={1}
+            >
                 <SubjectTag subject={data.subject} />
                 {isOwner() && (
                     <AssessmentMenu
@@ -40,13 +45,16 @@ export default function AssessmentItem({ data, setAssessment }) {
             </Flex>
 
             {/* FILE TITLE */}
-            <Para text={data.title} />
+            <Link to={`/assessment/${data.id}`}>
+                <Para text={data.title} />
+            </Link>
 
             {/* FILE DATE & AUTHOR */}
             <Text
                 fontSize="sm"
                 color={colorMode === "light" ? "gray.600" : "gray.400"}
                 mt={0.5}
+                mb={3}
             >
                 Posted by{" "}
                 <Text as="span" textDecor={"underline"}>
@@ -55,7 +63,7 @@ export default function AssessmentItem({ data, setAssessment }) {
                 - {new Date(data.createdAt).toDateString().slice(4)}
             </Text>
 
-            {/* FILE VOTES */}
+            {/* FILE VOTES & VIEW BUTTON */}
             <Flex
                 mt={2}
                 fontSize={"sm"}
@@ -65,6 +73,8 @@ export default function AssessmentItem({ data, setAssessment }) {
             >
                 <FaVoteYea size={20} />
                 <Para text={data.upvotes.length - data.downvotes.length} />
+
+                {/* VIEW BUTTON */}
                 <Link to={`/assessment/${data.id}`}>
                     <Button
                         size={"sm"}
