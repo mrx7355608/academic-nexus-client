@@ -1,9 +1,9 @@
 import { Box } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
 import { Suspense } from "react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import MainSpinner from "../components/MainSpinner";
+import Navbar from "../components/main/Navbar";
+import Footer from "../components/main/Footer";
+import MainSpinner from "../components/main/MainSpinner";
 
 export default function MainLayout() {
     return (

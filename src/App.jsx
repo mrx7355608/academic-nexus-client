@@ -2,10 +2,9 @@ import { lazy, useEffect, useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import useUser from "./states/user";
-import MainSpinner from "./components/MainSpinner";
+import MainSpinner from "./components/main/MainSpinner";
 
 // Pages
-// TODO: use lazy loading
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
 const Search = lazy(() => import("./pages/Search"));
@@ -16,11 +15,15 @@ const EditAssessment = lazy(() => import("./pages/EditAssessment"));
 const MyAssessments = lazy(() => import("./pages/MyAssessments"));
 const StudentProfile = lazy(() => import("./pages/StudentProfile"));
 const SubAssessmentsPage = lazy(() => import("./pages/SubAssessmentsPage"));
-const ProtectedRoute = lazy(() => import("./components/ProtectedRoute"));
-const GuestRoute = lazy(() => import("./components/GuestRoute"));
+const ProtectedRoute = lazy(
+    () => import("./components/route-protection/ProtectedRoute"),
+);
+const GuestRoute = lazy(
+    () => import("./components/route-protection/GuestRoute"),
+);
 const NotFound = lazy(() => import("./pages/NotFound"));
 import MainLayout from "./layouts/MainLayout";
-import ErrorPage from "./components/ErrorPage";
+import ErrorPage from "./pages/ErrorPage";
 
 const router = createBrowserRouter([
     {

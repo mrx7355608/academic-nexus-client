@@ -4,8 +4,8 @@ import { Box, Flex, Text, Button, useColorMode } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { FaVoteYea } from "react-icons/fa";
 import AssessmentMenu from "./AssessmentMenu";
-import useUser from "../states/user";
-import { SubjectTag, Para } from "./ui";
+import useUser from "../../states/user";
+import { SubjectTag, Para } from "../ui";
 
 export default function AssessmentItem({ data, setAssessment }) {
     const { colorMode } = useColorMode();

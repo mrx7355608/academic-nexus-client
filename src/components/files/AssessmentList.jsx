@@ -1,7 +1,7 @@
 import { Flex, Text } from "@chakra-ui/react";
 import { useEffect } from "react";
 import AssessmentItem from "./AssessmentItem";
-import useAssessments from "../states/assessments";
+import useAssessments from "../../states/assessments";
 
 export default function AssessmentList({ assessments: data }) {
     const { assessments, setAssessments } = useAssessments();

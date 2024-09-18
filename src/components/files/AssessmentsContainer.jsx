@@ -1,6 +1,6 @@
 import { Text, Spinner, Flex } from "@chakra-ui/react";
 import AssessmentList from "./AssessmentList";
-import useFetch from "../hooks/useFetch";
+import useFetch from "../../hooks/useFetch";
 
 export default function AssessmentsContainer({
     endpoint,

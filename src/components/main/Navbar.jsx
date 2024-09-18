@@ -8,10 +8,10 @@ import {
     Image,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import DarkModeToggle from "./DarkModeToggle";
-import useUser from "../states/user";
+import DarkModeToggle from "../ui/DarkModeToggle";
+import useUser from "../../states/user";
 import { useState } from "react";
-import useToastUtils from "../hooks/useToastUtils";
+import useToastUtils from "../../hooks/useToastUtils";
 import NavSearchbar from "./NavSearchbar";
 
 export default function Navbar() {

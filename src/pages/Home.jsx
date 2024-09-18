@@ -1,11 +1,10 @@
-import { Flex, Text } from "@chakra-ui/react";
-import FilterModal from "../components/Modals/FilterModal";
+import { Flex, Text, Heading, Divider } from "@chakra-ui/react";
+import FilterModal from "../components/files/FilterModal";
 import SortMenu from "../components/SortMenu";
-import HomeSearchbar from "../components/HomeSearchbar";
-import AssessmentsContainer from "../components/AssessmentsContainer";
+import HomeSearchbar from "../components/search/HomeSearchbar";
+import AssessmentsContainer from "../components/files/AssessmentsContainer";
 import { useSearchParams } from "react-router-dom";
-import PageHeading from "../components/PageHeading";
-import ErrorBoundary from "../components/ErrorBoundary";
+import ErrorBoundary from "../components/main/ErrorBoundary";
 
 export default function Home() {
     // eslint-disable-next-line
@@ -14,7 +13,8 @@ export default function Home() {
     return (
         <>
             <Flex alignItems="center" gap="5" mb={12}>
-                <PageHeading title="Home" />
+                <Heading>Home</Heading>
+                <Divider />
                 <Flex alignItems="center" gap={1}>
                     <SortMenu />
                     <FilterModal />

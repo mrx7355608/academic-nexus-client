@@ -2,9 +2,9 @@ import { Menu, MenuButton, MenuItem, MenuList, Button } from "@chakra-ui/react";
 import { useState } from "react";
 import { HiDotsVertical } from "react-icons/hi";
 import { Link } from "react-router-dom";
-import useToastUtils from "../hooks/useToastUtils";
-import { deleteAssessment } from "../services/assessment.services";
-import useAssessments from "../states/assessments";
+import useToastUtils from "../../hooks/useToastUtils";
+import { deleteAssessment } from "../../services/assessment.services";
+import useAssessments from "../../states/assessments";
 
 // eslint-disable-next-line
 export default function AssessmentMenu({ id }) {
