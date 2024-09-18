@@ -6,6 +6,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 const axiosInstance = axios.create({
     baseURL: NODE_ENV === "production" ? "" : BASE_URL,
     validateStatus: (status) => (status >= 500 ? false : true),
+    timeout: 5000,
 });
 
 export default axiosInstance;
