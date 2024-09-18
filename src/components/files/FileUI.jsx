@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
     Box,
     Heading,
@@ -8,17 +9,34 @@ import {
     Button,
     useColorMode,
 } from "@chakra-ui/react";
+import { useParams } from "react-router-dom";
+import useUser from "../../states/user";
+import useToastUtils from "../../hooks/useToastUtils";
 import { FaCircleArrowUp, FaCircleArrowDown } from "react-icons/fa6";
+import { upvoteAssessment } from "../../services/assessment.services";
+import FileViewer from "./FileViewer";
 
 export default function FileUI({ data }) {
+    const { id } = useParams();
     const { colorMode } = useColorMode();
+    const { showErrorToast, showSuccessToast } = useToastUtils();
+
+    const user = useUser((state) => state.user);
+    const [loading, setLoading] = useState({
+        upvoting: false,
+        downvoting: false,
+    });
+
     return (
         <>
+            {/* TITLE */}
             <Flex alignItems={"center"}>
                 <Box rounded="full" bg="purple.500" w="20px" h="20px"></Box>
                 <Divider bg="purple.500" w="20px" h="5px" mr={4} />
                 <Heading color="purple.500">{data.title}</Heading>
             </Flex>
+
+            {/* AUTHOR */}
             <Flex alignItems={"center"} gap={3} mt={5}>
                 <Image
                     src={data.author.profilePicture}
@@ -52,17 +70,77 @@ export default function FileUI({ data }) {
 
             {/* UPVOTE AND DOWNVOTE BUTTONS */}
             <Box my={7}>
-                <Button leftIcon={<FaCircleArrowUp />} colorScheme="green">
+                <Button
+                    leftIcon={<FaCircleArrowUp />}
+                    colorScheme="green"
+                    onClick={upvote}
+                    isLoading={loading.upvoting}
+                    isDisabled={loading.upvoting}
+                >
                     Upvote
                 </Button>
                 <Button
                     leftIcon={<FaCircleArrowDown />}
                     colorScheme={"red"}
                     mx={3}
+                    onClick={downvote}
+                    isLoading={loading.downvoting}
+                    isDisabled={loading.downvoting}
                 >
                     Downvote
                 </Button>
             </Box>
+
+            {/* FILE VIEWER */}
+            <FileViewer fileURL={data.fileURL} />
         </>
     );
+
+    async function upvote() {
+        // 1. Check if user is authenticated
+        if (!user) {
+            return showErrorToast("Not authenticated");
+        }
+
+        // 2. Check if user has already upvoted
+        const userId = user?._id;
+        if (data.upvotes.includes(userId)) {
+            return showErrorToast("You have already upvoted");
+        }
+
+        // 3. Make api call, if user has not upvoted
+        setLoading({ ...loading, upvoting: true });
+        const { data: response, error } = await upvoteAssessment(id);
+        setLoading({ ...loading, upvoting: false });
+
+        // TODO: update upvotes count in file state
+
+        return response
+            ? showSuccessToast("You upvoted this file")
+            : showErrorToast(error);
+    }
+
+    async function downvote() {
+        // 1. Check if user is authenticated
+        if (!user) {
+            return showErrorToast("Not authenticated");
+        }
+
+        // 2. Check if user has already upvoted
+        const userId = user?._id;
+        if (data.upvotes.includes(userId)) {
+            return showErrorToast("You have already upvoted");
+        }
+
+        // 3. Make api call, if user has not upvoted
+        setLoading({ ...loading, downvoting: true });
+        const { data: response, error } = await upvoteAssessment(id);
+        setLoading({ ...loading, downvoting: false });
+
+        // TODO: update downvotes count in file state
+
+        return response
+            ? showSuccessToast("You downvoted this file")
+            : showErrorToast(error);
+    }
 }

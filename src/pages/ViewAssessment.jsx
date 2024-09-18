@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom";
-import useFetch from "../hooks/useFetch";
-import { Heading, Flex, useColorMode, Spinner, Text } from "@chakra-ui/react";
+import { Spinner } from "@chakra-ui/react";
 import PageHeading from "../components/PageHeading";
 import ErrorBoundary from "../components/main/ErrorBoundary";
 import FileUI from "../components/files/FileUI";
 import ErrorMessage from "../components/ui/ErrorMessage";
+import useFetch from "../hooks/useFetch";
 
 export default function ViewAssessment() {
     const { id } = useParams();
