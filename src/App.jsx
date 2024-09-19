@@ -24,6 +24,7 @@ const GuestRoute = lazy(
 const NotFound = lazy(() => import("./pages/NotFound"));
 import MainLayout from "./layouts/MainLayout";
 import ErrorPage from "./pages/ErrorPage";
+import useFetch from "./hooks/useFetch";
 
 const router = createBrowserRouter([
     {
@@ -102,28 +103,12 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-    const [loading, setLoading] = useState(true);
     const setUser = useUser((state) => state.setUser);
+    const { loading, data } = useFetch("/api/students/me", true);
 
-    // Fetch logged in user data with useEffect
-    useEffect(() => {
-        async function getUser() {
-            try {
-                const response = await fetch("/api/students/me", {
-                    credentials: "include",
-                });
-                const result = await response.json();
-                setUser(result.data);
-            } catch (err) {
-                // Do nothing (the user will be logged out)
-                return null;
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        getUser();
-    }, [setUser]);
+    if (data) {
+        setUser(data);
+    }
 
     if (loading) {
         return <MainSpinner />;
