@@ -8,7 +8,6 @@ import {
     Box,
 } from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
 
 export default function Login() {
     return (
@@ -32,7 +31,10 @@ export default function Login() {
                     </Box>
                 </Alert>
             </Box>
-            <a href={`${import.meta.env.VITE_SERVER_URL}/api/auth/google`}>
+            <a
+                href={`${import.meta.env.VITE_BASE_URL}/api/auth/google`}
+                style={{ width: "100%" }}
+            >
                 <Button
                     mt={4}
                     size="lg"
