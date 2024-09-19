@@ -1,3 +1,4 @@
+import axiosInstance from "../axiosInstance";
 import servicesWrapper from "./servicesWrapper";
 
 export const getAssessment = servicesWrapper(async (id) => {
@@ -63,31 +64,35 @@ export const deleteAssessment = servicesWrapper(async (id) => {
 });
 
 export const upvoteAssessment = servicesWrapper(async (id) => {
-    const options = {
-        method: "post",
-        credentials: "include",
-    };
-    const response = await fetch(`/api/files/${id}/upvote`, options);
-    const result = await response.json();
+    const response = await axiosInstance.patch(
+        `/api/files/${id}/upvote`,
+        null,
+        {
+            withCredentials: true,
+        },
+    );
 
-    if (response.ok) {
-        return { data: result.data };
+    const { data } = response.data;
+
+    if (data) {
+        return { data };
     } else {
-        return { error: result.error };
+        return { error: data.error };
     }
 });
 
 export const downvoteAssessment = servicesWrapper(async (id) => {
-    const options = {
-        method: "post",
-        credentials: "include",
-    };
-    const response = await fetch(`/api/files/${id}/downvote`, options);
-    const result = await response.json();
+    const response = await axiosInstance.patch(
+        `/api/files/${id}/downvote`,
+        null,
+        { withCredentials: true },
+    );
 
-    if (response.ok) {
-        return { data: result.data };
+    const { data } = response.data;
+
+    if (data) {
+        return { data };
     } else {
-        return { error: result.error };
+        return { error: data.error };
     }
 });

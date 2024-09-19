@@ -13,13 +13,20 @@ import { useParams } from "react-router-dom";
 import useUser from "../../states/user";
 import useToastUtils from "../../hooks/useToastUtils";
 import { FaCircleArrowUp, FaCircleArrowDown } from "react-icons/fa6";
-import { upvoteAssessment } from "../../services/assessment.services";
+import {
+    upvoteAssessment,
+    downvoteAssessment,
+} from "../../services/assessment.services";
 import FileViewer from "./FileViewer";
 
 export default function FileUI({ data }) {
     const { id } = useParams();
     const { colorMode } = useColorMode();
     const { showErrorToast, showSuccessToast } = useToastUtils();
+    const [votes, setVotes] = useState({
+        upvotes: data.upvotes,
+        downvotes: data.downvotes,
+    });
 
     const user = useUser((state) => state.user);
     const [loading, setLoading] = useState({
@@ -64,7 +71,7 @@ export default function FileUI({ data }) {
             <Text mt={4} mb={4} fontWeight={600}>
                 Average votes:{"  "}
                 <Text as="span" fontWeight={400} ml={1}>
-                    {data?.upvotes.length - data?.downvotes.length}
+                    {votes.upvotes.length - votes.downvotes.length}
                 </Text>
             </Text>
 
@@ -104,7 +111,7 @@ export default function FileUI({ data }) {
 
         // 2. Check if user has already upvoted
         const userId = user?._id;
-        if (data.upvotes.includes(userId)) {
+        if (votes.upvotes.includes(userId)) {
             return showErrorToast("You have already upvoted");
         }
 
@@ -113,7 +120,8 @@ export default function FileUI({ data }) {
         const { data: response, error } = await upvoteAssessment(id);
         setLoading({ ...loading, upvoting: false });
 
-        // TODO: update upvotes count in file state
+        // 4. Update votes count in file state
+        setVotes({ upvotes: response.upvotes, downvotes: response.downvotes });
 
         return response
             ? showSuccessToast("You upvoted this file")
@@ -128,16 +136,17 @@ export default function FileUI({ data }) {
 
         // 2. Check if user has already upvoted
         const userId = user?._id;
-        if (data.upvotes.includes(userId)) {
-            return showErrorToast("You have already upvoted");
+        if (votes.downvotes.includes(userId)) {
+            return showErrorToast("You have already downvoted");
         }
 
         // 3. Make api call, if user has not upvoted
         setLoading({ ...loading, downvoting: true });
-        const { data: response, error } = await upvoteAssessment(id);
+        const { data: response, error } = await downvoteAssessment(id);
         setLoading({ ...loading, downvoting: false });
 
-        // TODO: update downvotes count in file state
+        // 4. Update votes count in file state
+        setVotes({ upvotes: response.upvotes, downvotes: response.downvotes });
 
         return response
             ? showSuccessToast("You downvoted this file")
