@@ -1,4 +1,4 @@
-import { lazy, useEffect, useState } from "react";
+import { lazy } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import useUser from "./states/user";
