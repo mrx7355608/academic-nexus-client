@@ -1,8 +1,9 @@
+import React from "react";
 import { Box } from "@chakra-ui/react";
 import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 import "@cyntler/react-doc-viewer/dist/index.css";
 
-export default function FileViewer({ fileURL }) {
+const FileViewer = React.memo(({ fileURL }) => {
     return (
         <Box height={"100vh"} my={5}>
             <DocViewer
@@ -15,4 +16,7 @@ export default function FileViewer({ fileURL }) {
             />
         </Box>
     );
-}
+});
+
+FileViewer.displayName = "FileViewer";
+export default FileViewer;
