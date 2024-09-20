@@ -1,13 +1,10 @@
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useToastUtils from "../hooks/useToastUtils";
-import { Button, useColorMode } from "@chakra-ui/react";
-
-// Components
-import CloudinaryUploadWidget from "../components/upload-page/CloudinaryUploadWidget";
+import { Button, Box } from "@chakra-ui/react";
 import PageHeading from "../components/PageHeading";
-import { createAssessment } from "../services/assessment.services";
 import UploadForm from "../components/files/UploadForm";
+import { createAssessment } from "../services/assessment.services";
 
 export default function Upload() {
     const navigate = useNavigate();
@@ -30,17 +27,21 @@ export default function Upload() {
 
     return (
         <>
-            <PageHeading title={"Upload"} />
-            <UploadForm setAssessment={memoizedSetAssessment} />
-            <Button
-                w="full"
-                colorScheme="purple"
-                onClick={uploadAssessment}
-                isLoading={loading}
-                isDisabled={loading}
-            >
-                Upload Assessment
-            </Button>
+            <PageHeading title={"Upload File"} />
+            <Box w="full" maxW="md" mx="auto">
+                <UploadForm setAssessment={memoizedSetAssessment} />
+                <Button
+                    w="full"
+                    colorScheme="purple"
+                    onClick={uploadAssessment}
+                    isLoading={loading}
+                    isDisabled={loading}
+                    mt={8}
+                    mb={20}
+                >
+                    Upload Assessment
+                </Button>
+            </Box>
         </>
     );
 

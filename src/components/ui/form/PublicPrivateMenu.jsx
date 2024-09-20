@@ -6,7 +6,6 @@ import {
     MenuButton,
     MenuList,
     MenuItem,
-    useColorMode,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { memo } from "react";
