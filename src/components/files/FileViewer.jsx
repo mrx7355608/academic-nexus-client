@@ -6,14 +6,16 @@ import ErrorMessage from "../ui/ErrorMessage";
 
 const FileViewer = React.memo(({ fileURL }) => {
     const [loading, setLoading] = useState(true);
+    const [renderFile, setRenderFile] = useState(false);
     const [error, setError] = useState("");
 
     useEffect(() => {
         fetch(fileURL)
             .then((resp) => {
                 if (!resp.ok) {
-                    setError("Unable to load file");
+                    return setError("Unable to load file");
                 }
+                setRenderFile(true);
             })
             .catch(() => setError("Unable to load file"))
             .finally(setLoading(false));
@@ -23,7 +25,7 @@ const FileViewer = React.memo(({ fileURL }) => {
         <Box height={"100vh"} my={5}>
             {loading && <Spinner />}
             {error && <ErrorMessage err={error} />}
-            {!error && !loading ? (
+            {renderFile && (
                 <DocViewer
                     documents={[
                         {
@@ -32,7 +34,7 @@ const FileViewer = React.memo(({ fileURL }) => {
                     ]}
                     pluginRenderers={DocViewerRenderers}
                 />
-            ) : null}
+            )}
         </Box>
     );
 });

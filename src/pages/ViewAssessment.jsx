@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { Spinner } from "@chakra-ui/react";
 import PageHeading from "../components/PageHeading";
 import ErrorBoundary from "../components/main/ErrorBoundary";
-import FileUI from "../components/files/FileUI";
+import ViewFilePageUI from "../components/files/ViewFilePageUI";
 import ErrorMessage from "../components/ui/ErrorMessage";
 import useFetch from "../hooks/useFetch";
 
@@ -19,7 +19,7 @@ export default function ViewAssessment() {
                 <ErrorBoundary
                     fallback={<ErrorMessage err={"Something went wrong!"} />}
                 >
-                    <FileUI data={data} />
+                    <ViewFilePageUI data={data} />
                 </ErrorBoundary>
             )}
         </>

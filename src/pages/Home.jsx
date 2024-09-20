@@ -12,7 +12,7 @@ import ErrorMessage from "../components/ui/ErrorMessage";
 
 export default function Home() {
     // eslint-disable-next-line
-    const [sp, _setSp] = useSearchParams();
+    const [sp, setSp] = useSearchParams();
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
     const [files, setFiles] = useState([]);
@@ -22,11 +22,18 @@ export default function Home() {
         if (!data) return;
 
         if (data.length < 10) {
+            console.log("data less");
             setHasMore(false);
         }
 
-        setFiles([...files, ...data]);
+        console.log("data more");
+        setFiles((prevFiles) => [...prevFiles, ...data]);
     }, [data]);
+
+    const onNext = () => {
+        setPage((page) => page + 1);
+        sp.set("page", page);
+    };
 
     return (
         <>
@@ -53,7 +60,7 @@ export default function Home() {
                         next={onNext}
                         hasMore={hasMore}
                         loader={<Spinner marginX={"auto"} />}
-                        scrollThreshold={0.95}
+                        scrollThreshold={1}
                     >
                         <FilesList files={files} />
                     </InfiniteScroll>
@@ -61,11 +68,6 @@ export default function Home() {
             ) : null}
         </>
     );
-
-    function onNext() {
-        setPage(page + 1);
-        sp.set("page", page);
-    }
 }
 
 function FilesList({ files }) {

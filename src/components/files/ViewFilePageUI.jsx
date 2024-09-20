@@ -19,7 +19,7 @@ import {
 } from "../../services/assessment.services";
 import FileViewer from "./FileViewer";
 
-export default function FileUI({ data }) {
+export default function ViewFilePageUI({ data }) {
     const { id } = useParams();
     const { colorMode } = useColorMode();
     const { showErrorToast, showSuccessToast } = useToastUtils();

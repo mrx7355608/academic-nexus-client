@@ -6,13 +6,15 @@ import {
     MenuButton,
     MenuList,
     MenuItem,
-    useColorMode,
 } from "@chakra-ui/react";
 import { memo, useState } from "react";
 import { FaBook } from "react-icons/fa";
 
-export default memo(function SubjectMenu({ setAssessment, defaultSubject }) {
-    const { colorMode } = useColorMode();
+export default memo(function SubjectMenu({
+    setAssessment,
+    colorMode,
+    defaultSubject,
+}) {
     const [selectedSubject, setSelectedSubject] = useState(null);
     const subjects = [
         "Linear Algebra",
@@ -46,13 +48,7 @@ export default memo(function SubjectMenu({ setAssessment, defaultSubject }) {
                         return (
                             <MenuItem
                                 key={subject}
-                                onClick={() => {
-                                    setSelectedSubject(subject);
-                                    setAssessment((prev) => ({
-                                        ...prev,
-                                        subject: subject,
-                                    }));
-                                }}
+                                onClick={() => onClickHandler(subject)}
                             >
                                 {subject}
                             </MenuItem>
@@ -62,4 +58,12 @@ export default memo(function SubjectMenu({ setAssessment, defaultSubject }) {
             </Menu>
         </Box>
     );
+
+    function onClickHandler(subject) {
+        setSelectedSubject(subject);
+        setAssessment((prev) => ({
+            ...prev,
+            subject: subject,
+        }));
+    }
 });
