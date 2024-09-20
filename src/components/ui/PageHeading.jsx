@@ -1,8 +1,6 @@
-import { Flex, Heading, Divider, useColorMode } from "@chakra-ui/react";
+import { Flex, Heading, Divider } from "@chakra-ui/react";
 
-export default function PageHeading({ title }) {
-    const { colorMode } = useColorMode();
-
+export default function PageHeading({ title, colorMode }) {
     return (
         <Flex alignItems="center" gap="5" mb={12}>
             <Heading fontWeight={700} fontSize={"4xl"}>

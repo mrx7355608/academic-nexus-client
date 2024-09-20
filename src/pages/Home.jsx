@@ -7,7 +7,7 @@ import ErrorBoundary from "../components/main/ErrorBoundary";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useState, useEffect } from "react";
 import useFetch from "../hooks/useFetch";
-import AssessmentItem from "../components/files/AssessmentItem";
+import FileItem from "../components/files/FileItem";
 import ErrorMessage from "../components/ui/ErrorMessage";
 
 export default function Home() {
@@ -74,7 +74,7 @@ function FilesList({ files }) {
     return (
         <Flex flexWrap={"wrap"} gap={4} mb={20}>
             {files.map((a) => {
-                return <AssessmentItem key={a.id} data={a} />;
+                return <FileItem key={a.id} data={a} />;
             })}
         </Flex>
     );
