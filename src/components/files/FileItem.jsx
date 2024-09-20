@@ -7,7 +7,7 @@ import AssessmentMenu from "./AssessmentMenu";
 import useUser from "../../states/user";
 import { SubjectTag, Para } from "../ui";
 
-export default function AssessmentItem({ data, setAssessment }) {
+export default function FileItem({ data, setAssessment }) {
     const { colorMode } = useColorMode();
     const user = useUser((state) => state.user);
 
